@@ -14,9 +14,21 @@
 
     <string-array name="special_choices">
         <item>Select</item>
-        <item>Pedia</item>
-        <item>MONO</item>
-        <item>sample 3</item>
+        <item>Pediatrician</item>
+        <item>Hospitalist</item>
+        <item>Child Abuse Pediatrician</item>
+        <item>Neonatalists</item>
+        <item>Emergency Pediatric Medicine</item>
+        <item>Pediatric Critical Care Medicine</item>
+        <item>Pediatric Cardiologist</item>
+        <item>Pediatric Endocrinology</item>
+        <item>Pediatric Gastroenterology</item>
+        <item>Pediatric Neurology</item>
+        <item>Pediatric Hematology/Oncology</item>
+        <item>Pediatric Pulmonology</item>
+        <item>Pediatric Nephrology</item>
+        <item>Pediatric Infectious Disease</item>
+        <item>Pediatric Rheumatology</item>
     </string-array>
 
     <string-array name="dose_options_bcg">

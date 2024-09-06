@@ -381,11 +381,12 @@
 
 
 <!--MAKE THIS ON JAVA WORKS-->
+
             <Spinner
                 android:id="@+id/spinnerspecial"
                 android:layout_width="340dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="0dp"
                 android:entries="@array/special_choices"
                 android:spinnerMode="dropdown"
                 app:layout_constraintEnd_toEndOf="parent"
