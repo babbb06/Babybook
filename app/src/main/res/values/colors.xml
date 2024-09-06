@@ -6,7 +6,9 @@
     <color name="grey">#E1DFDF</color>
     <color name="black">#000000</color>
     <color name="dark_violet">#9400D3</color> <!-- Dark Violet -->
-
+    <color name="h2text">#462964</color>
+    <color name="h1text">#5EE2f0</color>
+    <color name="h3text">#9c54d5</color>
 
     <color name="colorError">#FF0000</color>
     <color name="clear">#00FFFFFF</color>
