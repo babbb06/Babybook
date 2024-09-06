@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#E1DFDF"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextChildName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Child's Name"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:background="@drawable/textview_border"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="8dp"
+        />
+
+    <Button
+        android:id="@+id/buttonAddChild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Child"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_button"
+        android:layout_gravity="center" />
+</LinearLayout>

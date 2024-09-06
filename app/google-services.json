@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "318418303282",
+    "project_id": "babybookapplication-d3adf",
+    "storage_bucket": "babybookapplication-d3adf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318418303282:android:3c2e5b46bb9e83ee157f2b",
+        "android_client_info": {
+          "package_name": "com.example.babybook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPvBVWZEIsETdysj_WAT0yndOvNcTlTwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

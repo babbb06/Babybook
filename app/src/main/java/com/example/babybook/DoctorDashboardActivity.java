@@ -1,0 +1,212 @@
+package com.example.babybook;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.InputType;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.babybook.adapter.PostAdapter;
+import com.example.babybook.model.Post;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DoctorDashboardActivity extends AppCompatActivity {
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private RecyclerView recyclerView;
+    private PostAdapter postAdapter;
+    private List<Post> postList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_doctor_dashboard);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null) {
+            startActivity(new Intent(DoctorDashboardActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
+
+        Toolbar toolbar = findViewById(R.id.doctor_toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.doctor_drawer_layout);
+        navigationView = findViewById(R.id.doctor_nav_view);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id) {
+                    case R.id.doctor_nav_home:
+                        Toast.makeText(DoctorDashboardActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.doctor_nav_health:
+                        startActivity(new Intent(DoctorDashboardActivity.this, HealthRecordActivity.class));
+                        break;
+                    case R.id.doctor_nav_chat:
+                        startActivity(new Intent(DoctorDashboardActivity.this, SearchParentChatActivity.class));
+                        break;
+                    case R.id.doctor_nav_appointment:
+                        startActivity(new Intent(DoctorDashboardActivity.this, ManageAppointmentsActivity.class));
+                        break;
+                    case R.id.doctor_nav_logout:
+                        showLogoutConfirmation();
+                        break;
+                }
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            checkUserTypeAndFetchFullName(userId);
+        }
+
+        recyclerView = findViewById(R.id.newsfeedRecyclerView);
+        postList = new ArrayList<>();
+        postAdapter = new PostAdapter(postList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(postAdapter);
+
+        FloatingActionButton fabCreatePost = findViewById(R.id.fabCreatePost);
+        fabCreatePost.setOnClickListener(v -> showCreatePostDialog());
+
+        loadPosts();
+    }
+
+    private void checkUserTypeAndFetchFullName(String userId) {
+        db.collection("doctorUsers").document(userId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    String fullName = document.getString("fullName");
+                    updateNavHeader(fullName);
+                } else {
+                    Toast.makeText(DoctorDashboardActivity.this, "Doctor not found", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(DoctorDashboardActivity.this, "Error fetching doctor data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateNavHeader(String fullName) {
+        View headerView = navigationView.getHeaderView(0);
+        TextView fullNameTextView = headerView.findViewById(R.id.full_name);
+        fullNameTextView.setText(fullName);
+    }
+
+    private void showCreatePostDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Create New Post");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        builder.setView(input);
+
+        builder.setPositiveButton("Post", (dialog, which) -> {
+            String content = input.getText().toString();
+            if (!content.isEmpty()) {
+                createPost(content);
+            } else {
+                Toast.makeText(DoctorDashboardActivity.this, "Post content cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    private void createPost(String content) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            db.collection("doctorUsers").document(userId).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String doctorName = document.getString("fullName");
+                        Post post = new Post(null, userId, doctorName, content, System.currentTimeMillis());
+                        db.collection("posts").add(post).addOnSuccessListener(documentReference -> {
+                            Toast.makeText(DoctorDashboardActivity.this, "Post created", Toast.LENGTH_SHORT).show();
+                            loadPosts();
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(DoctorDashboardActivity.this, "Error creating post", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    private void loadPosts() {
+        db.collection("posts")
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        postList.clear();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Post post = document.toObject(Post.class);
+                            post.setPostId(document.getId());
+                            postList.add(post);
+                        }
+                        postAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(DoctorDashboardActivity.this, "Error loading posts", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void showLogoutConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Logout", (dialog, which) -> logoutUser())
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void logoutUser() {
+        mAuth.signOut();
+        startActivity(new Intent(DoctorDashboardActivity.this, LoginActivity.class));
+        finish();
+    }
+}

@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="#E1DFDF">
+
+    <TextView
+        android:id="@+id/text_view_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/button_accept"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_margin="20dp"
+        android:layout_marginEnd="8dp" />
+
+    <Button
+        android:id="@+id/button_accept"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Accept"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/rounded_button"
+        android:layout_margin="15dp"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/button_decline"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Decline"
+        android:layout_margin="15dp"
+        android:background="@drawable/rounded_button"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/button_accept" />
+
+
+
+</RelativeLayout>

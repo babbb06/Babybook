@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchDoctorChatActivity"
+    android:background="#E1DFDF">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/header"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <EditText
+        android:id="@+id/editTextSpecialization"
+        android:layout_height="wrap_content"
+        android:hint="Enter specialization"
+        android:fontFamily="@font/poppins"
+        android:background="@drawable/edittext_background"
+        android:layout_margin="20dp"
+        android:layout_width="600dp"
+
+        android:layout_below="@id/toolbar"
+        android:padding="16dp" />
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/editTextSpecialization"
+        android:layout_margin="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/rounded_button"
+        android:text="Search" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDoctors"
+        android:layout_width="match_parent"
+        android:fontFamily="@font/poppins"
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonSearch"
+        android:layout_marginTop="56dp"
+        android:padding="16dp" />
+</RelativeLayout>

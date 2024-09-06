@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_marginTop="150dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="@drawable/rounded_button">
+
+    <TextView
+        android:id="@+id/child_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Child's Name:"
+        android:textSize="16sp"
+        android:textColor="#ffff"/>
+
+    <TextView
+        android:id="@+id/service_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/child_name_text_view"
+        android:text="Service:"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_margin="20dp"
+        android:textSize="14sp"
+        android:textColor="#ffff"/>
+
+    <TextView
+        android:id="@+id/date_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/service_text_view"
+        android:text="Date:"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_margin="20dp"
+        android:textSize="14sp"
+        android:textColor="#ffff"/>
+
+    <TextView
+        android:id="@+id/time_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_text_view"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_margin="20dp"
+        android:text="Time:"
+        android:textSize="14sp"
+        android:textColor="#ffff"/>
+
+    <TextView
+        android:id="@+id/status_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_text_view"
+        android:text="Status:"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_margin="20dp"
+        android:textSize="14sp"
+        android:textColor="#ffff"/>
+
+    <TextView
+        android:id="@+id/elapsed_time_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/status_text_view"
+        android:text="Elapsed Time:"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_margin="20dp"
+        android:textSize="14sp"
+        android:textColor="#ffff"/>
+
+</RelativeLayout>

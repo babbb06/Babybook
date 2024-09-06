@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="buttonBackgroundColor">#6750a4</color> <!-- Example blue color -->
+    <color name="violet">#673ab7</color>
+    <color name="blue">#2196F3</color>
+    <color name="grey">#E1DFDF</color>
+    <color name="black">#000000</color>
+    <color name="dark_violet">#9400D3</color> <!-- Dark Violet -->
+
+
+    <color name="colorError">#FF0000</color>
+    <color name="clear">#00FFFFFF</color>
+
+    <!-- Add other colors here -->
+</resources>
