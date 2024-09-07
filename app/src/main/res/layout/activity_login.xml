@@ -6,14 +6,14 @@
     android:layout_height="match_parent">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fontFamily="@font/poppins"
-        android:padding="25dp">
-
+        android:padding="25dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
 
         <!--LOGO IMAGE-->
@@ -27,36 +27,33 @@
             app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="100dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_gravity="center"
-                android:layout_height="100dp"
-                />
+                android:src="@drawable/baby_book_logo" />
         </androidx.cardview.widget.CardView>
 
 
-        <!--TXT BABYBOOK-->
+        <!--TXT WELCOME-->
 
         <TextView
             android:id="@+id/babybook"
             android:layout_width="match_parent"
             android:layout_height="90dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/hind_guntur_bold"
             android:gravity="center"
-            android:text="@string/app_name"
+            android:text="WELCOME"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="45sp"
-            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card22" />
-
-
 
 
         <!--EMAIL -->
@@ -67,10 +64,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:paddingHorizontal="30dp"
             app:boxStrokeColor="@color/violet"
             app:boxStrokeErrorColor="@color/colorError"
             app:hintTextColor="@color/violet"
-            android:paddingHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/babybook">
@@ -80,11 +77,10 @@
                 style="@style/LoginTextInputInnerFieldStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
                 android:fontFamily="@font/poppins"
+                android:hint="Email"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
         <!--PASSWORD-->
@@ -94,10 +90,10 @@
             style="@style/LoginTextInputOuterFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
             app:boxStrokeColor="@color/violet"
             app:boxStrokeErrorColor="@color/colorError"
             app:hintTextColor="@color/violet"
-            android:paddingHorizontal="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailLayout"
@@ -109,9 +105,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                app:boxStrokeColor="@color/violet"
                 android:hint="Password"
                 android:inputType="textPassword"
+                app:boxStrokeColor="@color/violet"
                 tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,9 +141,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:textSize="15sp"
                 android:text="Don’t have an account?  "
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -155,9 +151,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:fontFamily="@font/poppins"
-                android:textSize="15sp"
                 android:text="Sign Up"
                 android:textColor="#217cbb"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -169,8 +165,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:visibility="gone"
             android:indeterminateTint="@color/violet"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSignUp" />
