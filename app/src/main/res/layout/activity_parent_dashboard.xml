@@ -27,7 +27,6 @@
 
         <!-- RecyclerView for posts -->
         <androidx.recyclerview.widget.RecyclerView
-            android:background="#E1DFDF"
             android:id="@+id/newsfeedRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
