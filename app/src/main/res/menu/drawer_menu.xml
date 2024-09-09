@@ -34,11 +34,7 @@
         <item android:title="Profile">
 
             <menu>
-
-                <item
-                    android:id="@+id/nav_login"
-                    android:icon="@drawable/profile"
-                    android:title="Login" />
+                
 
                 <item
                     android:id="@+id/nav_profile"
