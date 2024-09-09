@@ -26,5 +26,10 @@
 
     </style>
 
+    <!--for button add-->
+    <style name="oval">
+        <item name="cornerSize">60%</item>
+    </style>
+
     <style name="Theme.BabyBook" parent="Base.Theme.BabyBook" />
 </resources>

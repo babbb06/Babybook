@@ -31,11 +31,6 @@
             <menu>
 
                 <item
-                    android:id="@+id/doctor_nav_login"
-                    android:icon="@drawable/logout"
-                    android:title="Login" />
-
-                <item
                     android:id="@+id/doctor_nav_profile"
                     android:icon="@drawable/profile"
                     android:title="Profile" />

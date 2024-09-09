@@ -1,4 +1,5 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,56 +11,67 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
-        android:layout_margin="20dp"
-        android:padding="30dp">
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="55dp"
+            android:layout_marginStart="10dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/profile_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--doctors name-->
 
         <TextView
             android:id="@+id/postDoctorName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/edittext_background"
             android:fontFamily="@font/poppins"
             android:padding="15dp"
-            android:text="Doctor Name"
+            android:text="Juan Dela Cruz"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/postContent"
-            android:layout_width="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
-            android:text="Post content"
-            android:background="@drawable/edittext_background"
-            app:layout_constraintTop_toBottomOf="@id/postDoctorName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:fontFamily="@font/poppins"
-            android:padding="15dp"
-            android:textSize="20sp" />
 
+        <!--time stamp-->
         <TextView
             android:id="@+id/postTimestamp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
-            android:text="Timestamp"
             android:fontFamily="@font/poppins_semibold"
-            android:textSize="20sp"
-            android:textColor="@android:color/darker_gray"
-            app:layout_constraintTop_toBottomOf="@id/postContent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp"
             android:padding="15dp"
-            android:layout_marginBottom="30dp"/>
+android:layout_marginTop="-37dp"
+            android:text="March 25, 2023"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/postDoctorName" />
+
+
+
+        <TextView
+            android:id="@+id/postContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:fontFamily="@font/poppins"
+            android:padding="15dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"
+            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+            android:textSize="16sp"
+            android:justificationMode="inter_word"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postTimestamp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

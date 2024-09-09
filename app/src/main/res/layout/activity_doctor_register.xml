@@ -152,19 +152,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbllastnameLayout">
 
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/lastnameEt"
-                    style="LoginTextInputInnerFieldStyle"
+                    style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:paddingStart="100dp"
-                    android:minHeight="48dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/black"
-                    app:backgroundTintMode="multiply" />
+                    android:fontFamily="@font/poppins"
+                    android:inputType="textEmailAddress"
+                    tools:ignore="TouchTargetSizeCheck" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
