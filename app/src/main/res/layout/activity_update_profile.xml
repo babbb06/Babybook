@@ -1,0 +1,298 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateProfile">>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#1BFFFFFF">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/backbtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/baby_backbtn"
+                android:layout_marginStart="17dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Edit Personal Details"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:elevation="1dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="60dp">
+
+            <ImageView
+                android:id="@+id/ivProfilePicture"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_placeholder" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp"
+            android:layout_marginTop="15dp">
+
+
+            <!-- username -->
+            <TextView
+                android:id="@+id/lblprofile_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="First Name"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lblprofile_username2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:visibility="invisible"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/lblprofile_username"
+                app:layout_constraintTop_toTopOf="@+id/lblprofile_username" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/profile_usernameLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                android:enabled="false"
+                android:layout_marginTop="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblprofile_username">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_username"
+                    style="LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First name"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:backgroundTint="@color/black"
+                    app:backgroundTintMode="multiply"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- username -->
+            <TextView
+                android:id="@+id/lblprofile_lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Last Name"
+                android:textColor="#000000"
+                app:layout_constraintTop_toBottomOf="@+id/profile_usernameLayout"
+               app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/lblprofile_lastname2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:visibility="invisible"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/lblprofile_lastname"
+                app:layout_constraintTop_toTopOf="@+id/lblprofile_lastname" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/profile_lastnameLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                android:enabled="false"
+                android:layout_marginTop="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblprofile_lastname">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_lastname"
+                    style="LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last name"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:backgroundTint="@color/black"
+                    app:backgroundTintMode="multiply"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- email -->
+            <TextView
+                android:id="@+id/lblprofile_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Email"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_lastnameLayout" />
+
+            <TextView
+                android:id="@+id/lblprofile_email2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:visibility="invisible"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/lblprofile_email"
+                app:layout_constraintTop_toTopOf="@+id/lblprofile_email" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/profile_emailLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                android:layout_marginTop="1dp"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblprofile_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_email"
+                    style="LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Please enter your Full Name"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:backgroundTint="@color/black"
+                    app:backgroundTintMode="multiply" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <!-- password -->
+            <TextView
+                android:id="@+id/lblconfirmPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Password"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_emailLayout" />
+
+            <TextView
+                android:id="@+id/lblconfirmPassword2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:visibility="invisible"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/lblconfirmPassword"
+                app:layout_constraintTop_toTopOf="@+id/lblconfirmPassword" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirmPasswordLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                android:layout_marginTop="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblconfirmPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirmPassword"
+                    style="LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Please enter your Password"
+                    app:boxStrokeColor="@color/violet"
+                    app:boxStrokeErrorColor="@color/colorError"
+                    app:errorTextColor="@color/clear"
+                    app:hintTextColor="@color/violet"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:backgroundTint="@color/black"
+                    app:backgroundTintMode="multiply" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/profle_update_btn"
+                android:layout_width="250dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:text="Update profile"
+                android:fontFamily="@font/poppins_semibold"
+                app:layout_constraintTop_toBottomOf="@+id/confirmPasswordLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/profile_progress_bar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.049" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

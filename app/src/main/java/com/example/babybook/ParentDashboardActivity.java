@@ -87,6 +87,9 @@ public class ParentDashboardActivity extends AppCompatActivity {
                         Intent doctorIntent = new Intent(ParentDashboardActivity.this, SearchDoctorActivity.class);
                         startActivity(doctorIntent);
                         break;
+                    case R.id.doctor_nav_profile:
+                        startActivity(new Intent(ParentDashboardActivity.this, UpdateProfile.class));
+                        break;
                     case R.id.nav_schedules:
                         Intent schedulesIntent = new Intent(ParentDashboardActivity.this, SchedulesAppointmentActivity.class);
                         startActivity(schedulesIntent);
