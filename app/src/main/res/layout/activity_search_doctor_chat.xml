@@ -36,7 +36,7 @@
                 android:layout_marginStart="20dp"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/poppins"
-                android:hint="Enter parent full name"
+                android:hint="Enter doctor's name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +65,6 @@
         android:fontFamily="@font/poppins"
         android:layout_height="match_parent"
         android:layout_below="@id/searchrela"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="25dp"
         android:padding="16dp" />
 </RelativeLayout>

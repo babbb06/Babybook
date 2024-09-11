@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/doctor_nav_home"
-            android:icon="@drawable/home"
-            android:title="Home" />
-        <item
-            android:id="@+id/doctor_nav_health"
-            android:icon="@drawable/health"
-            android:title="Health Record" />
-        <item
-            android:id="@+id/doctor_nav_chat"
-            android:icon="@drawable/chat_icon"
-            android:title="Chat" />
-        <item
-            android:id="@+id/doctor_nav_appointment"
-            android:icon="@drawable/schedule"
-            android:title="Appointment Requests" />
-        <item
-            android:id="@+id/doctor_nav_set_appointment"
-            android:icon="@drawable/schedsend"
-            android:title="Set Appointment" />
+        <item android:title="Menu">
+            <menu>
+                <item
+                    android:id="@+id/doctor_nav_home"
+                    android:icon="@drawable/home"
+                    android:title="Home" />
+                <item
+                    android:id="@+id/doctor_nav_health"
+                    android:icon="@drawable/health"
+                    android:title="Health Record" />
+                <item
+                    android:id="@+id/doctor_nav_chat"
+                    android:icon="@drawable/chat_icon"
+                    android:title="Chat" />
+                <item
+                    android:id="@+id/doctor_nav_appointment"
+                    android:icon="@drawable/schedule"
+                    android:title="Appointment Requests" />
+                <item
+                    android:id="@+id/doctor_nav_set_appointment"
+                    android:icon="@drawable/schedsend"
+                    android:title="Set Appointment" />
+            </menu>
+        </item>
 
     </group>
+
     <group android:checkableBehavior="single">
 
         <item android:title="Profile">

@@ -139,7 +139,7 @@ public class ParentDashboardActivity extends AppCompatActivity {
                             DocumentSnapshot parentDocument = parentTask.getResult();
                             if (parentDocument.exists()) {
                                 String fullName = parentDocument.getString("fullName");
-                                updateNavHeader(fullName);
+                                updateNavHeader("Greetings, "+ fullName + "!");
                             } else {
                                 Toast.makeText(ParentDashboardActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                             }
@@ -178,7 +178,9 @@ public class ParentDashboardActivity extends AppCompatActivity {
     private void updateNavHeader(String fullName) {
         View headerView = navigationView.getHeaderView(0);
         TextView fullNameTextView = headerView.findViewById(R.id.full_name);
+        TextView parentRole = headerView.findViewById(R.id.parent_role);
         fullNameTextView.setText(fullName);
+        parentRole.setText("Parent");
     }
 
     private void showLogoutConfirmation() {

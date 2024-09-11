@@ -121,7 +121,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     String fullName = document.getString("fullName");
-                    updateNavHeader(fullName);
+                    updateNavHeader("Greetings, "+ fullName + "!");
                 } else {
                     Toast.makeText(DoctorDashboardActivity.this, "Doctor not found", Toast.LENGTH_SHORT).show();
                 }
@@ -131,10 +131,14 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void updateNavHeader(String fullName) {
         View headerView = navigationView.getHeaderView(0);
-        TextView fullNameTextView = headerView.findViewById(R.id.full_name);
+        TextView fullNameTextView = headerView.findViewById(R.id.doctor_full_name);
+        TextView doctorRole = headerView.findViewById(R.id.doctor_role);
         fullNameTextView.setText(fullName);
+        doctorRole.setText("Doctor");
     }
 
     private void showCreatePostDialog() {
