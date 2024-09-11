@@ -1,41 +1,61 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="#E1DFDF">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#E1DFDF"
+    app:cardCornerRadius="15dp"
+    android:elevation="10dp"
+    android:layout_marginTop="15dp"
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/text_view_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@id/button_accept"
-        android:fontFamily="@font/poppins_semibold"
-        android:layout_margin="20dp"
-        android:layout_marginEnd="8dp" />
 
-    <Button
-        android:id="@+id/button_accept"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:text="Accept"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/rounded_button"
-        android:layout_margin="15dp"
-        android:layout_alignParentTop="true" />
-
-    <Button
-        android:id="@+id/button_decline"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:text="Decline"
-        android:layout_margin="15dp"
-        android:background="@drawable/rounded_button"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/button_accept" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/text_view_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+           app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="15dp"
+                android:hint="Child Name: Juan Dela Cruz \nService:Vaccination\nDate:2024-09-25\nTime 2PM\nStatus:Decline\nBooked:33\n12312 minute(s) ago "
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/button_decline"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="#9E9E9E"
+                android:text="Decline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_accept"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_details" />
+
+            <Button
+                android:id="@+id/button_accept"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="@color/violet2"
+                android:text="Accept"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_decline"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_details" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

@@ -86,7 +86,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                         break;
                         //new added layout
                     case R.id.doctor_nav_profile:
-                        startActivity(new Intent(DoctorDashboardActivity.this, UpdateProfile.class));
+                        startActivity(new Intent(DoctorDashboardActivity.this, UpdateProfiledDoctor.class));
                         break;
 
                     case R.id.doctor_nav_logout:

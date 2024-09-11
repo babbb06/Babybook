@@ -12,6 +12,10 @@
     <color name="white">#FFFFFF</color>
 
 
+    <color name="approve">#4CAF50</color>
+    <color name="decline">#F44336</color>
+
+
 
     <!--violets-->
     <color name="violet1">#9e72c3</color>

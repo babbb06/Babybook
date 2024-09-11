@@ -69,7 +69,7 @@
 
                 <!-- CHANGE TO EDITTEXT FIRSTNAME IN JAVA -->
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextFullName"
+                    android:id="@+id/child_name_edit_text"
                     style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

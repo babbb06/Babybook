@@ -39,14 +39,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cvtent"
-            android:layout_width="160dp"
-            android:layout_height="160dp">
+            android:layout_width="140dp"
+            android:layout_height="140dp">
 
 
             <ImageView
                 android:id="@+id/icon_parent"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:clickable="true"
                 android:contentDescription="Parent Icon"
                 android:focusable="true"
@@ -88,13 +88,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/doctor"
-            android:layout_width="160dp"
-            android:layout_height="160dp">
+            android:layout_width="140dp"
+            android:layout_height="140dp">
 
             <ImageView
                 android:id="@+id/icon_doctor"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:clickable="true"
                 android:contentDescription="Doctor Icon"
                 android:focusable="true"
