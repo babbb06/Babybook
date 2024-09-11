@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,10 +47,19 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         editTextClinicAddress = findViewById(R.id.editTextClinicAddress);
 
         Button buttonRegister = findViewById(R.id.buttonRegister);
+        ImageView backBtn = findViewById(R.id.imageView);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registerDoctor();
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the back button click here
+                onBackPressed(); // or finish() to close the current activity
             }
         });
 
@@ -64,6 +74,8 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void registerDoctor() {
         final String fullName = editTextFullName.getText().toString().trim();
@@ -167,4 +179,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }

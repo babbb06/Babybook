@@ -16,17 +16,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
-            android:padding="20dp">
+            android:padding="20dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
             <!--back btn -->
-<!--MAKE THIS WORK -->
+            <!--MAKE THIS WORK -->
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/baby_backbtn"
-                android:layout_marginTop="10dp"
                 android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/baby_backbtn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +44,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="28dp"
                 android:fontFamily="@font/hind_guntur_bold"
-                android:text="Getting started"
+                android:text="Doctor Registration"
                 android:textColor="@color/black"
                 android:textSize="30dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,14 +95,14 @@
                 android:layout_marginTop="4dp"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
-                app:hintTextColor="@color/violet"
                 app:errorTextColor="@color/clear"
+                app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbletfirstname">
 
 
-<!-- CHANGE TO EDITTEXT FIRSTNAME IN JAVA -->
+                <!-- CHANGE TO EDITTEXT FIRSTNAME IN JAVA -->
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextFullName"
                     style="@style/LoginTextInputInnerFieldStyle"
@@ -113,7 +115,7 @@
 
             <!-- lastname -->
 
-<!-- INPUT ON DATABASE!!!-->
+            <!-- INPUT ON DATABASE!!!-->
             <TextView
                 android:id="@+id/lbllastnameLayout"
                 android:layout_width="wrap_content"
@@ -136,18 +138,17 @@
                 app:layout_constraintTop_toTopOf="@+id/lbllastnameLayout" />
 
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lastnameLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/violet"
-                app:errorTextColor="@color/clear"
-                app:boxStrokeErrorColor="@color/colorError"
-                app:hintTextColor="@color/violet"
                 android:layout_marginTop="1dp"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
                 app:hintEnabled="false"
+                app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbllastnameLayout">
@@ -214,9 +215,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-
             <!--  password -->
             <TextView
                 android:id="@+id/lbletpasswordLayout"
@@ -244,12 +242,12 @@
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
-                app:hintTextColor="@color/violet"
                 app:errorTextColor="@color/clear"
+                app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbletpasswordLayout"
                 app:passwordToggleEnabled="true">
@@ -263,9 +261,6 @@
                     android:inputType="textPassword"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
 
             <!--  password confirm -->
@@ -296,11 +291,11 @@
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
-                app:hintTextColor="@color/violet"
                 app:errorTextColor="@color/clear"
-                android:layout_marginTop="0dp"
+                app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbletpassword2Layout"
@@ -315,9 +310,6 @@
                     android:inputType="textPassword"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
 
             <!--  Specialization -->
@@ -376,7 +368,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-<!--MAKE THIS ON JAVA WORKS-->
+            <!--MAKE THIS ON JAVA WORKS-->
 
             <Spinner
                 android:id="@+id/spinnerspecial"
@@ -391,57 +383,52 @@
                 app:layout_constraintTop_toBottomOf="@+id/lbletSpecializationLayout" />
 
 
-                <!--  Clinic Address -->
-                <TextView
-                    android:id="@+id/lbletclinicaddLayout"
-                    android:layout_width="wrap_content"
+            <!--  Clinic Address -->
+            <TextView
+                android:id="@+id/lbletclinicaddLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Clinic Address"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/SpecializationLayout" />
+
+            <TextView
+                android:id="@+id/lbletclinicaddLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/lbletclinicaddLayout"
+                app:layout_constraintTop_toTopOf="@+id/lbletclinicaddLayout" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/clinicaddLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:hintTextColor="@color/violet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.32"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbletclinicaddLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextClinicAddress"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Clinic Address"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/SpecializationLayout" />
-
-                <TextView
-                    android:id="@+id/lbletclinicaddLayout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-2dp"
-                    android:text="*"
-                    android:textColor="@android:color/holo_red_light"
-                    app:layout_constraintStart_toEndOf="@+id/lbletclinicaddLayout"
-                    app:layout_constraintTop_toTopOf="@+id/lbletclinicaddLayout" />
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/clinicaddLayout"
-                    style="@style/LoginTextInputOuterFieldStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    app:boxStrokeColor="@color/violet"
-                    app:boxStrokeErrorColor="@color/colorError"
-                    app:errorTextColor="@color/clear"
-                    app:hintTextColor="@color/violet"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.32"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lbletclinicaddLayout">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextClinicAddress"
-                        style="@style/LoginTextInputInnerFieldStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:inputType="textEmailAddress"
-                        tools:ignore="TouchTargetSizeCheck" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-
+                    android:fontFamily="@font/poppins"
+                    android:inputType="textEmailAddress"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <!-- profile pic -->
@@ -499,18 +486,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/ivSelectedImage" />
 
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <!--create button-->
 
-                <Button
+            <Button
                 android:id="@+id/buttonRegister"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="58dp"
                 android:width="302dp"
-                android:text="Create Account"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Create Doctor Account"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
@@ -523,10 +510,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/buttonRegister"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins"
                 android:text="Already have an account?               "
                 android:textAlignment="center"
-                android:layout_marginTop="20dp"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -550,7 +537,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
 
