@@ -197,16 +197,85 @@
                 android:padding="16dp">
 
                 <!-- Add buttons for each time slot (8 AM to 5 PM) -->
-                <Button android:text="8 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="9 AM"  android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="10 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="11 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="12 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="1 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="2 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="3 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="4 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-                <Button android:text="5 PM"  android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="8\nAM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                       android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="9\nAM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button android:text="10\nAM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                    android:textSize="11dp"
+                           android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="11\nAM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="12\nPM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="1\nPM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="2\nPM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="3\nPM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="4\nPM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
+                <Button
+                    android:text="5\nPM"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:background="@drawable/rounded_button"
+                    android:layout_margin="10dp"
+                           android:layout_width="0dp"    android:textSize="11dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1" />
             </GridLayout>
 
             <!-- Submit Button -->

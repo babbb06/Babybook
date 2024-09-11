@@ -41,10 +41,7 @@
                     android:icon="@drawable/profile"
                     android:title="Profile" />
 
-                <item
-                    android:id="@+id/nav_logout"
-                    android:icon="@drawable/logout"
-                    android:title="Logout" />
+
 
 
             </menu>
@@ -67,7 +64,10 @@
                 android:icon="@drawable/rate"
                 android:title="Rate Us" />
 
-
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
 
 
         </menu>

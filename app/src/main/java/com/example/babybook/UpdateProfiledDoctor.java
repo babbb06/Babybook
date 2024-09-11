@@ -11,7 +11,7 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_profile);
+        setContentView(R.layout.activity_update_profile_doctor);
 
 
     }

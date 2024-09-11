@@ -9,7 +9,7 @@
         <item
             android:id="@+id/doctor_nav_health"
             android:icon="@drawable/health"
-            android:title="Health" />
+            android:title="Health Record" />
         <item
             android:id="@+id/doctor_nav_chat"
             android:icon="@drawable/chat_icon"
@@ -35,10 +35,7 @@
                     android:icon="@drawable/profile"
                     android:title="Profile" />
 
-                <item
-                    android:id="@+id/doctor_nav_logout"
-                    android:icon="@drawable/logout"
-                    android:title="Logout" />
+
 
             </menu>
 
@@ -59,6 +56,11 @@
                 android:id="@+id/doctor_nav_rate"
                 android:icon="@drawable/rate"
                 android:title="Rate Us" />
+
+            <item
+                android:id="@+id/doctor_nav_logout"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
 
         </menu>
 
