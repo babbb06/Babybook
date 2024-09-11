@@ -5,7 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+
     </style>
+
 
     <!-- FOR BOXING INPUT TEXT -->
     <style name="LoginTextInputOuterFieldStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

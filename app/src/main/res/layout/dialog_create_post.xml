@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+    <EditText
+    android:id="@+id/input_post"
+    android:background="@drawable/border_black"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:inputType="textMultiLine"
+    android:minLines="4"
+    android:gravity="top"
+    android:padding="18dp"
+    android:fontFamily="@font/poppins"
+    android:hint="Enter your post here..."
+    android:textSize="15sp"/>
+
+</LinearLayout>

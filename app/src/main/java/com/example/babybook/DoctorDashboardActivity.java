@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +75,6 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.doctor_nav_home:
-                        Toast.makeText(DoctorDashboardActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.doctor_nav_health:
                         startActivity(new Intent(DoctorDashboardActivity.this, HealthRecordActivity.class));
@@ -142,12 +143,18 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     }
 
     private void showCreatePostDialog() {
+        // Inflate the custom dialog layout
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.dialog_create_post, null);
+
+        // Get the EditText from the custom layout
+        final EditText input = dialogView.findViewById(R.id.input_post);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Create New Post");
 
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        builder.setView(input);
+        // Set the custom view in the dialog
+        builder.setView(dialogView);
 
         builder.setPositiveButton("Post", (dialog, which) -> {
             String content = input.getText().toString();
@@ -160,8 +167,18 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
-        builder.show();
+        AlertDialog dialog = builder.create();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        });
+
+        dialog.show();
     }
+
 
     private void createPost(String content) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
