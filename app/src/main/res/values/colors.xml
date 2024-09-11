@@ -10,5 +10,14 @@
     <color name="colorError">#FF0000</color>
     <color name="clear">#00FFFFFF</color>
 
+
+
+    <!--violets-->
+    <color name="violet1">#9e72c3</color>
+    <color name="violet2">#924dbf</color>
+    <color name="violet3">#7338a0</color>
+    <color name="violet4">#4a2574</color>
+    <color name="violet5">#0f0523</color>
+
     <!-- Add other colors here -->
 </resources>

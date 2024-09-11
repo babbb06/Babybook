@@ -1,71 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/edittext_background"
-    android:layout_margin="20dp">
+    android:padding="10dp">
 
-
+    <!--  TITLE -->
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--  DOSE -->
+    <TextView
+        android:id="@+id/lbletdoseLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:text="Dose"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+    <TextView
+        android:id="@+id/lbletdoseLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-2dp"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintStart_toEndOf="@+id/lbletdoseLayout"
+        app:layout_constraintTop_toTopOf="@+id/lbletdoseLayout" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/selectdoseLayout"
+        style="@style/LoginTextInputOuterFieldStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:boxStrokeColor="@color/violet"
+        app:boxStrokeErrorColor="@color/colorError"
+        app:errorTextColor="@color/clear"
+        app:hintEnabled="false"
+        app:hintTextColor="@color/violet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbletdoseLayout">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextspinnerdose"
+            style="LoginTextInputInnerFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="3"
+            android:minHeight="48dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:backgroundTint="@color/black"
+            app:backgroundTintMode="multiply" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Spinner
         android:id="@+id/spinnerDose"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp" />
+        android:layout_width="340dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbletdoseLayout" />
 
-    <EditText
-        android:id="@+id/editTextType"
-        android:hint="Vaccine Type"
+
+    <!--  VACCINE TYPE -->
+
+    <TextView
+        android:id="@+id/Vaccineview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:text="Vaccine Type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectdoseLayout" />
+
+    <TextView
+        android:id="@+id/asvac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintStart_toEndOf="@id/Vaccineview"
+        app:layout_constraintTop_toTopOf="@id/Vaccineview" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vaccinelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:textSize="20dp"
-        android:layout_marginTop="40dp" />
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Vaccineview">
 
-    <EditText
-        android:id="@+id/editTextLocation"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--  LOCATION -->
+    <TextView
+        android:id="@+id/locationview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:text="Location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vaccinelayout" />
+
+    <TextView
+        android:id="@+id/asloc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintStart_toEndOf="@id/locationview"
+        app:layout_constraintTop_toTopOf="@id/locationview" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/locationlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:hint="Location"
-        android:textSize="20dp"
-        android:layout_marginTop="40dp" />
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/locationview">
 
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="match_parent"
-        android:fontFamily="@font/poppins_semibold"
-        android:layout_height="wrap_content"
-        android:hint="Date"
-        android:textSize="20dp"
-        android:layout_marginTop="40dp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editTextReaction"
-        android:layout_width="match_parent"
-        android:fontFamily="@font/poppins_semibold"
+
+    <!--  DATE -->
+    <TextView
+        android:id="@+id/dateview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Reaction"
-        android:textSize="20dp"
-        android:layout_marginTop="40dp" />
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:text="Date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationlayout" />
+
+    <TextView
+        android:id="@+id/asdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintStart_toEndOf="@id/dateview"
+        app:layout_constraintTop_toTopOf="@id/dateview" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/datelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateview">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--  REACTION -->
+
+    <TextView
+        android:id="@+id/reactionview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:text="Reaction"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datelayout" />
+
+    <TextView
+        android:id="@+id/asreact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintStart_toEndOf="@id/reactionview"
+        app:layout_constraintTop_toTopOf="@id/reactionview" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reactlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reactionview">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextReaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/buttonUpload"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/rounded_button"
-        android:fontFamily="@font/poppins_semibold"
-        android:padding="20dp"
-        android:text="Upload" />
+        android:layout_width="250dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="30dp"
+        android:width="302dp"
+        android:text="Upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reactlayout" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
