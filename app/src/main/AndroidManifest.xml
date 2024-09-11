@@ -27,6 +27,9 @@
             android:name=".UpdateProfile"
             android:exported="false" />
         <activity
+            android:name=".UpdateProfiledDoctor"
+            android:exported="false" />
+        <activity
             android:name=".ChildDetailsActivity2"
             android:exported="false" />
         <activity
@@ -71,6 +74,7 @@
         <activity
             android:name=".DoctorRegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".ChooseUserActivity"
             android:exported="false" />
