@@ -7,19 +7,24 @@
     android:layout_height="200dp">
 
 
+
     <ImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@drawable/bbplus" />
+        android:src="@drawable/baby_book_logo"
+        android:elevation="20dp"
+        android:id="@+id/doctor_header_imageView" />
 
     <TextView
         android:id="@+id/full_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:textSize="18sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:hint="Juan Dela Cruz"
+        android:padding="8dp"
         android:textColor="@android:color/black"
-        android:padding="8dp" />
+        android:textSize="18sp" />
+
 
 
 

@@ -82,7 +82,6 @@
                 android:layout_marginTop="-2dp"
                 android:text="*"
                 android:textColor="@android:color/holo_red_light"
-
                 app:layout_constraintStart_toEndOf="@+id/lbletfirstname"
                 app:layout_constraintTop_toTopOf="@+id/lbletfirstname" />
 

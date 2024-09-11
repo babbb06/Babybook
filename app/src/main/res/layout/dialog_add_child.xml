@@ -1,29 +1,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#E1DFDF"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextChildName"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Child's Name"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:background="@drawable/textview_border"
-        android:inputType="textPersonName"
-        android:layout_marginBottom="8dp"
-        />
+        android:padding="15dp"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/buttonAddChild"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Child"
-        android:layout_margin="20dp"
-        android:background="@drawable/rounded_button"
-        android:layout_gravity="center" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/usernameLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/violet"
+            app:boxStrokeErrorColor="@color/colorError"
+            app:errorTextColor="@color/clear"
+            app:hintTextColor="@color/violet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextChildName"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:hint="Child's Name"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:inputType="textPersonName"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/buttonAddChild"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Add Child"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/usernameLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

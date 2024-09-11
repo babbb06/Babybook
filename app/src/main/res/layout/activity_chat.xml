@@ -9,16 +9,25 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/header"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
             android:id="@+id/toolbarTitle"
+            android:text="name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
+
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/profile_placeholder"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -45,12 +54,12 @@
 
     <Button
         android:id="@+id/buttonSend"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_button"
+        android:layout_margin="17dp"
+        android:background="@drawable/send_icon"
         android:text="Send"/>
 
 </RelativeLayout>
