@@ -43,17 +43,29 @@
         <TextView
             android:id="@+id/babybook"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/hind_guntur_bold"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
-            android:text="WELCOME"
-            android:textAllCaps="true"
+            android:text="Welcome Back"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="45sp"
+            android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card22" />
+
+        <TextView
+            android:id="@+id/txtSubWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="Login to your account"
+            android:textSize="15sp"
+            android:textColor="#7B7B7B"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/babybook" />
 
 
         <!--EMAIL -->
@@ -64,13 +76,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:paddingHorizontal="30dp"
+            android:layout_marginHorizontal="30dp"
             app:boxStrokeColor="@color/violet"
             app:boxStrokeErrorColor="@color/colorError"
             app:hintTextColor="@color/violet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/babybook">
+            app:layout_constraintTop_toBottomOf="@+id/txtSubWelcome">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextEmail"
@@ -90,7 +102,7 @@
             style="@style/LoginTextInputOuterFieldStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="30dp"
+            android:layout_marginHorizontal="30dp"
             app:boxStrokeColor="@color/violet"
             app:boxStrokeErrorColor="@color/colorError"
             app:hintTextColor="@color/violet"
@@ -114,14 +126,16 @@
         <!--LOGIN BUTTON-->
         <Button
             android:id="@+id/buttonLogin"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="Login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toEndOf="@+id/passwordLayout"
+            app:layout_constraintStart_toStartOf="@+id/passwordLayout"
             app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
 
 
@@ -130,9 +144,9 @@
             android:id="@+id/textViewSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="50dp"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="25dp">
 
             <TextView
@@ -150,9 +164,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
-                android:fontFamily="@font/poppins"
-                android:text="Sign Up"
-                android:textColor="#217cbb"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Register!"
+                android:textColor="@color/violet"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
