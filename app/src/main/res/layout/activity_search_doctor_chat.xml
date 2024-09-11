@@ -16,7 +16,6 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-
         android:layout_margin="20dp"
         android:elevation="15dp"
         android:id="@+id/searchrela"

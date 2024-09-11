@@ -31,10 +31,10 @@
                 android:id="@+id/editTextSearchParent"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-             android:layout_marginStart="20dp"
+                 android:layout_marginStart="20dp"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/poppins"
-                android:hint="Enter parent full name"
+                android:hint="Enter doctor full name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
