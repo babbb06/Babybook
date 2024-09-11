@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E1DFDF">
+        >
 
         <!-- Toolbar for the return arrow -->
         <androidx.appcompat.widget.Toolbar
@@ -18,130 +19,221 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <!-- Child's Name EditText, positioned below the Toolbar -->
-        <EditText
-            android:id="@+id/child_name_edit_text"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter child's name"
+            android:id="@+id/cons"
             android:layout_below="@id/toolbar"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/poppins"
-            android:layout_marginBottom="16dp"
-            android:padding="18dp" />
+            android:layout_height="match_parent">
 
-        <!-- Service Selection Buttons -->
-        <TextView
-            android:id="@+id/select_service_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Service"
-            android:layout_below="@id/child_name_edit_text"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:padding="16dp" />
 
-        <LinearLayout
-            android:id="@+id/service_buttons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/select_service_text"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:weightSum="2">
 
-            <Button
-                android:id="@+id/vaccination_button"
+            <!--child name -->
+            <TextView
+                android:id="@+id/lbletchild"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Child's Name"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="15dp"/>
+
+            <TextView
+                android:id="@+id/lbletchildd2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/lbletchild"
+                app:layout_constraintTop_toTopOf="@+id/lbletchild" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/childLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Vaccinations"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_button"/>
+                android:layout_marginTop="4dp"
+             android:layout_marginHorizontal="15dp"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:hintTextColor="@color/violet"
+                app:errorTextColor="@color/clear"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbletchild">
+
+
+                <!-- CHANGE TO EDITTEXT FIRSTNAME IN JAVA -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextFullName"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:inputType="text"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <!-- Service Selection Buttons -->
+
+            <TextView
+                android:id="@+id/select_service_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Select Service"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/childLayout"
+                android:layout_marginStart="15dp"/>
+
+            <TextView
+                android:id="@+id/select_service_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/select_service_text"
+                app:layout_constraintTop_toTopOf="@+id/select_service_text" />
+
+
+            <LinearLayout
+                android:id="@+id/service_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf= "@id/select_service_text"
+               android:layout_marginHorizontal="15dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/vaccination_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Vaccinations"
+                    android:layout_margin="10dp"
+                    />
+
+                <Button
+                    android:id="@+id/checkup_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Check-up" />
+            </LinearLayout>
+
+            <!-- Date Selection -->
+
+            <TextView
+                android:id="@+id/select_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Select Date"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/service_buttons"
+                android:layout_marginStart="15dp"/>
+
+            <TextView
+                android:id="@+id/select_date_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/select_date_text"
+                app:layout_constraintTop_toTopOf="@+id/select_date_text" />
+
+            <!-- Time Selection Buttons -->
+
+            <CalendarView
+                android:id="@+id/appointment_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/select_date_text"
+                android:padding="10dp" />
+
+
+
+            <TextView
+                android:id="@+id/select_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Select Time"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appointment_calendar"
+                android:layout_marginStart="15dp"/>
+
+            <TextView
+                android:id="@+id/select_time_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:text="*"
+                android:textColor="@android:color/holo_red_light"
+                app:layout_constraintStart_toEndOf="@+id/select_time_text"
+                app:layout_constraintTop_toTopOf="@+id/select_time_text" />
+
+            <GridLayout
+                android:id="@+id/time_buttons_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/select_time_text"
+                android:columnCount="4"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp">
+
+                <!-- Add buttons for each time slot (8 AM to 5 PM) -->
+                <Button android:text="8 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="9 AM"  android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="10 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="11 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="12 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="1 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="2 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="3 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="4 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+                <Button android:text="5 PM"  android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
+            </GridLayout>
+
+            <!-- Submit Button -->
 
             <Button
-                android:id="@+id/checkup_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:text="Check-up" />
-        </LinearLayout>
+                android:id="@+id/submit_button"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="16dp"
+                android:text="Submit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/time_buttons_grid" />
 
-        <!-- Date Selection -->
-        <TextView
-            android:id="@+id/select_date_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Date"
-            android:layout_marginLeft="20dp"
-            android:layout_below="@id/service_buttons"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:padding="16dp" />
 
-        <!-- Time Selection Buttons -->
 
-        <CalendarView
-            android:id="@+id/appointment_calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/select_date_text"
-            android:layout_marginTop="16dp"
 
-            android:layout_marginBottom="16dp"
-            android:padding="16dp" />
 
-        <TextView
-            android:id="@+id/select_time_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/appointment_calendar"
-            android:layout_marginTop="14dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:padding="16dp"
-            android:layout_marginLeft="20dp"
-            android:text="Select Time" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <GridLayout
-            android:id="@+id/time_buttons_grid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/select_time_text"
-            android:columnCount="4"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp">
 
-            <!-- Add buttons for each time slot (8 AM to 5 PM) -->
-            <Button android:text="8 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="9 AM"  android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="10 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="11 AM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="12 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="1 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="2 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="3 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="4 PM" android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-            <Button android:text="5 PM"  android:fontFamily="@font/poppins_semibold" android:background="@drawable/rounded_button" android:layout_margin="10dp" android:layout_width="10dp" android:layout_height="wrap_content" android:layout_columnWeight="1" />
-        </GridLayout>
 
-        <!-- Submit Button -->
 
-        <Button
-            android:id="@+id/submit_button"
-            android:layout_width="250dp"
-            android:layout_height="60dp"
-            android:text="Submit"
-            android:layout_below="@id/time_buttons_grid"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/poppins_semibold"
-            android:background="@drawable/rounded_button"
-            android:layout_margin="20dp"
-            android:padding="16dp" />
+
 
     </RelativeLayout>
 </ScrollView>
