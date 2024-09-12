@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/header"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:theme="@style/ToFontBold"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@android:color/white"/>
 
 
     <androidx.cardview.widget.CardView

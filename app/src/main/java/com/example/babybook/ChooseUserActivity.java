@@ -1,6 +1,7 @@
 package com.example.babybook;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class ChooseUserActivity extends AppCompatActivity {
         doctorIcon = findViewById(R.id.icon_doctor);
         Button myButton = findViewById(R.id.my_button);
         signInBtn = findViewById(R.id.textViewSignIn);
+        Drawable buttonBg = getResources().getDrawable(R.drawable.bg_btn_bck_light);
 
         // Save the original background of the ImageView
         originalBackground = parentIcon.getBackground();
@@ -41,6 +43,8 @@ public class ChooseUserActivity extends AppCompatActivity {
                 parentIcon.setBackground(borderDrawable); // Apply the border effect
                 doctorIcon.setBackground(originalBackground); // Reset doctor icon if needed
                 myButton.setText("Register as a Parent >");
+                myButton.setBackground(buttonBg);
+                myButton.setTextColor(Color.parseColor("#FFFFFF"));
                 myButton.setEnabled(true);
             }
         });
@@ -52,6 +56,8 @@ public class ChooseUserActivity extends AppCompatActivity {
                 doctorIcon.setBackground(borderDrawable); // Apply the border effect
                 parentIcon.setBackground(originalBackground); // Reset parent icon if needed
                 myButton.setText("Register as a Doctor >");
+                myButton.setBackground(buttonBg);
+                myButton.setTextColor(Color.parseColor("#FFFFFF"));
                 myButton.setEnabled(true);
             }
         });

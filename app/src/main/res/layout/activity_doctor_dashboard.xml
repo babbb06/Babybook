@@ -15,15 +15,17 @@
         <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/doctor_toolbar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:background="@drawable/header"
             android:layout_height="?attr/actionBarSize"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:title="BabyBook"
-            app:titleTextColor="@android:color/white"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:theme="@style/ToFontBold"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@android:color/white"/>
 
         <!-- Newsfeed RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
@@ -57,5 +59,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/doctor_drawer_menu"
+        android:theme="@style/NavigationView"
         app:headerLayout="@layout/doctor_nav_header"/>
 </androidx.drawerlayout.widget.DrawerLayout>

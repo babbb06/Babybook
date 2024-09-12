@@ -490,12 +490,14 @@
 
             <!--create button-->
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonRegister"
                 android:layout_width="0dp"
                 android:layout_height="58dp"
                 android:width="302dp"
                 android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_btn_bck_light"
                 android:text="Create Doctor Account"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

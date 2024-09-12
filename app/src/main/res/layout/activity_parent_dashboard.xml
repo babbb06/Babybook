@@ -5,6 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".ParentDashboardActivity">
 
     <!-- Main content -->
@@ -22,8 +23,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/ToFontBold"
             app:title="BabyBook"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@android:color/white"/>
 
         <!-- RecyclerView for posts -->
         <androidx.recyclerview.widget.RecyclerView
@@ -45,6 +48,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
+        android:theme="@style/NavigationView"
         app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

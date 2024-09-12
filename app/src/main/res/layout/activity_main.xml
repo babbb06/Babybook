@@ -57,13 +57,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_text1" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/my_button"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:width="302dp"
         android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_btn_bck_light"
         android:text="Get Started! "
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="@+id/title_text"
