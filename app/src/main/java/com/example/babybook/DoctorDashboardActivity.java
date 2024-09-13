@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,6 +68,17 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(false);
+
+// Set a custom drawable for the hamburger icon with your desired color
+        toggle.setHomeAsUpIndicator(R.drawable.hamburger); // Use your own drawable
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START); // Open the drawer when icon is clicked
+            }
+        });
+
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -73,7 +87,6 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.doctor_nav_home:
-                        Toast.makeText(DoctorDashboardActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.doctor_nav_health:
                         startActivity(new Intent(DoctorDashboardActivity.this, HealthRecordActivity.class));
@@ -84,6 +97,11 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                     case R.id.doctor_nav_appointment:
                         startActivity(new Intent(DoctorDashboardActivity.this, ManageAppointmentsActivity.class));
                         break;
+                        //new added layout
+                    case R.id.doctor_nav_profile:
+                        startActivity(new Intent(DoctorDashboardActivity.this, UpdateProfiledDoctor.class));
+                        break;
+
                     case R.id.doctor_nav_logout:
                         showLogoutConfirmation();
                         break;
@@ -116,7 +134,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     String fullName = document.getString("fullName");
-                    updateNavHeader(fullName);
+                    updateNavHeader("Greetings, "+ fullName + "!");
                 } else {
                     Toast.makeText(DoctorDashboardActivity.this, "Doctor not found", Toast.LENGTH_SHORT).show();
                 }
@@ -126,19 +144,29 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void updateNavHeader(String fullName) {
         View headerView = navigationView.getHeaderView(0);
-        TextView fullNameTextView = headerView.findViewById(R.id.full_name);
+        TextView fullNameTextView = headerView.findViewById(R.id.doctor_full_name);
+        TextView doctorRole = headerView.findViewById(R.id.doctor_role);
         fullNameTextView.setText(fullName);
+        doctorRole.setText("Doctor");
     }
 
     private void showCreatePostDialog() {
+        // Inflate the custom dialog layout
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.dialog_create_post, null);
+
+        // Get the EditText from the custom layout
+        final EditText input = dialogView.findViewById(R.id.input_post);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Create New Post");
 
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        builder.setView(input);
+        // Set the custom view in the dialog
+        builder.setView(dialogView);
 
         builder.setPositiveButton("Post", (dialog, which) -> {
             String content = input.getText().toString();
@@ -151,8 +179,18 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
-        builder.show();
+        AlertDialog dialog = builder.create();
+
+        dialog.setOnShowListener(dialogInterface -> {
+            dialog.getWindow().setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        });
+
+        dialog.show();
     }
+
 
     private void createPost(String content) {
         FirebaseUser currentUser = mAuth.getCurrentUser();

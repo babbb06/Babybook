@@ -2,25 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
-    android:background="#E1DFDF">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="0dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/header"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="@style/ToFontBold"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@android:color/white"/>
 
     <ListView
         android:id="@+id/appointments_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins_semibold"
         android:padding="15dp" />
-
 
 
 </RelativeLayout>

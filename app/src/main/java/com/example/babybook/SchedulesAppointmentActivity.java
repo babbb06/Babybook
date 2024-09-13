@@ -50,6 +50,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Schedule");
         }
 
         appointmentsListView = findViewById(R.id.appointments_list_view);

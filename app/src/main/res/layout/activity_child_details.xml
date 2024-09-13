@@ -17,14 +17,15 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:padding="1dp"
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/header"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:theme="@style/ToFontBold"
             app:navigationIcon="?attr/homeAsUpIndicator"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/textViewBCG"

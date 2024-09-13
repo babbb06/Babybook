@@ -2,38 +2,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchDoctorActivity"
-    android:background="#E1DFDF">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SearchDoctorActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/header"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:theme="@style/ToFontBold"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@android:color/white"/>
 
-    <EditText
-        android:id="@+id/search_edit_text"
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter specialization to search"
+        android:layout_margin="20dp"
+        android:elevation="15dp"
+        android:id="@+id/searchrela"
         android:layout_below="@id/toolbar"
-        android:padding="16dp" />
+        app:cardElevation="15dp"
+        app:cardCornerRadius="16dp"
+        android:layout_height="50dp">
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_edit_text"
-        android:layout_marginTop="11dp"
-        android:layout_marginLeft="50dp"
-        android:background="@drawable/rounded_button"
-        android:text="Search" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/edittext_background"
+                android:fontFamily="@font/poppins"
+                android:hint="Enter specialization to search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:layout_alignTop="@+id/search_edit_text"
+                android:layout_alignEnd="@+id/search_edit_text"
+                android:background="@drawable/search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/search_button"
+        android:layout_below="@id/searchrela"
         android:padding="16dp" />
 </RelativeLayout>

@@ -41,6 +41,7 @@ public class SearchDoctorChatActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Message");
         }
 
         searchEditText = findViewById(R.id.editTextSpecialization);
@@ -65,7 +66,7 @@ public class SearchDoctorChatActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(query)) {
                 searchDoctors(query);
             } else {
-                Toast.makeText(SearchDoctorChatActivity.this, "Please enter a specialization to search.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchDoctorChatActivity.this, "Please enter doctor's name to search.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -81,8 +82,8 @@ public class SearchDoctorChatActivity extends AppCompatActivity {
                         doctors.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Doctor doctor = document.toObject(Doctor.class);
-                            if (doctor != null && doctor.getSpecialization() != null &&
-                                    doctor.getSpecialization().toLowerCase().startsWith(lowerCaseQuery)) {
+                            if (doctor != null && doctor.getFullName() != null &&
+                                    doctor.getFullName().toLowerCase().startsWith(lowerCaseQuery)) {
                                 doctor.setId(document.getId());
                                 doctors.add(doctor);
                             }

@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +59,17 @@ public class ParentDashboardActivity extends AppCompatActivity {
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(false);
+
+// Set a custom drawable for the hamburger icon with your desired color
+        toggle.setHomeAsUpIndicator(R.drawable.hamburger); // Use your own drawable
+        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START); // Open the drawer when icon is clicked
+            }
+        });
+
         toggle.syncState();
 
 // In the onCreate method of ParentDashboardActivity
@@ -86,6 +98,10 @@ public class ParentDashboardActivity extends AppCompatActivity {
                     case R.id.nav_doctor:
                         Intent doctorIntent = new Intent(ParentDashboardActivity.this, SearchDoctorActivity.class);
                         startActivity(doctorIntent);
+                        break;
+                    case R.id.nav_profile:
+                        Intent profileIntent =new Intent(ParentDashboardActivity.this, UpdateProfile.class) ;
+                        startActivity(profileIntent);
                         break;
                     case R.id.nav_schedules:
                         Intent schedulesIntent = new Intent(ParentDashboardActivity.this, SchedulesAppointmentActivity.class);
@@ -135,7 +151,7 @@ public class ParentDashboardActivity extends AppCompatActivity {
                             DocumentSnapshot parentDocument = parentTask.getResult();
                             if (parentDocument.exists()) {
                                 String fullName = parentDocument.getString("fullName");
-                                updateNavHeader(fullName);
+                                updateNavHeader("Greetings, "+ fullName + "!");
                             } else {
                                 Toast.makeText(ParentDashboardActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                             }
@@ -174,7 +190,9 @@ public class ParentDashboardActivity extends AppCompatActivity {
     private void updateNavHeader(String fullName) {
         View headerView = navigationView.getHeaderView(0);
         TextView fullNameTextView = headerView.findViewById(R.id.full_name);
+        TextView parentRole = headerView.findViewById(R.id.parent_role);
         fullNameTextView.setText(fullName);
+        parentRole.setText("Parent");
     }
 
     private void showLogoutConfirmation() {

@@ -1,9 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.BabyBook" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.BabyBook" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+
     </style>
+
 
     <!-- FOR BOXING INPUT TEXT -->
     <style name="LoginTextInputOuterFieldStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -24,6 +29,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:singleLine">true</item>
 
+    </style>
+
+    <!--for button add-->
+    <style name="oval">
+        <item name="cornerSize">60%</item>
     </style>
 
     <style name="Theme.BabyBook" parent="Base.Theme.BabyBook" />

@@ -6,10 +6,23 @@
     <color name="grey">#E1DFDF</color>
     <color name="black">#000000</color>
     <color name="dark_violet">#9400D3</color> <!-- Dark Violet -->
-
-
+    <color name="transparent">#00FFFFFF</color>
     <color name="colorError">#FF0000</color>
     <color name="clear">#00FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <color name="approve">#4CAF50</color>
+    <color name="decline">#F44336</color>
+
+
+
+    <!--violets-->
+    <color name="violet1">#9e72c3</color>
+    <color name="violet2">#924dbf</color>
+    <color name="violet3">#7338a0</color>
+    <color name="violet4">#4a2574</color>
+    <color name="violet5">#0f0523</color>
 
     <!-- Add other colors here -->
 </resources>
