@@ -12,7 +12,8 @@
         android:background="@drawable/header"
         android:theme="@style/ToFontBold"
         app:titleTextColor="@color/white"
-        app:subtitleTextColor="@android:color/white"/>
+        app:subtitleTextColor="@android:color/white"
+        app:title="Declined Appointment Requests"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

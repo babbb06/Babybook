@@ -3,6 +3,7 @@ package com.example.babybook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -36,11 +37,11 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Appointment Request");
+        getSupportActionBar().setTitle("Appointment Requests");
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        ImageView checkImage = findViewById(R.id.check_image);
-        ImageView crossImage = findViewById(R.id.cross_image);
+        Button checkImage = findViewById(R.id.check_image);
+        Button crossImage = findViewById(R.id.cross_image);
 
         checkImage.setOnClickListener(v -> {
             Intent intent = new Intent(ManageAppointmentsActivity.this, AcceptedRequestActivity.class);
