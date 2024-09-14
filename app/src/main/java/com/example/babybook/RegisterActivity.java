@@ -3,6 +3,7 @@ package com.example.babybook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText editTextFullName, editTextEmail, editTextPassword, editTextConfirmPassword;
+    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -36,7 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        editTextFullName = findViewById(R.id.editTextFullName);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
+        editTextLastName = findViewById(R.id.lastnameEt);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
@@ -70,19 +72,34 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        final String fullName = editTextFullName.getText().toString().trim();
+        //final String fullName = editTextFirstName.getText().toString().trim();
+        String firstName = editTextFirstName.getText().toString().trim();
+        String lastName = editTextLastName.getText().toString().trim();
+        String fullName = firstName + " " + lastName;
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
         String confirmPassword = editTextConfirmPassword.getText().toString();
 
-        if (TextUtils.isEmpty(fullName)) {
-            editTextFullName.setError("Please enter your full name");
-            editTextFullName.requestFocus();
+        if (TextUtils.isEmpty(firstName)) {
+            editTextFirstName.setError("Please enter your first name");
+            editTextFirstName.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(lastName)) {
+            editTextLastName.setError("Please enter your last name");
+            editTextLastName.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(email)) {
             editTextEmail.setError("Please enter your email");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError("Please enter a valid email address");
             editTextEmail.requestFocus();
             return;
         }

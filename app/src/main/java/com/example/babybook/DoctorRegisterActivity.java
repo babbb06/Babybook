@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +29,9 @@ import java.util.Map;
 public class DoctorRegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "DoctorRegisterActivity";
-    private EditText editTextFullName, editTextEmail, editTextPassword, editTextConfirmPassword,
+    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword,
             editTextSpecialization, editTextClinicAddress;
+    private Spinner spinnerSpecialization;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -39,12 +43,25 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        editTextFullName = findViewById(R.id.editTextFullName);
+        editTextFirstName = findViewById(R.id.editTextFirstName);
+        editTextLastName = findViewById(R.id.lastnameEt);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
         editTextSpecialization = findViewById(R.id.editTextSpecialization);
         editTextClinicAddress = findViewById(R.id.editTextClinicAddress);
+        spinnerSpecialization = findViewById(R.id.spinnerspecial);
+
+        ArrayAdapter<CharSequence> specializationAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.special_choices,
+                android.R.layout.simple_spinner_item
+        );
+
+        specializationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerSpecialization.setAdapter(specializationAdapter);
+
 
         Button buttonRegister = findViewById(R.id.buttonRegister);
         ImageView backBtn = findViewById(R.id.imageView);
@@ -78,21 +95,38 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
 
     private void registerDoctor() {
-        final String fullName = editTextFullName.getText().toString().trim();
+        //final String fullName = editTextFullName.getText().toString().trim();
+        String firstName = editTextFirstName.getText().toString().trim();
+        String lastName = editTextLastName.getText().toString().trim();
+        String fullName = firstName + " " + lastName;
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
         String confirmPassword = editTextConfirmPassword.getText().toString();
-        final String specialization = editTextSpecialization.getText().toString().trim();
-        final String clinicAddress = editTextClinicAddress.getText().toString().trim();
+        String clinicAddress = editTextClinicAddress.getText().toString().trim();
+        int selectedSpecializationPosition = spinnerSpecialization.getSelectedItemPosition();
+        String specialization = spinnerSpecialization.getSelectedItem().toString().trim();
 
-        if (TextUtils.isEmpty(fullName)) {
-            editTextFullName.setError("Please enter your full name");
-            editTextFullName.requestFocus();
+
+        if (TextUtils.isEmpty(firstName)) {
+            editTextFirstName.setError("Please enter your first name");
+            editTextFirstName.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(lastName)) {
+            editTextLastName.setError("Please enter your last name");
+            editTextLastName.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(email)) {
             editTextEmail.setError("Please enter your email");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError("Please enter a valid email address");
             editTextEmail.requestFocus();
             return;
         }
@@ -103,6 +137,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             return;
         }
 
+
         if (password.length() < 6) {
             editTextPassword.setError("Password must be at least 6 characters");
             editTextPassword.requestFocus();
@@ -112,6 +147,19 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         if (!password.equals(confirmPassword)) {
             editTextConfirmPassword.setError("Passwords do not match");
             editTextConfirmPassword.requestFocus();
+            return;
+        }
+
+        if (selectedSpecializationPosition == 0 ) {
+            Toast.makeText(this, "Please select specialization", Toast.LENGTH_SHORT).show();
+            editTextSpecialization.requestFocus();
+            spinnerSpecialization.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(clinicAddress)) {
+            editTextClinicAddress.setError("Please enter clinic address");
+            editTextClinicAddress.requestFocus();
             return;
         }
 
@@ -129,7 +177,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             saveDoctorData(fullName, email, specialization, clinicAddress);
 
                             // Redirect to doctor dashboard
-                            redirectToDashboard();
+                            redirectToLogin();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -174,10 +222,17 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void redirectToDashboard() {
+    /* private void redirectToDashboard() {
         Intent intent = new Intent(DoctorRegisterActivity.this, DoctorDashboardActivity.class);
         startActivity(intent);
         finish();
+    } */
+
+    private void redirectToLogin() {
+        // Redirect user to LoginActivity after registration
+        Intent intent = new Intent(DoctorRegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Finish the current activity to prevent going back to it via back button
     }
 
 
