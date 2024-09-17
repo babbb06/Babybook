@@ -87,7 +87,7 @@ public class ParentDashboardActivity extends AppCompatActivity {
                         break; // Added break statement here
                     case R.id.nav_health:
                         // Navigate to HealthRecordActivity
-                        Intent healthIntent = new Intent(ParentDashboardActivity.this, HealthRecordActivity.class);
+                        Intent healthIntent = new Intent(ParentDashboardActivity.this, HealthRecordParentActivity.class);
                         startActivity(healthIntent);
                         break;
                     case R.id.nav_chat:

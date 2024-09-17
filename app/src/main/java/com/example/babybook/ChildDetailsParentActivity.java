@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.health.connect.HealthPermissions;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -13,23 +12,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import com.google.firebase.Timestamp;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -37,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChildDetailsActivity extends AppCompatActivity {
+public class ChildDetailsParentActivity extends AppCompatActivity {
 
     private String currentParentId;
     private String childId; // Store the child ID
@@ -58,7 +59,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_child_details);
+        setContentView(R.layout.activity_child_details_parents);
 
 
         imageViewMenuBCG = findViewById(R.id.imageViewMenuBCG);
@@ -112,7 +113,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
         findViewById(R.id.imageViewAddMMR).setOnClickListener(v -> showAddImageDialog("MMR", R.array.dose_options_mmr));
         findViewById(R.id.imageViewAddBoosters3).setOnClickListener(v -> showAddImageDialog("BOOSTERS 2", R.array.dose_options_boosters3));
 
-        gestureDetector = new GestureDetector(this, new ChildDetailsActivity.SwipeGestureDetector());
+        gestureDetector = new GestureDetector(this, new ChildDetailsParentActivity.SwipeGestureDetector());
 
         findViewById(R.id.rootlayout).setOnTouchListener((v, event) -> {
             gestureDetector.onTouchEvent(event);
@@ -142,7 +143,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
         imageViewMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(ChildDetailsActivity.this, view);
+                PopupMenu popupMenu = new PopupMenu(ChildDetailsParentActivity.this, view);
                 MenuInflater inflater = popupMenu.getMenuInflater();
                 inflater.inflate(R.menu.menu_item, popupMenu.getMenu());
 
@@ -198,7 +199,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(ChildDetailsActivity.this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(ChildDetailsParentActivity.this,
                     (view, year1, monthOfYear, dayOfMonth) -> {
                         editTextDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
                     }, year, month, day);
@@ -213,7 +214,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
             String reaction = editTextReaction.getText().toString().trim();
 
             if (type.isEmpty() || location.isEmpty() || date.isEmpty() || reaction.isEmpty()) {
-                Toast.makeText(ChildDetailsActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChildDetailsParentActivity.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
             } else {
                 saveVaccineToFirestore(vaccineName, dose, type, location, date, reaction);
                 dialog.dismiss();
@@ -241,11 +242,11 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
         db.collection(collectionName).document(documentId).set(vaccine)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(ChildDetailsActivity.this, "Details uploaded successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChildDetailsParentActivity.this, "Details uploaded successfully", Toast.LENGTH_SHORT).show();
                     loadVaccinesFromFirestore(vaccineName); // Reload to show new data
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(ChildDetailsActivity.this, "Error uploading details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChildDetailsParentActivity.this, "Error uploading details", Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -265,7 +266,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
                             tableLayout.removeAllViews();
 
                             // Add table headers
-                            TableRow headerRow = new TableRow(ChildDetailsActivity.this);
+                            TableRow headerRow = new TableRow(ChildDetailsParentActivity.this);
                             headerRow.addView(createHeaderTextView("Dose"));
                             headerRow.addView(createHeaderTextView("Type"));
                             headerRow.addView(createHeaderTextView("Location"));
@@ -295,7 +296,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
                                 String reaction = document.getString("reaction");
                                 String docId = document.getId(); // Get document ID
 
-                                TableRow row = new TableRow(ChildDetailsActivity.this);
+                                TableRow row = new TableRow(ChildDetailsParentActivity.this);
                                 row.addView(createTextView(dose));
                                 row.addView(createTextView(type));
                                 row.addView(createTextView(location));
@@ -313,7 +314,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
                         }
                     } else {
                         Log.e("FirestoreError", "Error loading details: ", task.getException()); // Log the error
-                        Toast.makeText(ChildDetailsActivity.this, "Error loading details", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChildDetailsParentActivity.this, "Error loading details", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -377,7 +378,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
         db.collection("vaccines").document(documentId)
                 .update(updates)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(ChildDetailsActivity.this, "Details updated successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChildDetailsParentActivity.this, "Details updated successfully", Toast.LENGTH_SHORT).show();
                     loadVaccinesFromFirestore("BCG");
                     loadVaccinesFromFirestore("Hepatitis B");
                     loadVaccinesFromFirestore("DPT");
@@ -391,7 +392,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
                     loadVaccinesFromFirestore("BOOSTERS 2");
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(ChildDetailsActivity.this, "Error updating details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChildDetailsParentActivity.this, "Error updating details", Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -429,7 +430,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
     }
 
     private TextView createTextView(String text) {
-        TextView textView = new TextView(ChildDetailsActivity.this);
+        TextView textView = new TextView(ChildDetailsParentActivity.this);
         textView.setText(text);
         textView.setPadding(16, 16, 16, 16);
         textView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -467,7 +468,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
 
     private void navigateToChildDetailsActivity2() {
-        Intent intent = new Intent(ChildDetailsActivity.this, ChildDetailsActivity2.class);
+        Intent intent = new Intent(ChildDetailsParentActivity.this, ChildDetailsActivity2.class);
         intent.putExtra("CHILD_ID", childId); // Pass the child ID to the next activity
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
