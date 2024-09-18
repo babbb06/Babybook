@@ -55,6 +55,8 @@ public class ChildDetailsActivity extends AppCompatActivity {
     private ImageView imageViewMenuBoosters3;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,6 +189,46 @@ public class ChildDetailsActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
 
         EditText editTextType = dialogView.findViewById(R.id.editTextType);
+        switch (vaccineName) {
+            case "BCG":
+                editTextType.setText("BCG");
+                break;
+            case "Hepatitis B":
+                editTextType.setText("Hepatitis B");
+                break;
+            case "DPT":
+                editTextType.setText("DPT");
+                break;
+            case "BOOSTERS":
+                editTextType.setText("BOOSTERS");
+                break;
+            case "OPV/IPV":
+                editTextType.setText("OPV/IPV");
+                break;
+            case "BOOSTERS 1":
+                editTextType.setText("BOOSTERS 1");
+                break;
+            case "H. Influenza B":
+                editTextType.setText("H. Influenza B");
+                break;
+            case "ROTAVIRUS":
+                editTextType.setText("ROTAVIRUS");
+                break;
+            case "MEASLES":
+                editTextType.setText("MEASLES");
+                break;
+            case "MMR":
+                editTextType.setText("MMR");
+                break;
+            case "BOOSTERS 2":
+                editTextType.setText("BOOSTERS 2");
+                break;
+            default:
+                editTextType.setText(""); // Clear text if no match
+
+                break;
+        }
+
         EditText editTextLocation = dialogView.findViewById(R.id.editTextLocation);
         EditText editTextDate = dialogView.findViewById(R.id.editTextDate);
         EditText editTextReaction = dialogView.findViewById(R.id.editTextReaction);
