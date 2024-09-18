@@ -1,81 +1,67 @@
 package com.example.babybook.adapter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import android.widget.ArrayAdapter;
 
 import com.example.babybook.R;
 import com.example.babybook.model.AppointmentRequest;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
-public class AppointmentAdapter extends BaseAdapter {
+public class AppointmentAdapter extends ArrayAdapter<AppointmentRequest> {
+
     private Context context;
-    private ArrayList<AppointmentRequest> appointments;
-    private Handler handler = new Handler();
+    private List<AppointmentRequest> appointmentList;
 
-    public AppointmentAdapter(Context context, ArrayList<AppointmentRequest> appointments) {
+    public AppointmentAdapter(@NonNull Context context, List<AppointmentRequest> list) {
+        super(context, 0, list);
         this.context = context;
-        this.appointments = appointments;
-
-        handler.postDelayed(updateTimeRunnable, 60000);
+        this.appointmentList = list;
     }
 
-    private Runnable updateTimeRunnable = new Runnable() {
-        @Override
-        public void run() {
-            notifyDataSetChanged();
-            handler.postDelayed(this, 60000); // Update every minute
-        }
-    };
-
+    @NonNull
     @Override
-    public int getCount() {
-        return appointments.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return appointments.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        // Inflate the custom layout for each appointment
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_appointment, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.appointment_list_item, parent, false);
         }
 
-        TextView childNameTextView = convertView.findViewById(R.id.child_name_text_view);
-        TextView serviceTextView = convertView.findViewById(R.id.service_text_view);
-        TextView dateTextView = convertView.findViewById(R.id.date_text_view);
-        TextView timeTextView = convertView.findViewById(R.id.time_text_view);
-        TextView statusTextView = convertView.findViewById(R.id.status_text_view);
-        TextView elapsedTimeTextView = convertView.findViewById(R.id.elapsed_time_text_view);
+        // Get the appointment at the current position
+        AppointmentRequest appointment = appointmentList.get(position);
 
-        AppointmentRequest appointment = appointments.get(position);
+        // Populate the data into the custom layout
+        TextView tvAppointmentTitle = convertView.findViewById(R.id.tvAppointmentTitle);
+        TextView tvAppointmentDate = convertView.findViewById(R.id.tvAppointmentDate);
+        TextView tvAppointmentTime = convertView.findViewById(R.id.tvAppointmentTime);
+        TextView tvAppointmentStatus = convertView.findViewById(R.id.tvAppointmentStatus);
+        TextView tvChildName = convertView.findViewById(R.id.tvChildName);
 
-        childNameTextView.setText(appointment.getChildName());
-        serviceTextView.setText(appointment.getService());
-        dateTextView.setText(appointment.getDate());
-        timeTextView.setText(appointment.getTime());
-        statusTextView.setText(appointment.getStatus());
+        // Set the text for each field
+        tvAppointmentTitle.setText("Service: " + appointment.getService());
+        tvChildName.setText("Child's Name: " + appointment.getChildName());
+        tvAppointmentDate.setText("Date: " + appointment.getDate());
+        tvAppointmentTime.setText("Time: " + appointment.getTime());
+        tvAppointmentStatus.setText("Status: " + appointment.getStatus());
 
-        long elapsedTime = new Date().getTime() - appointment.getBookingTime().getTime();
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(elapsedTime);
-        long hours = TimeUnit.MILLISECONDS.toHours(elapsedTime);
+        // Set the status text color based on the status
+        if ("Accepted".equals(appointment.getStatus())) {
+            tvAppointmentStatus.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_green_dark));
+        } else if ("Declined".equals(appointment.getStatus())) {
+            tvAppointmentStatus.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
+        } else if ("Pending".equals(appointment.getStatus())) {
+            tvAppointmentStatus.setTextColor(ContextCompat.getColor(getContext(), android.R.color.darker_gray));
+        }
 
-        elapsedTimeTextView.setText("Booked " + hours + " hours and " + minutes % 60 + " minutes ago");
 
         return convertView;
     }
