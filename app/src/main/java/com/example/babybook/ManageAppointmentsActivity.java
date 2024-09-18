@@ -60,12 +60,30 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         adapter = new AppointmentRequestAdapter(appointmentRequests, new AppointmentRequestAdapter.OnItemClickListener() {
             @Override
             public void onAcceptClick(AppointmentRequest request) {
-                updateAppointmentStatus(request.getId(), "Accepted");
+                // Show confirmation dialog for accepting
+                new androidx.appcompat.app.AlertDialog.Builder(ManageAppointmentsActivity.this)
+                        .setTitle("Confirm Acceptance")
+                        .setMessage("Are you sure you want to accept this appointment?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            updateAppointmentStatus(request.getId(), "Accepted");
+                        })
+                        .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                        .create()
+                        .show();
             }
 
             @Override
             public void onDeclineClick(AppointmentRequest request) {
-                updateAppointmentStatus(request.getId(), "Declined");
+                // Show confirmation dialog for declining
+                new androidx.appcompat.app.AlertDialog.Builder(ManageAppointmentsActivity.this)
+                        .setTitle("Confirm Decline")
+                        .setMessage("Are you sure you want to decline this appointment?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            updateAppointmentStatus(request.getId(), "Declined");
+                        })
+                        .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                        .create()
+                        .show();
             }
         }, true); // Pass true to show buttons
         recyclerView.setAdapter(adapter);
@@ -80,6 +98,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("appointments")
                 .whereEqualTo("doctorId", doctorId)
+                .whereEqualTo("status", "Pending") // Only get appointments with "Pending" status
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -89,6 +108,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                             request.setId(document.getId());
                             appointmentRequests.add(request);
                         }
+                        // Sort the list by booking time (descending)
                         Collections.sort(appointmentRequests, (a1, a2) -> a2.getBookingTime().compareTo(a1.getBookingTime()));
                         adapter.notifyDataSetChanged();
                     } else {
@@ -96,6 +116,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     private void updateAppointmentStatus(String id, String status) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
