@@ -31,6 +31,7 @@ public class DeclinedRequestActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setTitle("Declined Appointment Requests");
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         recyclerView = findViewById(R.id.recycler_view);

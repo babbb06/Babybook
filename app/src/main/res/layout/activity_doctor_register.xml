@@ -103,7 +103,7 @@
 
                 <!-- CHANGE TO EDITTEXT FIRSTNAME IN JAVA -->
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextFullName"
+                    android:id="@+id/editTextFirstName"
                     style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -220,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Password"
+                android:text="Password (atleast 6 characters)"
                 android:textColor="#000000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailLayout" />
@@ -372,7 +372,7 @@
 
             <Spinner
                 android:id="@+id/spinnerspecial"
-                android:layout_width="340dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:entries="@array/special_choices"
                 android:spinnerMode="dropdown"
@@ -475,12 +475,14 @@
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins"
-                    android:textSize="20sp"
+                    android:text="Select a Profile Photo"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivSelectedImage" />
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

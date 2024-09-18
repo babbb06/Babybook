@@ -12,6 +12,7 @@
         android:background="@drawable/header"
         android:theme="@style/ToFontBold"
         app:titleTextColor="@color/white"
+        app:title="Accepted Appointment Requests"
         app:subtitleTextColor="@android:color/white"/>
 
     <androidx.recyclerview.widget.RecyclerView

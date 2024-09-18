@@ -12,7 +12,7 @@
 
 
     <string-array name="special_choices">
-        <item>Select</item>
+        <item>Select Specialization</item>
         <item>Pediatrician</item>
         <item>Hospitalist</item>
         <item>Child Abuse Pediatrician</item>
