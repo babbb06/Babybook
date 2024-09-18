@@ -234,12 +234,17 @@ public class ChildDetailsActivity extends AppCompatActivity {
         EditText editTextReaction = dialogView.findViewById(R.id.editTextReaction);
         Button buttonUpload = dialogView.findViewById(R.id.buttonUpload);
 
-        editTextDate.setOnClickListener(v -> {
-            final Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+
+        // Set the current date in editTextDate
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String currentDate = day + "/" + (month + 1) + "/" + year;
+        editTextDate.setText(currentDate);
+
+        editTextDate.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(ChildDetailsActivity.this,
                     (view, year1, monthOfYear, dayOfMonth) -> {
                         editTextDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
