@@ -256,7 +256,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
 
         db.collection(collectionName)
                 .whereEqualTo("name", vaccineName)
-                .whereEqualTo("parentId", currentParentId)
+              //  .whereEqualTo("parentId", currentParentId)
                 .whereEqualTo("childId", childId)
                 .get()
                 .addOnCompleteListener(task -> {
