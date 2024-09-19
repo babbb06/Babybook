@@ -44,7 +44,7 @@ public class HealthRecordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_health_record);
+        setContentView(R.layout.activity_health_record_doctor);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -150,6 +150,14 @@ public class HealthRecordActivity extends AppCompatActivity {
                             // Update with document ID
                             String documentId = task.getResult().getId();
                             healthRecord.setId(documentId);
+                            //placeholder to not null!
+                            //adding child using doctor
+                            healthRecord.setDate("placeholder_date");
+                            healthRecord.setService("placeholder_service");
+                            healthRecord.setStatus("placeholder_status");
+                            healthRecord.setTime("placeholder_time");
+                            healthRecord.setUserId("placeholder_userid");
+                            healthRecord.setDoctorId(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "Unknown");
 
                             healthRecordsCollection.document(documentId).set(healthRecord)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
