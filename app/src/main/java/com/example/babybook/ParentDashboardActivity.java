@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.babybook.adapter.PostAdapter;
 import com.example.babybook.model.Post;
 import com.google.android.material.navigation.NavigationView;
@@ -138,20 +140,24 @@ public class ParentDashboardActivity extends AppCompatActivity {
 
     private void checkUserTypeAndFetchFullName(String userId) {
         // Check if user is in doctorUsers collection
-        db.collection("doctorUsers").document(userId).get().addOnCompleteListener(task -> {
+        db.collection("parentUsers").document(userId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     String fullName = document.getString("fullName");
-                    updateNavHeader(fullName);
+                    String userProfileImageUrl = document.getString("profileImageUrl");
+
+                    updateNavHeader("Greetings, " + fullName + "!", userProfileImageUrl);
                 } else {
                     // If not in doctorUsers, check parentUsers
                     db.collection("parentUsers").document(userId).get().addOnCompleteListener(parentTask -> {
                         if (parentTask.isSuccessful()) {
                             DocumentSnapshot parentDocument = parentTask.getResult();
                             if (parentDocument.exists()) {
-                                String fullName = parentDocument.getString("fullName");
-                                updateNavHeader("Greetings, "+ fullName + "!");
+                                String fullName = document.getString("fullName");
+                                String userProfileImageUrl = document.getString("profileImageUrl");
+
+                                updateNavHeader("Greetings, " + fullName + "!", userProfileImageUrl);
                             } else {
                                 Toast.makeText(ParentDashboardActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                             }
@@ -187,12 +193,19 @@ public class ParentDashboardActivity extends AppCompatActivity {
                 });
     }
 
-    private void updateNavHeader(String fullName) {
+    private void updateNavHeader(String fullName, String userProfileImageUrl) {
         View headerView = navigationView.getHeaderView(0);
         TextView fullNameTextView = headerView.findViewById(R.id.full_name);
         TextView parentRole = headerView.findViewById(R.id.parent_role);
+        ImageView doctorImg = headerView.findViewById(R.id.doctor_header_imageView);
+
         fullNameTextView.setText(fullName);
         parentRole.setText("Parent");
+
+        // Load the image using Glide
+        Glide.with(this)
+                .load(userProfileImageUrl)
+                .into(doctorImg);
     }
 
     private void showLogoutConfirmation() {

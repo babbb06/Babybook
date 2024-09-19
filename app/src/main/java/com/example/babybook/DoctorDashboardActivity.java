@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.babybook.adapter.PostAdapter;
 import com.example.babybook.model.Post;
 import com.google.android.material.navigation.NavigationView;
@@ -134,7 +136,11 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     String fullName = document.getString("fullName");
-                    updateNavHeader("Greetings, "+ fullName + "!");
+                    String userProfileImageUrl = document.getString("profileImageUrl");
+                    String specialization = document.getString("specialization");
+
+                    // Pass both the fullName and image URL to updateNavHeader
+                    updateNavHeader("Greetings, " + fullName + "!", userProfileImageUrl, specialization);
                 } else {
                     Toast.makeText(DoctorDashboardActivity.this, "Doctor not found", Toast.LENGTH_SHORT).show();
                 }
@@ -144,15 +150,21 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         });
     }
 
-
-
-    private void updateNavHeader(String fullName) {
+    private void updateNavHeader(String fullName, String userProfileImageUrl, String specialization) {
         View headerView = navigationView.getHeaderView(0);
         TextView fullNameTextView = headerView.findViewById(R.id.doctor_full_name);
         TextView doctorRole = headerView.findViewById(R.id.doctor_role);
+        ImageView doctorImg = headerView.findViewById(R.id.doctor_header_imageView);
+
         fullNameTextView.setText(fullName);
-        doctorRole.setText("Doctor");
+        doctorRole.setText(specialization);
+
+        // Load the image using Glide
+        Glide.with(this)
+                .load(userProfileImageUrl)
+                .into(doctorImg);
     }
+
 
     private void showCreatePostDialog() {
         // Inflate the custom dialog layout
