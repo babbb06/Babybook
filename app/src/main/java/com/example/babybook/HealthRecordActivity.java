@@ -81,7 +81,7 @@ public class HealthRecordActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference healthRecordsCollection = db.collection("healthRecords");
 
-            healthRecordsCollection.whereEqualTo("addedBy", currentUserId)
+            healthRecordsCollection.whereEqualTo("doctorId", currentUserId)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override

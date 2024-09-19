@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.babybook.adapter.AppointmentRequestAdapter;
 import com.example.babybook.model.AppointmentRequest;
+import com.example.babybook.model.HealthRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -59,18 +60,29 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         appointmentRequests = new ArrayList<>();
         adapter = new AppointmentRequestAdapter(appointmentRequests, new AppointmentRequestAdapter.OnItemClickListener() {
             @Override
+
             public void onAcceptClick(AppointmentRequest request) {
                 // Show confirmation dialog for accepting
                 new androidx.appcompat.app.AlertDialog.Builder(ManageAppointmentsActivity.this)
                         .setTitle("Confirm Acceptance")
-                        .setMessage("Are you sure you want to accept this appointment?")
+                        .setMessage("Are you sure you want to accept the appointment for " + request.getChildName() + "?")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            updateAppointmentStatus(request.getId(), "Accepted");
+                            updateAppointmentStatus(
+                                    request.getId(),
+                                    "Accepted",
+                                    request.getChildName(),
+                                    request.getService(),
+                                    request.getDate(),
+                                    request.getTime(),
+                                    request.getUserId(),
+                                    request.getDoctorId()
+                            );
                         })
                         .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                         .create()
                         .show();
             }
+
 
             @Override
             public void onDeclineClick(AppointmentRequest request) {
@@ -93,6 +105,51 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         doctorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         loadAppointments();
     }
+
+    private void updateAppointmentStatus(String id, String status, String childName, String service, String date, String time, String userId, String doctorId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Create a new HealthRecord object with all the details
+        HealthRecord healthRecord = new HealthRecord();
+        healthRecord.setChildName(childName);
+        healthRecord.setAddedBy(userId); // Assuming userId is the one adding the record
+        healthRecord.setId(id);
+        healthRecord.setDate(date);
+        healthRecord.setDoctorId(doctorId);
+        healthRecord.setService(service);
+        healthRecord.setTime(time);
+        healthRecord.setStatus(status);
+        healthRecord.setUserId(userId);
+
+        // Save the HealthRecord object to Firestore
+        db.collection("healthRecords").document(id)
+                .set(healthRecord)
+                .addOnSuccessListener(aVoid -> {
+                    // Log success or show success message if needed
+                    Log.d("ManageAppointments", "Health record successfully saved for " + childName);
+
+                    // Reload appointments to reflect updated status
+                    loadAppointments();
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("ManageAppointments", "Error saving health record.", e);
+                    Toast.makeText(ManageAppointmentsActivity.this, "Failed to save health record", Toast.LENGTH_SHORT).show();
+                });
+
+        // Also update the appointment status
+        db.collection("appointments").document(id)
+                .update("status", status)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("ManageAppointments", "Appointment status updated to " + status.toLowerCase());
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("ManageAppointments", "Error updating status.", e);
+                    Toast.makeText(ManageAppointmentsActivity.this, "Failed to update status", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+
+
 
     private void loadAppointments() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
