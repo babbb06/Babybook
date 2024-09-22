@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.babybook.adapter.AppointmentAdapter;
 import com.example.babybook.model.AppointmentRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,7 +51,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("Schedule");
+            getSupportActionBar().setTitle("Appointment");
         }
 
         appointmentsListView = findViewById(R.id.appointments_list_view);
@@ -58,7 +59,8 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         appointmentList = new ArrayList<>();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, appointmentList);
+        // Use the custom adapter
+        adapter = new AppointmentAdapter(this, appointmentList);
         appointmentsListView.setAdapter(adapter);
 
         checkNotificationPermission();

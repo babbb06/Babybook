@@ -8,30 +8,49 @@
     android:gravity="bottom"
     android:orientation="vertical">
 
-
-    <ImageView
-        android:id="@+id/doctor_header_imageView"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewImage"
         android:layout_width="75dp"
         android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:elevation="1dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="50dp"
         android:layout_marginStart="15dp"
-        android:src="@drawable/profile_placeholder"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/doctor_header_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/full_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="@font/poppins_semibold"
         android:hint="Loading..."
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/doctor_header_imageView"
-        app:layout_constraintStart_toEndOf="@+id/doctor_header_imageView"
-        app:layout_constraintTop_toTopOf="@+id/doctor_header_imageView" />
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@+id/cardViewImage"
+        app:layout_constraintStart_toEndOf="@+id/cardViewImage"
+        app:layout_constraintTop_toTopOf="@+id/cardViewImage"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <TextView
         android:id="@+id/parent_role"
@@ -41,6 +60,7 @@
         android:hint="Loading..."
         android:textColor="#595959"
         android:textSize="16sp"
+        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/full_name"
         app:layout_constraintTop_toBottomOf="@+id/full_name" />
 

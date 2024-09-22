@@ -38,6 +38,13 @@
         <activity
             android:name=".HealthRecordActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ChildDetailsParentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthRecordParentActivity"
+            android:exported="false" />
         <activity
             android:name=".DeclinedRequestActivity"
             android:exported="false" />

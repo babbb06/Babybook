@@ -13,15 +13,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewImage"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:elevation="1dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="50dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/profile_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/doc_post_placeholder"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        </androidx.cardview.widget.CardView>
 
         <!--doctors name-->
 
@@ -31,13 +43,15 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:padding="15dp"
+            android:layout_marginTop="-10dp"
             android:text="Juan Dela Cruz"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/cardViewImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
+            app:layout_constraintTop_toTopOf="@+id/cardViewImage" />
 
 
         <!--time stamp-->
@@ -52,7 +66,7 @@ android:layout_marginTop="-37dp"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
             app:layout_constraintTop_toBottomOf="@+id/postDoctorName" />
 
 

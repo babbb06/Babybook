@@ -2,9 +2,9 @@ package com.example.babybook;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.babybook.adapter.HealthRecordAdapter;
+import com.example.babybook.adapter.HealthRecordParentAdapter;
 import com.example.babybook.model.HealthRecord;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,17 +26,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthRecordActivity extends AppCompatActivity {
+public class HealthRecordParentActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewHealthRecords;
-    private HealthRecordAdapter adapter;
+    private HealthRecordParentAdapter adapter;
     private List<HealthRecord> healthRecords;
     private FirebaseFirestore db;
     private CollectionReference healthRecordsCollection;
@@ -44,7 +44,7 @@ public class HealthRecordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_health_record_doctor);
+        setContentView(R.layout.activity_health_record);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -53,11 +53,11 @@ public class HealthRecordActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("List of Patient");
+        getSupportActionBar().setTitle("List of Children");
 
         recyclerViewHealthRecords = findViewById(R.id.recyclerViewHealthRecords);
         healthRecords = new ArrayList<>();
-        adapter = new HealthRecordAdapter(this, healthRecords); // Pass context and list
+        adapter = new HealthRecordParentAdapter(this, healthRecords); // Pass context and list
         recyclerViewHealthRecords.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewHealthRecords.setAdapter(adapter);
 
@@ -66,12 +66,12 @@ public class HealthRecordActivity extends AppCompatActivity {
 
         loadHealthRecords();
 
-        findViewById(R.id.fabAddRecord).setOnClickListener(new View.OnClickListener() {
+     /*  findViewById(R.id.fabAddRecord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAddRecordDialog();
             }
-        });
+        });*/
     }
 
     private void loadHealthRecords() {
@@ -81,7 +81,7 @@ public class HealthRecordActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference healthRecordsCollection = db.collection("healthRecords");
 
-            healthRecordsCollection.whereEqualTo("doctorId", currentUserId)
+            healthRecordsCollection.whereEqualTo("addedBy", currentUserId)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -95,7 +95,7 @@ public class HealthRecordActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
                             } else {
                                 Log.e("HealthRecordActivity", "Error loading records: ", task.getException());
-                                Toast.makeText(HealthRecordActivity.this, "Failed to load records: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(HealthRecordParentActivity.this, "Failed to load records: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -126,7 +126,7 @@ public class HealthRecordActivity extends AppCompatActivity {
                 String childName = editTextChildName.getText().toString().trim();
 
                 if (childName.isEmpty()) {
-                    Toast.makeText(HealthRecordActivity.this, "Please fill the child's name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HealthRecordParentActivity.this, "Please fill the child's name", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -150,29 +150,21 @@ public class HealthRecordActivity extends AppCompatActivity {
                             // Update with document ID
                             String documentId = task.getResult().getId();
                             healthRecord.setId(documentId);
-                            //placeholder to not null!
-                            //adding child using doctor
-                            healthRecord.setDate("placeholder_date");
-                            healthRecord.setService("placeholder_service");
-                            healthRecord.setStatus("placeholder_status");
-                            healthRecord.setTime("placeholder_time");
-                            healthRecord.setUserId("placeholder_userid");
-                            healthRecord.setDoctorId(mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "Unknown");
 
                             healthRecordsCollection.document(documentId).set(healthRecord)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(HealthRecordActivity.this, "Record added", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(HealthRecordParentActivity.this, "Record added", Toast.LENGTH_SHORT).show();
                                                 loadHealthRecords(); // Reload records to display new one
                                             } else {
-                                                Toast.makeText(HealthRecordActivity.this, "Failed to add record", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(HealthRecordParentActivity.this, "Failed to add record", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
                         } else {
-                            Toast.makeText(HealthRecordActivity.this, "Failed to add record", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HealthRecordParentActivity.this, "Failed to add record", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

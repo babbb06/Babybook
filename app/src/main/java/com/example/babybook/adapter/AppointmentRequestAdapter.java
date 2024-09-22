@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.babybook.R;
@@ -37,9 +38,30 @@ public class AppointmentRequestAdapter extends RecyclerView.Adapter<AppointmentR
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AppointmentRequest request = appointmentRequests.get(position);
-        holder.textViewDetails.setText(request.toString()); // Use the toString() method for formatted details
 
-        // Show or hide buttons based on the flag
+        holder.textViewChildName.setText("Child's Name: " + request.getChildName());
+        holder.textViewService.setText("Service: " + request.getService());
+        holder.textViewDate.setText("Date: " + request.getDate());
+        holder.textViewTime.setText("Time: " + request.getTime());
+        holder.textViewStatus.setText("Status: " + request.getStatus());
+        // Set the status text color based on the status
+        int statusColor;
+        switch (request.getStatus()) {
+            case "Accepted":
+                statusColor = ContextCompat.getColor(holder.itemView.getContext(), android.R.color.holo_green_dark);
+                break;
+            case "Declined":
+                statusColor = ContextCompat.getColor(holder.itemView.getContext(), android.R.color.holo_red_dark);
+                break;
+            case "Pending":
+                statusColor = ContextCompat.getColor(holder.itemView.getContext(), android.R.color.black);
+                break;
+            default:
+                statusColor = ContextCompat.getColor(holder.itemView.getContext(), android.R.color.black); // Default color if status is unknown
+                break;
+        }
+        holder.textViewStatus.setTextColor(statusColor);
+
         if (showButtons) {
             holder.buttonAccept.setVisibility(View.VISIBLE);
             holder.buttonDecline.setVisibility(View.VISIBLE);
@@ -63,13 +85,21 @@ public class AppointmentRequestAdapter extends RecyclerView.Adapter<AppointmentR
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView textViewDetails;
+        public final TextView textViewChildName;
+        public final TextView textViewService;
+        public final TextView textViewDate;
+        public final TextView textViewTime;
+        public final TextView textViewStatus;
         public final Button buttonAccept;
         public final Button buttonDecline;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewDetails = itemView.findViewById(R.id.text_view_details);
+            textViewChildName = itemView.findViewById(R.id.text_view_child_name);
+            textViewService = itemView.findViewById(R.id.text_view_service);
+            textViewDate = itemView.findViewById(R.id.text_view_date);
+            textViewTime = itemView.findViewById(R.id.text_view_time);
+            textViewStatus = itemView.findViewById(R.id.text_view_status);
             buttonAccept = itemView.findViewById(R.id.button_accept);
             buttonDecline = itemView.findViewById(R.id.button_decline);
         }

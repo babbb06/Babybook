@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.legacy.support.v4)
     implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
+    implementation ("com.google.firebase:firebase-storage:20.2.1") // Add this line for Firebase Storage
     implementation("com.google.firebase:firebase-auth")
     implementation ("androidx.appcompat:appcompat:1.6.1")
     implementation ("androidx.annotation:annotation:1.4.0")
@@ -68,4 +69,9 @@ dependencies {
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     implementation ("com.google.android.gms:play-services-maps:18.1.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
+    
 }
