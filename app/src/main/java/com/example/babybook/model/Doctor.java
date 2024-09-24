@@ -2,7 +2,12 @@ package com.example.babybook.model;
 
 public class Doctor {
     private String id;
+    private String firstName;
+    private String lastName;
     private String fullName;
+    private String email;
+    private String phoneNumber;
+    private String PRCLicenseNumber;
     private String specialization;
     private String clinicAddress;
 
@@ -15,12 +20,52 @@ public class Doctor {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getFullName() {
         return fullName;
     }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPRCLicenseNumber() {
+        return PRCLicenseNumber;
+    }
+
+    public void setPRCLicenseNumber(String PRCLicenseNumber) {
+        this.PRCLicenseNumber = PRCLicenseNumber;
     }
 
     public String getSpecialization() {

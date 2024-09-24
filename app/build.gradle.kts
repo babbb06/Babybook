@@ -69,6 +69,7 @@ dependencies {
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     implementation ("com.google.android.gms:play-services-maps:18.1.0")
+    implementation ("com.hbb20:ccp:2.7.1")
 
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
