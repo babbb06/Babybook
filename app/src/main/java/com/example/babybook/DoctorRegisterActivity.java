@@ -1,5 +1,6 @@
 package com.example.babybook;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,10 +9,12 @@ import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
+import com.hbb20.CountryCodePicker;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -35,6 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +46,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "DoctorRegisterActivity";
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword,editTextPRCLicenseNumber,
-            editTextSpecialization, editTextClinicAddress,etPhoneNumber;
+            editTextSpecialization, editTextClinicAddress,etPhoneNumber,editTextBirthday;
 
     private Spinner spinnerSpecialization;
     private FirebaseAuth mAuth;
@@ -51,6 +55,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private boolean isImageSelected = false;
     private ImageView backBtn, selectedImage;
     private Uri selectedImageUri;
+    private CountryCodePicker countryCodePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +75,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         editTextSpecialization = findViewById(R.id.editTextSpecialization);
         editTextClinicAddress = findViewById(R.id.editTextClinicAddress);
         spinnerSpecialization = findViewById(R.id.spinnerspecial);
-
+        editTextBirthday = findViewById(R.id.editTextBirthday);
         selectedImage = findViewById(R.id.ivSelectedImage);
         backBtn = findViewById(R.id.imageView);
 
@@ -85,6 +90,12 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         editTextConfirmPassword.setFilters(new InputFilter[]{new EmojiInputFilter()});
         editTextSpecialization.setFilters(new InputFilter[]{new EmojiInputFilter()});
         editTextClinicAddress.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
+
+
+
+        //FOR AUTO SELECTED NUMBER (PHILIPPINES +63)
+        countryCodePicker = findViewById(R.id.login_countrycode);
+        countryCodePicker.setCountryForPhoneCode(63); // Set to Philippines
 
 
         //SELECT PROFILE PICTURE
@@ -139,6 +150,38 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         });
     }
 
+    public void showDatePicker(View view) {
+        // Get the current date
+        Calendar calendar = Calendar.getInstance();
+
+        // Set the date to 18 years ago
+        Calendar minDate = Calendar.getInstance();
+        minDate.add(Calendar.YEAR, -18); // Subtract 18 years
+
+        // Create a DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                        // Update the TextInputEditText with the selected date
+                        String date = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                        editTextBirthday.setText(date);
+                    }
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+
+        // Set the maximum date to 18 years ago
+        datePickerDialog.getDatePicker().setMaxDate(minDate.getTimeInMillis());
+
+        datePickerDialog.show();
+    }
+
+
+
 
     private void registerDoctor() {
         //final String fullName = editTextFullName.getText().toString().trim();
@@ -148,14 +191,17 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
         String confirmPassword = editTextConfirmPassword.getText().toString();
-
         String PRCLicenseNumber = editTextPRCLicenseNumber.getText().toString();
-
+        String birthday = editTextBirthday.getText().toString().trim();
+        String countryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
         String phoneNumber = etPhoneNumber.getText().toString().trim();
         String clinicAddress = editTextClinicAddress.getText().toString().trim();
         int selectedSpecializationPosition = spinnerSpecialization.getSelectedItemPosition();
         String specialization = spinnerSpecialization.getSelectedItem().toString().trim();
         TextView selectProfile = findViewById(R.id.textView4);
+
+        // Concatenate country code with the phone number
+        String fullPhoneNumber = countryCode + phoneNumber;
 
 
 
@@ -179,6 +225,15 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             editTextLastName.requestFocus();
             return;
         }
+
+
+        //Bday ERROR HANDLING
+        if (TextUtils.isEmpty(birthday)) {
+            editTextBirthday.setError("Please enter your Birthday");
+            editTextBirthday.requestFocus();
+            return;
+        }
+
 
 //EMAIL ERROR HANDLING
 
@@ -306,7 +361,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             String userId = mAuth.getCurrentUser().getUid();
 
                             // Call the uploadProfilePicture method
-                            uploadProfilePicture(userId, fullName,firstName,lastName, email, phoneNumber,PRCLicenseNumber, specialization, clinicAddress);
+                            uploadProfilePicture(userId, fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress);
 
                             Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
                             // Redirect to doctor dashboard
@@ -342,7 +397,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private boolean containsNumber(String text) {
         return text.matches(".*\\d.*");
     }
-    private void saveDoctorData(String fullName,String firstName,String lastName,String email,String phoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String profileImageUrl) {
+    private void saveDoctorData(String fullName,String firstName,String lastName,String birthday, String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String profileImageUrl) {
         // Ensure user is authenticated
         if (mAuth.getCurrentUser() == null) {
             Log.w(TAG, "saveDoctorData: no authenticated user");
@@ -356,8 +411,9 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         doctor.put("fullName", fullName);
         doctor.put("firstName",firstName);
         doctor.put("lastName", lastName);
+        doctor.put("birthday", birthday);
         doctor.put("email", email);
-        doctor.put("phoneNumber", phoneNumber);
+        doctor.put("phoneNumber", fullPhoneNumber);
         doctor.put("PRCLicenseNumber", PRCLicenseNumber);
         doctor.put("specialization", specialization);
         doctor.put("clinicAddress", clinicAddress);
@@ -417,7 +473,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     }
 
     // uploadProfilePicture to accept fullName and email
-    private void uploadProfilePicture(String userId, String fullName,String firstName,String lastName,String email,String phoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress) {
+    private void uploadProfilePicture(String userId, String fullName,String firstName,String birthday,String lastName,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress) {
         if (selectedImageUri != null) {
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("doctor_profile_pictures");
             StorageReference imageRef = storageRef.child(userId + ".jpg");
@@ -430,7 +486,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                                 String imageUrl = downloadUrlTask.getResult().toString();
 
                                 // After successfully uploading the image, save user data with profile image URL
-                                saveDoctorData(fullName,firstName,lastName, email, phoneNumber,PRCLicenseNumber, specialization, clinicAddress, imageUrl);
+                                saveDoctorData(fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, imageUrl);
                             } else {
                                 // Handle error while getting the image URL
                             }
