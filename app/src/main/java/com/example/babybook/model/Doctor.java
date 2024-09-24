@@ -1,10 +1,13 @@
 package com.example.babybook.model;
 
+import java.util.Date;
+
 public class Doctor {
     private String id;
     private String firstName;
     private String lastName;
     private String fullName;
+    private String birthday; // Assuming you want to store the birthday as a Date object
     private String email;
     private String phoneNumber;
     private String PRCLicenseNumber;
@@ -42,6 +45,14 @@ public class Doctor {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getEmail() {

@@ -45,8 +45,8 @@ import java.util.Map;
 public class DoctorRegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "DoctorRegisterActivity";
-    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextConfirmPassword,editTextPRCLicenseNumber,
-            editTextSpecialization, editTextClinicAddress,etPhoneNumber,editTextBirthday;
+    private EditText editTextFirstName, editTextLastName,editTextBirthday, editTextEmail, editTextPassword, editTextConfirmPassword,editTextPRCLicenseNumber,
+            editTextSpecialization, editTextClinicAddress,etPhoneNumber;
 
     private Spinner spinnerSpecialization;
     private FirebaseAuth mAuth;
@@ -473,7 +473,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     }
 
     // uploadProfilePicture to accept fullName and email
-    private void uploadProfilePicture(String userId, String fullName,String firstName,String birthday,String lastName,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress) {
+    private void uploadProfilePicture(String userId, String fullName,String firstName,String lastName ,String birthday,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress) {
         if (selectedImageUri != null) {
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("doctor_profile_pictures");
             StorageReference imageRef = storageRef.child(userId + ".jpg");

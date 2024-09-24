@@ -127,34 +127,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Birthday Picker -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/birthdayLayout"
-                style="@style/LoginTextInputOuterFieldStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:textColorHint="@color/black"
-                app:boxStrokeColor="@color/violet"
-                app:boxStrokeErrorColor="@color/colorError"
-                app:errorTextColor="@color/clear"
-                app:hintTextColor="@color/violet"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernameLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextBirthday"
-                    style="@style/LoginTextInputInnerFieldStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:fontFamily="@font/poppins"
-                    android:hint="Birthday"
-                    android:inputType="none"
-                    android:onClick="showDatePicker"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -174,7 +146,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.32"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/birthdayLayout">
+                app:layout_constraintTop_toBottomOf="@+id/usernameLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextEmail"
@@ -295,14 +267,46 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="3dp"
                 app:ccp_showFlag="false"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/etPhoneNumberLayout" />
 
 
+
+            <!-- Birthday Picker -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/birthdayLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:hintTextColor="@color/violet"
+                android:layout_marginEnd="3dp"
+                android:paddingEnd="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/PRCLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPhoneNumberLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextBirthday"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Birthday"
+                    android:inputType="none"
+                    android:onClick="showDatePicker"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <!--  PRC LICENCE NUMBER -->
 
-            <!--  NEED TO ADD IN DATABASE -->
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/PRCLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
@@ -313,9 +317,11 @@
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
                 app:errorTextColor="@color/clear"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.32"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/birthdayLayout"
+
+
                 app:layout_constraintTop_toBottomOf="@+id/etPhoneNumberLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
