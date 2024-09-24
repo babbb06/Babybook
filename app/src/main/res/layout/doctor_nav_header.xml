@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="140dp"
     android:background="@drawable/sidebarbg"
     android:gravity="bottom"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="20dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewImage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_gravity="center"
         android:elevation="1dp"
         android:layout_marginTop="15dp"
@@ -47,7 +48,7 @@
         android:hint="Loading..."
         android:maxLines="1"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cardViewImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardViewImage"
@@ -60,7 +61,7 @@
         android:fontFamily="@font/poppins"
         android:hint="Loading..."
         android:textColor="#595959"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/doctor_full_name"
         app:layout_constraintTop_toBottomOf="@+id/doctor_full_name" />
