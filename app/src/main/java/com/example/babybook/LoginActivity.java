@@ -70,12 +70,18 @@ public class LoginActivity extends AppCompatActivity {
             emailLayout.setError("Please enter your email");
             editTextEmail.requestFocus();
             return;
+        }else {
+            // Clear the error if password is not empty
+            emailLayout.setError(null);
         }
 
         if (TextUtils.isEmpty(password)) {
             passwordLayout.setError("Please enter your password");
             editTextPassword.requestFocus();
             return;
+        }else {
+            // Clear the error if password is not empty
+            passwordLayout.setError(null);
         }
 
         // Sign in user with Firebase Authentication
