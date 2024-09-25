@@ -33,11 +33,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
-        holder.doctorName.setText(post.getDoctorName());
-        holder.content.setText(post.getContent());
-        holder.timestamp.setText(new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm").format(post.getTimestamp()));
+        holder.doctorName.setText(post.getDoctorName()); // Set the doctor's name
+        holder.content.setText(post.getContent()); // Set the content of the post
 
-          }
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM/dd/yyyy   HH:mm");
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("Asia/Manila")); // Set timezone to PHT
+        holder.timestamp.setText(sdf.format(new java.util.Date(post.getTimestamp())));
+        holder.specialization.setText(post.getSpecialization());
+
+
+        // Load the doctor's profile image using Glide
+        Glide.with(holder.itemView.getContext())
+                .load(post.getProfileImageUrl()) // Load the profile image URL
+                .placeholder(R.drawable.baby_book_logo) // Optional: Add a placeholder image
+                .error(R.drawable.add) // Optional: Add an error image in case of failure
+                .into(holder.doctorImg); // Set the image into the ImageView
+    }
+
 
     @Override
     public int getItemCount() {
@@ -46,7 +58,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
 
-        TextView doctorName, content, timestamp;
+        TextView doctorName, content, timestamp, specialization;
         ImageView doctorImg;
 
         public PostViewHolder(@NonNull View itemView) {
@@ -54,6 +66,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             doctorName = itemView.findViewById(R.id.postDoctorName);
             content = itemView.findViewById(R.id.postContent);
             timestamp = itemView.findViewById(R.id.postTimestamp);
+            specialization = itemView.findViewById(R.id.postDocSpecialization);
             doctorImg = itemView.findViewById(R.id.imageView2);
         }
     }
