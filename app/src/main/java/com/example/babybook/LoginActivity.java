@@ -26,7 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
-    private TextInputLayout passwordLayout;
+    private TextInputLayout passwordLayout, emailLayout;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         passwordLayout = findViewById(R.id.passwordLayout);
-
+        emailLayout = findViewById(R.id.emailLayout);
 
         Button buttonLogin = findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -67,13 +67,13 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
-            editTextEmail.setError("Please enter your email");
+            emailLayout.setError("Please enter your email");
             editTextEmail.requestFocus();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            editTextPassword.setError("Please enter your password");
+            passwordLayout.setError("Please enter your password");
             editTextPassword.requestFocus();
             return;
         }
