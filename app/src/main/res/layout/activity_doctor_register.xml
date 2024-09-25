@@ -44,7 +44,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/hind_guntur_bold"
-                android:text="Doctor Registration"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="26dp"
@@ -56,9 +56,9 @@
                 android:id="@+id/lbletSignup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/hind_guntur_bold"
-                android:text="Sign up"
+                android:text="Doctor Registration"
                 android:textColor="@color/violet4"
                 android:textSize="30dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/lbletSignup">
 
 
-                <!-- CHANGE TO EDITTEXT FIRSTNAME IN JAVA -->
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextFirstName"
                     style="@style/LoginTextInputInnerFieldStyle"
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
                     android:hint="First Name"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:textColorHint="@color/black"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
                     android:hint="Last Name"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     tools:ignore="TouchTargetSizeCheck" />
 
 
@@ -238,6 +238,7 @@
             android:textColorHint="@color/black"
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/confirmPasswordLayout">
 
@@ -246,11 +247,10 @@
                     style="LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone Number "
                     android:inputType="number"
                     android:maxLength="10"
                     android:minHeight="48dp"
-                    android:paddingStart="100dp"
+                    android:paddingStart="86dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:backgroundTint="@color/black"
@@ -259,16 +259,28 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.hbb20.CountryCodePicker
+            <ImageView
+                android:id="@+id/phlogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="-3dp"
+                app:layout_constraintStart_toStartOf="@+id/etPhoneNumberLayout"
+                app:layout_constraintTop_toTopOf="@+id/etPhoneNumberLayout"
+                app:layout_constraintBottom_toBottomOf="@+id/etPhoneNumberLayout"
+                android:src="@drawable/phlogo"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/login_countrycode"
-                android:layout_width="96dp"
-                android:layout_height="49dp"
-                android:paddingTop="12dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="3dp"
-                app:ccp_showFlag="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etPhoneNumberLayout" />
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/etPhoneNumberLayout"
+                app:layout_constraintStart_toStartOf="@+id/etPhoneNumberLayout"
+                android:layout_marginStart="58.5dp"
+                app:layout_constraintTop_toTopOf="@+id/etPhoneNumberLayout"
+                android:text="+63"/>
+
 
 
 
@@ -420,7 +432,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Clinic Address"
                     android:fontFamily="@font/poppins"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textCapWords"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 

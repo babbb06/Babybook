@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
-import com.hbb20.CountryCodePicker;
+
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -47,7 +47,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private static final String TAG = "DoctorRegisterActivity";
     private EditText editTextFirstName, editTextLastName,editTextBirthday, editTextEmail, editTextPassword, editTextConfirmPassword,editTextPRCLicenseNumber,
             editTextSpecialization, editTextClinicAddress,etPhoneNumber;
-
     private Spinner spinnerSpecialization;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -55,7 +54,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private boolean isImageSelected = false;
     private ImageView backBtn, selectedImage;
     private Uri selectedImageUri;
-    private CountryCodePicker countryCodePicker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +92,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
 
 
-        //FOR AUTO SELECTED NUMBER (PHILIPPINES +63)
-        countryCodePicker = findViewById(R.id.login_countrycode);
-        countryCodePicker.setCountryForPhoneCode(63); // Set to Philippines
+
 
 
         //SELECT PROFILE PICTURE
@@ -193,7 +190,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         String confirmPassword = editTextConfirmPassword.getText().toString();
         String PRCLicenseNumber = editTextPRCLicenseNumber.getText().toString();
         String birthday = editTextBirthday.getText().toString().trim();
-        String countryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
         String phoneNumber = etPhoneNumber.getText().toString().trim();
         String clinicAddress = editTextClinicAddress.getText().toString().trim();
         int selectedSpecializationPosition = spinnerSpecialization.getSelectedItemPosition();
@@ -201,7 +197,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         TextView selectProfile = findViewById(R.id.textView4);
 
         // Concatenate country code with the phone number
-        String fullPhoneNumber = countryCode + phoneNumber;
+        String fullPhoneNumber = "+63" + phoneNumber;
 
 
 
