@@ -12,4 +12,14 @@
         <item name="homeAsUpIndicator">@drawable/backbtn</item>
 
     </style>
+
+
+
+    <style name="MyRadioButtonable" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:buttonTint">@color/radiobtnable</item>
+    </style>
+
+    <style name="MyRadioButtonerror" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:buttonTint">@color/radiobtnerror</item>
+    </style>
 </resources>

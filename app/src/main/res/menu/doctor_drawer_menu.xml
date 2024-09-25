@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group android:checkableBehavior="single">
         <item android:title="Menu">
             <menu>
@@ -8,13 +9,17 @@
                     android:icon="@drawable/home"
                     android:title="Home" />
                 <item
-                    android:id="@+id/doctor_nav_health"
-                    android:icon="@drawable/health"
-                    android:title="Health Record" />
-                <item
                     android:id="@+id/doctor_nav_chat"
                     android:icon="@drawable/chat_icon"
                     android:title="Chat" />
+                <item
+                    android:id="@+id/doctor_nav_health"
+                    android:icon="@drawable/health"
+                    android:title="Health Records" />
+                <item
+                    android:id="@+id/doctor_nav_clinic"
+                    android:icon="@drawable/clinic_drawable"
+                    android:title="Clinic" />
                 <item
                     android:id="@+id/doctor_nav_appointment"
                     android:icon="@drawable/schedule"
@@ -25,49 +30,36 @@
                     android:title="Set Appointment" />
             </menu>
         </item>
-
     </group>
 
     <group android:checkableBehavior="single">
-
         <item android:title="Profile">
-
             <menu>
-
                 <item
                     android:id="@+id/doctor_nav_profile"
                     android:icon="@drawable/profile"
-                    android:title="Profile" />
-
-
-
+                    android:title="View Profile" />
             </menu>
-
         </item>
-
     </group>
 
-    <item android:title="Communicate">
-
-        <menu>
-
-            <item
-                android:id="@+id/doctor_nav_share"
-                android:icon="@drawable/share"
-                android:title="Share" />
-
-            <item
-                android:id="@+id/doctor_nav_rate"
-                android:icon="@drawable/rate"
-                android:title="Rate Us" />
-
-            <item
-                android:id="@+id/doctor_nav_logout"
-                android:icon="@drawable/logout"
-                android:title="Logout" />
-
-        </menu>
-
-    </item>
+    <group android:checkableBehavior="single">
+        <item android:title="Communicate">
+            <menu>
+                <item
+                    android:id="@+id/doctor_nav_share"
+                    android:icon="@drawable/share"
+                    android:title="Share App" />
+                <item
+                    android:id="@+id/doctor_nav_rate"
+                    android:icon="@drawable/rate"
+                    android:title="Rate Us" />
+                <item
+                    android:id="@+id/doctor_nav_logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+            </menu>
+        </item>
+    </group>
 
 </menu>

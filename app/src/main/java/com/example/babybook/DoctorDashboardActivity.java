@@ -99,6 +99,9 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                     case R.id.doctor_nav_appointment:
                         startActivity(new Intent(DoctorDashboardActivity.this, ManageAppointmentsActivity.class));
                         break;
+                    case R.id.doctor_nav_clinic:
+                        startActivity(new Intent(DoctorDashboardActivity.this, AddClinicActivity.class));
+                        break;
                         //new added layout
                     case R.id.doctor_nav_profile:
                         startActivity(new Intent(DoctorDashboardActivity.this, UpdateProfiledDoctor.class));

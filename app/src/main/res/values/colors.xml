@@ -15,6 +15,11 @@
     <color name="approve">#4CAF50</color>
     <color name="decline">#F44336</color>
 
+    <color name="radiobtnable">#5E5E5E</color>
+    <color name="radiobtnerror">#FF0000</color>
+
+    <color name="available_success">#4BB543</color>
+    <color name="occupied_error">#FF7276</color>
 
 
     <!--violets-->
