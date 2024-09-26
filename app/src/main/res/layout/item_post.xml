@@ -1,29 +1,127 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="8dp"
-  android:elevation="10dp"
-    app:cardCornerRadius="10dp"
-
+    android:layout_marginTop="10dp"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="8dp"
+        android:backgroundTint="#E8E8E8"
+        android:elevation="12dp"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewImage"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:elevation="1dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="50dp"
-            android:layout_marginStart="15dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--doctors name-->
+
+            <TextView
+                android:id="@+id/postDoctorName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:text="Juan Dela Cruz"
+                android:textColor="@color/violet"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/postDocSpecialization"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-34dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:text="specialization"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/postDoctorName"
+                app:layout_constraintTop_toBottomOf="@+id/postDoctorName" />
+
+
+            <!--time stamp-->
+            <TextView
+                android:id="@+id/postTimestamp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:text="March 25, 2023"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/postDoctorName"
+                app:layout_constraintTop_toBottomOf="@+id/postDocSpecialization" />
+
+
+            <TextView
+                android:id="@+id/postContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="13dp"
+                android:fontFamily="@font/poppins"
+                android:padding="15dp"
+                android:layout_marginTop="-20dp"
+                android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+                android:textSize="13sp"
+                android:maxLines="5"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postTimestamp" />
+
+            <TextView
+                android:id="@+id/seeMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:paddingEnd="15dp"
+                android:text="See More"
+                android:textColor="@color/violet"
+                android:textSize="13sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/postContent"
+                app:layout_constraintTop_toBottomOf="@+id/postContent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewImage"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="35dp"
+        android:elevation="10dp"
+        android:translationZ="14dp"
+        app:cardCornerRadius="50dp"
+        android:layout_marginBottom="-30dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -31,75 +129,8 @@
             android:layout_height="match_parent"
             android:src="@drawable/doc_post_placeholder"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.cardview.widget.CardView>
 
-        <!--doctors name-->
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/postDoctorName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:padding="15dp"
-            android:layout_marginTop="-10dp"
-            android:text="Juan Dela Cruz"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardViewImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
-            app:layout_constraintTop_toTopOf="@+id/cardViewImage" />
-
-        <TextView
-            android:id="@+id/postDocSpecialization"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-34dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:padding="15dp"
-            android:text="specialization"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
-            app:layout_constraintTop_toBottomOf="@+id/postDoctorName" />
-
-
-        <!--time stamp-->
-        <TextView
-            android:id="@+id/postTimestamp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:padding="15dp"
-            android:layout_marginTop="-30dp"
-            android:text="March 25, 2023"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
-            app:layout_constraintTop_toBottomOf="@+id/postDocSpecialization" />
-
-
-
-        <TextView
-            android:id="@+id/postContent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
-            android:fontFamily="@font/poppins"
-            android:padding="15dp"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"
-            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
-            android:textSize="16sp"
-            android:justificationMode="inter_word"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/postTimestamp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>

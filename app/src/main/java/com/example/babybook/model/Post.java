@@ -8,6 +8,7 @@ public class Post {
     private long timestamp;
     private String profileImageUrl;
     private String specialization;
+    private boolean isExpanded;  // New field for expansion tracking
 
     public Post() {
         // Default constructor required for Firestore
@@ -21,6 +22,14 @@ public class Post {
         this.timestamp = timestamp;
         this.profileImageUrl = profileImageUrl;
         this.specialization = specialization;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
     }
 
     public String getPostId() {
