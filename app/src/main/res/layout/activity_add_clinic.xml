@@ -6,218 +6,312 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddClinicActivity">
+    <!-- Toolbar -->
 
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="47dp"
+        tools:layout_editor_absoluteY="-3dp" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
 
-        >
+        android:layout_height="670dp"
+
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
+            android:padding="15dp"
             android:layout_height="match_parent">
+
 
 
             <TextView
                 android:id="@+id/lblClinicDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="55dp"
-                android:fontFamily=""
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/violet4"
+                android:textSize="25dp"
                 android:text="Add Clinic Details"
-                android:textColor="#000000"
-                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/lblClinicName"
-                android:layout_width="wrap_content"
+            <!-- Clinic Name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/clinicNameLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Clinic Name"
-                android:textColor="#000000"
+                android:layout_marginTop="15dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                android:paddingHorizontal="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.32"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblClinicDetails" />
+                app:layout_constraintTop_toBottomOf="@+id/lblClinicDetails">
 
-            <TextView
-                android:id="@+id/lblClinicName3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp"
-                android:text="*"
-                android:textColor="@android:color/holo_red_light"
-                app:layout_constraintStart_toEndOf="@+id/lblClinicName"
-                app:layout_constraintTop_toTopOf="@+id/lblClinicName" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextClinicName"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Clinic Name"
+                android:inputType="text"
+                tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etClinicNameLayout"
+                android:id="@+id/etPhoneNumberLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/violet"
-                app:boxStrokeErrorColor="@color/colorError"
                 app:errorTextColor="@color/clear"
-                app:hintEnabled="false"
-                app:hintTextColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                android:textColorHint="@color/black"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:paddingHorizontal="10dp"
+                app:hintEnabled="false"
+                android:clickable="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblClinicName">
+                app:layout_constraintTop_toBottomOf="@+id/clinicNameLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etClinicName"
+                    android:id="@+id/etPhoneNumberClinic"
                     style="LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
+                    android:maxLength="10"
                     android:minHeight="48dp"
+                    android:paddingStart="86dp"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:backgroundTint="@color/black"
                     app:backgroundTintMode="multiply" />
+
+
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/phlogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toStartOf="@+id/etPhoneNumberLayout"
+                app:layout_constraintTop_toTopOf="@+id/etPhoneNumberLayout"
+                app:layout_constraintBottom_toBottomOf="@+id/etPhoneNumberLayout"
+                android:src="@drawable/phlogo"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/login_countrycode"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/etPhoneNumberLayout"
+                app:layout_constraintStart_toStartOf="@+id/etPhoneNumberLayout"
+                android:layout_marginStart="68.5dp"
+                app:layout_constraintTop_toTopOf="@+id/etPhoneNumberLayout"
+                android:text="+63"/>
+
+
 
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvDateandTime"
-                android:layout_marginTop="20dp"
-              android:layout_marginHorizontal="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etClinicNameLayout">
+                app:layout_constraintTop_toBottomOf="@+id/etPhoneNumberLayout">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content">
-
-
-
-                <TextView
-                    android:id="@+id/lblDay"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Day"
-                    android:textColor="#000000"
-                    app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
-                    android:id="@+id/lblDay2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-2dp"
-                    android:text="*"
-
-                    android:textColor="@android:color/holo_red_light"
-                    app:layout_constraintStart_toEndOf="@+id/lblDay"
-                    app:layout_constraintTop_toTopOf="@+id/lblDay" />
+                    android:layout_gravity="center">
 
 
-                <RadioGroup
-                    android:id="@+id/rdDay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lblDay">
+                    <TextView
+                        android:id="@+id/lblDay"
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:text="Select Days Available"
+                        android:textColor="#000000"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <GridLayout
-                        android:id="@+id/rdDay1"
+
+                    <TextView
+                        android:id="@+id/lblDay2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-2dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_light"
+                        app:layout_constraintStart_toEndOf="@+id/lblDay"
+                        app:layout_constraintTop_toTopOf="@+id/lblDay" />
+
+                    <View
+                        android:id="@+id/linesdc"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginEnd="220dp"
+                        android:layout_marginStart="13dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblDay" />
+
+
+                    <RadioGroup
+                        android:id="@+id/rdDay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:columnCount="3"
-                        android:elevation="2dp"
-                        android:padding="8dp"
-                        android:rowCount="3">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linesdc">
 
-                        <CheckBox
-                            android:id="@+id/cbMonday"
-                            android:layout_width="wrap_content"
+                        <GridLayout
+                            android:id="@+id/rdDay1"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
+                            android:layout_gravity="center"
+                            android:columnCount="3"
+                            android:elevation="2dp"
                             android:padding="8dp"
-                            android:text="Monday"
-                            android:textColor="@android:color/black" />
+                            android:rowCount="3">
 
-                        <CheckBox
-                            android:id="@+id/cbTuesday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp"
-                            android:text="Tuesday"
-                            android:textColor="@android:color/black" />
+                            <CheckBox
+                                android:id="@+id/cbMonday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:text="Monday"
+                                android:textColor="@android:color/black" />
 
-                        <CheckBox
-                            android:id="@+id/cbWednesday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp"
-                            android:text="Wednesday"
-                            android:textColor="@android:color/black" />
+                            <CheckBox
+                                android:id="@+id/cbTuesday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:text="Tuesday"
+                                android:textColor="@android:color/black" />
 
-                        <CheckBox
-                            android:id="@+id/cbThursday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp"
-                            android:text="Thursday"
-                            android:textColor="@android:color/black" />
+                            <CheckBox
+                                android:id="@+id/cbWednesday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:text="Wednesday"
+                                android:textColor="@android:color/black" />
 
-                        <CheckBox
-                            android:id="@+id/cbFriday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp"
-                            android:text="Friday"
-                            android:textColor="@android:color/black" />
+                            <CheckBox
+                                android:id="@+id/cbThursday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:text="Thursday"
+                                android:textColor="@android:color/black" />
 
-                        <CheckBox
-                            android:id="@+id/cbSaturday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp"
-                            android:text="Saturday"
-                            android:textColor="@android:color/black" />
+                            <CheckBox
+                                android:id="@+id/cbFriday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:text="Friday"
+                                android:textColor="@android:color/black" />
 
-                        <CheckBox
-                            android:id="@+id/cbSunday"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp"
-                            android:text="Sunday"
-                            android:textColor="@android:color/black" />
+                            <CheckBox
+                                android:id="@+id/cbSaturday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:text="Saturday"
+                                android:textColor="@android:color/black" />
 
-                    </GridLayout>
+                            <CheckBox
+                                android:id="@+id/cbSunday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:text="Sunday"
+                                android:textColor="@android:color/black" />
 
-                </RadioGroup>
+                        </GridLayout>
+
+                    </RadioGroup>
 
 
-                <!-- Time Picker Layout -->
-                <TextView
-                    android:id="@+id/tvSelectTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/black"
-                    android:text="Select Time Range"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rdDay" />
+                    <!-- Time Picker Layout -->
+                    <TextView
+                        android:id="@+id/tvSelectTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Select Time Range"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rdDay" />
+
+
+                    <TextView
+                        android:id="@+id/tvSelectTime2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-2dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_light"
+                        app:layout_constraintStart_toEndOf="@+id/tvSelectTime"
+                        app:layout_constraintTop_toTopOf="@+id/tvSelectTime" />
+
+
+                    <View
+                        android:id="@+id/linest"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                      android:layout_marginTop="5dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginEnd="238dp"
+                        android:layout_marginStart="13dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSelectTime" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etStartTimeLayout"
@@ -228,7 +322,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/etEndTimeLayout"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSelectTime">
+                        app:layout_constraintTop_toBottomOf="@+id/linest">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etStartTime"
@@ -239,24 +333,24 @@
                             android:hint="Start Time (e.g., 8:00 AM)" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/etEndTimeLayout"
-                    style="@style/LoginTextInputOuterFieldStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/etStartTimeLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/tvSelectTime">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etEndTime"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/etEndTimeLayout"
+                        style="@style/LoginTextInputOuterFieldStyle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:hint="End Time (e.g., 5:00 PM)" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_margin="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/etStartTimeLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/linest">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEndTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:hint="End Time (e.g., 5:00 PM)" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -266,10 +360,10 @@
                 android:id="@+id/cvvaccine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
                 app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cvDateandTime">
 
@@ -279,25 +373,87 @@
                     android:layout_height="wrap_content">
 
 
-                    <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                     >
 
-                        <Button
-                            android:id="@+id/addButton"
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:paddingHorizontal="15dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/lblvac"
+                            android:layout_width="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content"
+                            android:text="Add Vaccine Available"/>
+
+                        <TextView
+                            android:id="@+id/lblvac2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Add" />
+                            android:layout_marginTop="-2dp"
+                            android:text="*"
+                            android:textColor="@android:color/holo_red_light" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="13dp"
+                            android:background="@android:color/darker_gray"
+                            android:layout_marginVertical="8dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                        android:text="Vaccine Type"
+                            android:layout_width="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginStart="15dp"
+                            android:textSize="18dp"
+                         android:paddingEnd="50dp"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                        android:text="Quantity"
+                            android:layout_width="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                         android:layout_marginHorizontal="13dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginVertical="8dp" />
 
                         <LinearLayout
                             android:id="@+id/vaccineList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingTop="16dp" />
+                            />
+                        <Button
+                            android:id="@+id/addButton"
+                            android:layout_width="300dp"
+                            android:paddingTop="15dp"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:layout_marginBottom="12dp"
+                            android:layout_height="wrap_content"
+                            android:text="Add" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -343,7 +499,7 @@
                     android:layout_height="wrap_content"
                     android:elevation="2dp">
 
-                  <!--  <fragment
+                    <!--  <fragment
                         android:id="@+id/ivMapView"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
@@ -416,161 +572,106 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-            <TextView
-                android:id="@+id/lblPhoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Phone Number"
-                android:textColor="#000000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblClinicDoctorDetails" />
-
-            <TextView
-                android:id="@+id/lblPhoneNumber2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp"
-                android:text="*"
-
-                android:textColor="@android:color/holo_red_light"
-                app:layout_constraintStart_toEndOf="@+id/lblPhoneNumber"
-                app:layout_constraintTop_toTopOf="@+id/lblPhoneNumber" />
 
 
+            <!-- First name -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etPhoneNumLayout"
+                android:id="@+id/usernameLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
                 app:errorTextColor="@color/clear"
-                app:hintEnabled="false"
                 app:hintTextColor="@color/violet"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingStart="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/lastnameLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblPhoneNumber">
+                app:layout_constraintTop_toBottomOf="@+id/lblClinicDoctorDetails">
+
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhoneNumber"
-                    style="LoginTextInputInnerFieldStyle"
+                    android:id="@+id/editTextFirstName"
+                    style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:minHeight="48dp"
-                    android:paddingStart="100dp"
-                    android:text="92312312312312"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/black"
-                    app:backgroundTintMode="multiply" />
+                    android:fontFamily="@font/poppins"
+                    android:hint="First Name"
+                    android:inputType="textPersonName|textCapWords"
+                    android:enabled="false"
+                    android:textColorHint="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/login_countrycode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                app:ccp_showFlag="false"
-                app:ccp_showNameCode="true"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblPhoneNumber" />
+            <!-- lastname -->
 
-            <TextView
-                android:id="@+id/lblEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Doctor's Email"
-                android:textColor="#000000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPhoneNumLayout" />
-
-            <TextView
-                android:id="@+id/lblEmail2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp"
-                android:text="*"
-
-                android:textColor="@android:color/holo_red_light"
-                app:layout_constraintStart_toEndOf="@+id/lblEmail"
-                app:layout_constraintTop_toTopOf="@+id/lblEmail" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etEmailLayout"
+                android:id="@+id/lastnameLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:paddingEnd="10dp"
+                android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
                 app:errorTextColor="@color/clear"
-                app:hintEnabled="false"
                 app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblEmail">
+
+                app:layout_constraintStart_toEndOf="@+id/usernameLayout"
+                app:layout_constraintTop_toBottomOf="@+id/lblClinicDoctorDetails">
+
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
-                    style="LoginTextInputInnerFieldStyle"
+                    android:id="@+id/lastnameEt"
+                    style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/black"
-                    app:backgroundTintMode="multiply" />
+                    android:fontFamily="@font/poppins"
+                    android:hint="Last Name"
+                    android:enabled="false"
+                    android:inputType="textPersonName|textCapWords"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/lblusername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Doctor's Name"
-                android:textColor="#000000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etEmailLayout" />
 
-            <TextView
-                android:id="@+id/lblusername2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp"
-                android:text="*"
 
-                android:textColor="@android:color/holo_red_light"
-                app:layout_constraintStart_toEndOf="@+id/lblusername"
-                app:layout_constraintTop_toTopOf="@+id/lblusername" />
 
+
+
+            <!--  email -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etUsernameLayout"
+                android:id="@+id/emailLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
                 app:errorTextColor="@color/clear"
-                app:hintEnabled="false"
-                app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.32"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblusername">
+                android:paddingHorizontal="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/usernameLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etusername"
-                    style="LoginTextInputInnerFieldStyle"
+                    android:id="@+id/editTextEmail"
+                    style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/black"
-                    app:backgroundTintMode="multiply" />
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -583,7 +684,7 @@
                 android:textColor="#000000"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etUsernameLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/emailLayout" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -661,9 +762,6 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 
             <CheckBox

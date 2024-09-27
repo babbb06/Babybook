@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -29,6 +30,7 @@ public class AddClinicActivity extends AppCompatActivity {
     private List<String> vaccines;
     private TextInputEditText etStartTime;
     private TextInputEditText etEndTime;
+    private TextInputEditText quantityInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,22 +93,32 @@ public class AddClinicActivity extends AppCompatActivity {
 
         // Get references to the TextView and EditText in the dialog
         TextView vaccineNameTextView = dialogView.findViewById(R.id.vaccineNameTextView);
-        EditText quantityInput = dialogView.findViewById(R.id.quantityInput);
+        quantityInput = dialogView.findViewById(R.id.quantityInput);
+        ImageView buttonMinus = dialogView.findViewById(R.id.buttonMinus);
+        ImageView buttonPlus = dialogView.findViewById(R.id.buttonPlus);
 
         // Set the vaccine name in the TextView
         vaccineNameTextView.setText(vaccine);
 
+        // Set up click listener for minus button
+        buttonMinus.setOnClickListener(v -> adjustQuantity(-1));
+
+        // Set up click listener for plus button
+        buttonPlus.setOnClickListener(v -> adjustQuantity(1));
+
         builder.setPositiveButton("OK", (dialog, which) -> {
                     String quantity = quantityInput.getText().toString();
-                    addVaccineToList(vaccine, quantity);
+                    if (quantity.isEmpty()) {
+                        quantityInput.setError("Quantity is required");
+                    } else {
+                        addVaccineToList(vaccine, quantity);
+                    }
                 })
                 .setNegativeButton("Cancel", null);
 
         // Show the dialog
         builder.create().show();
     }
-
-
 
     private void addVaccineToList(String vaccine, String quantity) {
         // Inflate the vaccine list item layout
@@ -124,6 +136,22 @@ public class AddClinicActivity extends AppCompatActivity {
         vaccineList.addView(vaccineItem);
     }
 
+    private void adjustQuantity(int adjustment) {
+        // Get current quantity
+        String currentQuantityStr = quantityInput.getText().toString();
+        int currentQuantity = currentQuantityStr.isEmpty() ? 0 : Integer.parseInt(currentQuantityStr);
+
+        // Adjust quantity
+        currentQuantity += adjustment;
+
+        // Ensure quantity does not go below zero
+        if (currentQuantity < 0) {
+            currentQuantity = 0; // Prevent negative quantities
+        }
+
+        // Set updated quantity back to the EditText
+        quantityInput.setText(String.valueOf(currentQuantity));
+    }
 
     private void showTimePickerDialog(final boolean isStartTime) {
         Calendar calendar = Calendar.getInstance();
@@ -166,5 +194,4 @@ public class AddClinicActivity extends AppCompatActivity {
 
         timePickerDialog.show();
     }
-
 }
