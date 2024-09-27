@@ -2,21 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Base.Theme.BabyBook"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="140dp"
     android:background="@drawable/sidebarbg"
     android:gravity="bottom"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="20dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewImage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_gravity="center"
-        android:elevation="1dp"
-        android:layout_marginTop="15dp"
-        app:cardCornerRadius="50dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:elevation="1dp"
+        app:cardCornerRadius="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -38,18 +40,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:ellipsize="end"
         android:fontFamily="@font/poppins_semibold"
         android:hint="Loading..."
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:ellipsize="end"
         android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cardViewImage"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardViewImage"
-        app:layout_constraintTop_toTopOf="@+id/cardViewImage"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/cardViewImage" />
 
 
     <TextView
@@ -59,7 +61,7 @@
         android:fontFamily="@font/poppins"
         android:hint="Loading..."
         android:textColor="#595959"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/full_name"
         app:layout_constraintTop_toBottomOf="@+id/full_name" />

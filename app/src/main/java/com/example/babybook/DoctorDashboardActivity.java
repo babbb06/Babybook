@@ -36,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class DoctorDashboardActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
@@ -216,18 +217,37 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         String doctorName = document.getString("fullName");
-                        Post post = new Post(null, userId, doctorName, content, System.currentTimeMillis());
-                        db.collection("posts").add(post).addOnSuccessListener(documentReference -> {
-                            Toast.makeText(DoctorDashboardActivity.this, "Post created", Toast.LENGTH_SHORT).show();
-                            loadPosts();
-                        }).addOnFailureListener(e -> {
-                            Toast.makeText(DoctorDashboardActivity.this, "Error creating post", Toast.LENGTH_SHORT).show();
-                        });
+                        String doctorProfile = document.getString("profileImageUrl");
+                        String specialization = document.getString("specialization");
+
+                        // Ensure name and profile are not null
+                        if (doctorName != null && doctorProfile != null) {
+                            Post post = new Post(null, userId, doctorName, content, System.currentTimeMillis(), doctorProfile, specialization);
+
+                            // Add the post to Firestore
+                            db.collection("posts").add(post).addOnSuccessListener(documentReference -> {
+                                // Get the auto-generated postId and update the post document
+                                String postId = documentReference.getId();
+                                documentReference.update("postId", postId)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Toast.makeText(DoctorDashboardActivity.this, "Post created", Toast.LENGTH_SHORT).show();
+                                            loadPosts(); // Reload posts after successful creation
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(DoctorDashboardActivity.this, "Error updating postId", Toast.LENGTH_SHORT).show();
+                                        });
+                            }).addOnFailureListener(e -> {
+                                Toast.makeText(DoctorDashboardActivity.this, "Error creating post", Toast.LENGTH_SHORT).show();
+                            });
+                        } else {
+                            Toast.makeText(DoctorDashboardActivity.this, "Doctor profile data missing", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });
         }
     }
+
 
     private void loadPosts() {
         db.collection("posts")
