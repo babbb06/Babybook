@@ -16,16 +16,16 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="47dp"
-        tools:layout_editor_absoluteY="-3dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-
-        android:layout_height="670dp"
-
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +40,7 @@
                 android:id="@+id/lblClinicDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/violet4"
                 android:textSize="25dp"
@@ -319,6 +319,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
+                        android:textColorHint="@color/black"
+                        app:boxStrokeColor="@color/violet"
+                        app:boxStrokeErrorColor="@color/colorError"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/etEndTimeLayout"
                         app:layout_constraintStart_toStartOf="parent"
@@ -339,6 +342,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
+                        android:textColorHint="@color/black"
+                        app:boxStrokeColor="@color/violet"
+                        app:boxStrokeErrorColor="@color/colorError"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/etStartTimeLayout"
                         app:layout_constraintTop_toBottomOf="@+id/linest">
@@ -474,10 +480,9 @@
                 android:id="@+id/lblMapLocation2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-113dp"
+                android:layout_marginStart="-125dp"
                 android:layout_marginTop="-2dp"
                 android:text="*"
-
                 android:textColor="@android:color/holo_red_light"
                 app:layout_constraintStart_toEndOf="@+id/lblMapLocation"
                 app:layout_constraintTop_toTopOf="@+id/lblMapLocation" />
