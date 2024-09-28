@@ -1,14 +1,19 @@
 package com.example.babybook;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +41,17 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
         etPhoneNumber = findViewById(R.id.etPhoneNumberClinic);
         editTextSpecialization = findViewById(R.id.editTextSpecialization);
         btnUpdateProfile = findViewById(R.id.profle_update_btn);
+
+
+        // Initialize the toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Update Profile");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Show back button
+        }
+
+
 
         // Initialize Firestore and FirebaseAuth
         db = FirebaseFirestore.getInstance();
@@ -130,5 +146,14 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
 
 
 
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle action bar item clicks here.
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish(); // Close the current activity and return to the previous one
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
