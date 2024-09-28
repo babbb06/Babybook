@@ -240,6 +240,18 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             return;
         }
 
+        //EMAIL ERROR HANDLING
+        if (TextUtils.isEmpty(phoneNumber)) {
+            etPhoneNumber.setError("Please enter your Phone Number");
+            etPhoneNumber.requestFocus();
+            return;
+        }
+        if (phoneNumber.length() < 10) {
+            etPhoneNumber.setError("Phone Number must be valid");
+            etPhoneNumber.requestFocus();
+            return;
+        }
+
 
 //PASSWORD ERROR HANDLING
         if (TextUtils.isEmpty(password)) {
@@ -262,17 +274,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         }
 
 
-//EMAIL ERROR HANDLING
-        if (TextUtils.isEmpty(phoneNumber)) {
-            etPhoneNumber.setError("Please enter your Phone Number");
-            etPhoneNumber.requestFocus();
-            return;
-        }
-        if (phoneNumber.length() < 10) {
-            etPhoneNumber.setError("Phone Number must be valid");
-            etPhoneNumber.requestFocus();
-            return;
-        }
+
 
         //Bday ERROR HANDLING
         if (TextUtils.isEmpty(birthday)) {
