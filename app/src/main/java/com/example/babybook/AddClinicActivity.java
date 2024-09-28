@@ -4,12 +4,15 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+
+
+
+
+
 public class AddClinicActivity extends AppCompatActivity {
 
     private LinearLayout vaccineList;
@@ -35,6 +46,21 @@ public class AddClinicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_clinic);
+
+
+
+
+        // Set up the toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Clinic");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Show back button
+        }
+
+
+
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -92,9 +118,32 @@ public class AddClinicActivity extends AppCompatActivity {
         // Get references to the TextView and EditText in the dialog
         TextView vaccineNameTextView = dialogView.findViewById(R.id.vaccineNameTextView);
         EditText quantityInput = dialogView.findViewById(R.id.quantityInput);
+        ImageView buttonPlus = dialogView.findViewById(R.id.buttonPlus);
+        ImageView buttonMinus = dialogView.findViewById(R.id.buttonMinus);
 
         // Set the vaccine name in the TextView
         vaccineNameTextView.setText(vaccine);
+
+        // Set initial quantity
+        quantityInput.setText("1");
+
+        // Add functionality for the minus button
+        buttonMinus.setOnClickListener(view -> {
+            int currentQuantity = Integer.parseInt(quantityInput.getText().toString());
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                quantityInput.setText(String.valueOf(currentQuantity));
+            }
+        });
+
+        // Add functionality for the plus button
+        buttonPlus.setOnClickListener(view -> {
+            int currentQuantity = Integer.parseInt(quantityInput.getText().toString());
+            if (currentQuantity < 999) { // Set a max limit for safety
+                currentQuantity++;
+                quantityInput.setText(String.valueOf(currentQuantity));
+            }
+        });
 
         builder.setPositiveButton("OK", (dialog, which) -> {
                     String quantity = quantityInput.getText().toString();
@@ -105,8 +154,6 @@ public class AddClinicActivity extends AppCompatActivity {
         // Show the dialog
         builder.create().show();
     }
-
-
 
     private void addVaccineToList(String vaccine, String quantity) {
         // Inflate the vaccine list item layout
@@ -123,7 +170,17 @@ public class AddClinicActivity extends AppCompatActivity {
         // Add the inflated view to the vaccine list
         vaccineList.addView(vaccineItem);
     }
-
+    // Override onOptionsItemSelected to handle back button click
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: // ID for the back button
+                onBackPressed(); // Call this to go back
+                return true; // Indicate that the event was handled
+            default:
+                return super.onOptionsItemSelected(item); // Handle other menu items if any
+        }
+    }
 
     private void showTimePickerDialog(final boolean isStartTime) {
         Calendar calendar = Calendar.getInstance();
@@ -166,5 +223,4 @@ public class AddClinicActivity extends AppCompatActivity {
 
         timePickerDialog.show();
     }
-
 }
