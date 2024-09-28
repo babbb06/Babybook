@@ -101,6 +101,13 @@ public class UpdateProfile extends AppCompatActivity {
                                 String email = document.getString("email");
                                 String phoneNumber = document.getString("phoneNumber");
 
+                                // Remove first 3 characters from phone number if it is long enough
+                                if (phoneNumber.length() > 3) {
+                                    phoneNumber = phoneNumber.substring(3);
+                                } else {
+                                    phoneNumber = ""; // Or handle this case as needed
+                                }
+
                                 // Set data to EditText fields
                                 editTextFirstName.setText(firstName);
                                 editTextLastName.setText(lastName);
@@ -127,8 +134,9 @@ public class UpdateProfile extends AppCompatActivity {
         String lastName = editTextLastName.getText().toString();
         String email = editTextEmail.getText().toString();
         String phoneNumber = etPhoneNumber.getText().toString();
+        String fullphoneNumber = "+36" + phoneNumber;
 
-        FirebaseUser currentUser = auth.getCurrentUser();
+                FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid(); // Get the current user ID
 
@@ -137,7 +145,7 @@ public class UpdateProfile extends AppCompatActivity {
                     .update("firstName", firstName,
                             "lastName", lastName,
                             "email", email,
-                            "phoneNumber", phoneNumber)
+                            "phoneNumber", fullphoneNumber)
                     .addOnCompleteListener(task -> {
                         progressBar.setVisibility(View.GONE); // Hide progress bar after update
                         if (task.isSuccessful()) {

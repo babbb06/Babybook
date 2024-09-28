@@ -120,7 +120,7 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
         String email = editTextEmail.getText().toString();
         String phoneNumber = etPhoneNumber.getText().toString();
         String specialization = editTextSpecialization.getText().toString();
-
+        String fullphoneNumber = "+36" + phoneNumber;
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid(); // Get the current user ID
@@ -130,7 +130,7 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
                     .update("firstName", firstName,
                             "lastName", lastName,
                             "email", email,
-                            "phoneNumber", phoneNumber,
+                            "phoneNumber", fullphoneNumber,
                             "specialization", specialization)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
