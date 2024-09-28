@@ -164,6 +164,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                         // Update the TextInputEditText with the selected date
                         String date = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                         editTextBirthday.setText(date);
+                        editTextBirthday.setError(null);
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -223,12 +224,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         }
 
 
-        //Bday ERROR HANDLING
-        if (TextUtils.isEmpty(birthday)) {
-            editTextBirthday.setError("Please enter your Birthday");
-            editTextBirthday.requestFocus();
-            return;
-        }
 
 
 //EMAIL ERROR HANDLING
@@ -276,6 +271,13 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         if (phoneNumber.length() < 10) {
             etPhoneNumber.setError("Phone Number must be valid");
             etPhoneNumber.requestFocus();
+            return;
+        }
+
+        //Bday ERROR HANDLING
+        if (TextUtils.isEmpty(birthday)) {
+            editTextBirthday.setError("Please enter your Birthday");
+            editTextBirthday.requestFocus();
             return;
         }
 
