@@ -1,6 +1,7 @@
 package com.example.babybook;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -60,6 +61,16 @@ public class UpdateProfile extends AppCompatActivity {
         lastnameLayout = findViewById(R.id.lastnameLayout);
         emailLayout = findViewById(R.id.emailLayout);
         etPhoneNumberLayout = findViewById(R.id.etPhoneNumberLayout);
+
+        // Initialize the toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Update Profile");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Show back button
+        }
+
+
 
         // Fetch user data
         fetchUserData();
@@ -139,5 +150,16 @@ public class UpdateProfile extends AppCompatActivity {
             progressBar.setVisibility(View.GONE); // Hide progress bar if no user is logged in
             Toast.makeText(this, "No user is logged in", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle action bar item clicks here.
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish(); // Close the current activity and return to the previous one
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
