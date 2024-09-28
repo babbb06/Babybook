@@ -72,7 +72,7 @@
                     app:hintTextColor="@color/violet"
                     app:layout_constraintEnd_toStartOf="@+id/lastnameLayout"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lbletSignup">
+                    app:layout_constraintTop_toTopOf="parent">
 
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -103,8 +103,8 @@
                     app:errorTextColor="@color/clear"
                     app:hintTextColor="@color/violet"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/usernameLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/lbletSignup">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/usernameLayout">
 
 
                     <com.google.android.material.textfield.TextInputEditText
