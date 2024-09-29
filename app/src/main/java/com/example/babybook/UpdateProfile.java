@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -100,6 +102,8 @@ public class UpdateProfile extends AppCompatActivity {
                                 String lastName = document.getString("lastName");
                                 String email = document.getString("email");
                                 String phoneNumber = document.getString("phoneNumber");
+                                String userProfileImageUrl = document.getString("profileImageUrl");
+
 
                                 // Remove first 3 characters from phone number if it is long enough
                                 if (phoneNumber.length() > 3) {
@@ -113,6 +117,11 @@ public class UpdateProfile extends AppCompatActivity {
                                 editTextLastName.setText(lastName);
                                 editTextEmail.setText(email);
                                 etPhoneNumber.setText(phoneNumber);
+
+                                // Load the image using Glide
+                                Glide.with(UpdateProfile.this)
+                                        .load(userProfileImageUrl)
+                                        .into(profilePicture);
                             } else {
                                 Toast.makeText(UpdateProfile.this, "No such document", Toast.LENGTH_SHORT).show();
                             }

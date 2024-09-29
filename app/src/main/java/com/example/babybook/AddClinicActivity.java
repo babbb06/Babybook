@@ -26,7 +26,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.babybook.model.Clinic;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -64,6 +67,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
     private Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
     private Button btnSubmit;
     private FirebaseFirestore db;
+    EditText etFirstName, etLastName, etEmail, etClinicName, etClinicNumber;
 
 
 
@@ -116,7 +120,17 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
         tvNoPin = findViewById(R.id.tvnoPin);
         tvPinSuccess = findViewById(R.id.tvPinSuccess);
         btnSubmit = findViewById(R.id.btnSubmit);
+
+        etFirstName = findViewById(R.id.editTextFirstName);
+        etLastName = findViewById(R.id.lastnameEt);
+        etEmail = findViewById(R.id.editTextEmail);
+        etClinicName = findViewById(R.id.editTextClinicName);
+        etClinicNumber = findViewById(R.id.etPhoneNumberClinic);
+
         db = FirebaseFirestore.getInstance();
+
+        // Fetch Doc data
+        fetchUserData();
 
         // List of vaccines
         vaccines = new ArrayList<>();
@@ -163,10 +177,13 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
                         String doctorName = document.getString("fullName");
                         String doctorProfile = document.getString("profileImageUrl");
                         String specialization = document.getString("specialization");
+                        String clinicName = etClinicName.getText().toString().trim();
+                        String clinicPhoneNumber = "+63" + etClinicNumber.getText().toString().trim();
+
 
                         // Ensure name and profile are not null
                         if (doctorName != null && doctorProfile != null) {
-                            Clinic clinic = new Clinic(null, userId, doctorName, latitude, longitude, System.currentTimeMillis(), doctorProfile, specialization);
+                            Clinic clinic = new Clinic(null, clinicName, clinicPhoneNumber,  userId, doctorName, latitude, longitude, System.currentTimeMillis(), doctorProfile, specialization);
 
                             // Add the Clinic to Firestore
                             db.collection("clinics").add(clinic).addOnSuccessListener(documentReference -> {
@@ -321,6 +338,46 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
         };
 
         timePickerDialog.show();
+    }
+
+    private void fetchUserData() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid(); // Get the current user ID
+
+            db.collection("doctorUsers").document(userId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    // Get data from Firestore
+                                    String firstName = document.getString("firstName");
+                                    String lastName = document.getString("lastName");
+                                    String email = document.getString("email");
+
+
+
+
+                                    // Set data to EditText fields
+                                    etFirstName.setText(firstName);
+                                    etLastName.setText(lastName);
+                                    etEmail.setText(email);
+
+
+                                } else {
+                                    Toast.makeText(AddClinicActivity.this, "No such document", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(AddClinicActivity.this, "Fetch failed: " + task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "No user is logged in", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*---------------------------------MAP----------------------------------------------------*/

@@ -63,7 +63,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
     implementation ("com.google.firebase:firebase-storage:20.2.1") // Add this line for Firebase Storage
     implementation("com.google.firebase:firebase-auth")
-    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation ("androidx.appcompat:appcompat:1.7.0")
     implementation ("androidx.annotation:annotation:1.4.0")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("androidx.fragment:fragment:1.5.5")

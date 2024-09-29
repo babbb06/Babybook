@@ -17,7 +17,8 @@
         android:theme="@style/ToFontBold"
         app:layout_constraintTop_toTopOf="parent"
         app:subtitleTextColor="@android:color/white"
-        app:titleTextColor="@color/white" />
+        app:titleMarginTop="13dp"
+        app:titleTextColor="@color/white"/>
 
 
     <androidx.core.widget.NestedScrollView

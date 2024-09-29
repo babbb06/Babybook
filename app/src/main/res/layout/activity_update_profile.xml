@@ -11,8 +11,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="@style/ToFontBold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleMarginTop="13dp"
+        app:titleTextColor="@color/white"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView2"

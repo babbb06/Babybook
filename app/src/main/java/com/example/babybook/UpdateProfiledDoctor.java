@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +28,7 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
 
     private EditText editTextFirstName, editTextLastName, editTextEmail, etPhoneNumber, editTextSpecialization;
     private Button btnUpdateProfile;
+    ImageView ivProfilePicture;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
 
@@ -41,6 +44,7 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
         etPhoneNumber = findViewById(R.id.etPhoneNumberClinic);
         editTextSpecialization = findViewById(R.id.editTextSpecialization);
         btnUpdateProfile = findViewById(R.id.profle_update_btn);
+        ivProfilePicture = findViewById(R.id.ivProfilePicture);
 
 
         // Initialize the toolbar
@@ -48,7 +52,10 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Update Profile");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Show back button
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.backbtn);
+
         }
 
 
@@ -86,6 +93,8 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
                                     String email = document.getString("email");
                                     String phoneNumber = document.getString("phoneNumber");
                                     String specialization = document.getString("specialization");
+                                    String userProfileImageUrl = document.getString("profileImageUrl");
+
 
                                     // Remove first 3 characters from phone number if it is long enough
                                     if (phoneNumber.length() > 3) {
@@ -100,6 +109,11 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
                                     editTextEmail.setText(email);
                                     etPhoneNumber.setText(phoneNumber);
                                     editTextSpecialization.setText(specialization);
+
+                                    // Load the image using Glide
+                                    Glide.with(UpdateProfiledDoctor.this)
+                                            .load(userProfileImageUrl)
+                                            .into(ivProfilePicture);
                                 } else {
                                     Toast.makeText(UpdateProfiledDoctor.this, "No such document", Toast.LENGTH_SHORT).show();
                                 }
@@ -146,12 +160,11 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
 
 
 
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Handle action bar item clicks here.
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish(); // Close the current activity and return to the previous one
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

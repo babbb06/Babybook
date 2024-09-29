@@ -11,6 +11,8 @@ public class Clinic {
     private long timestamp;
     private String profileImageUrl;
     private String specialization;
+    private String clinicName;
+    private String clinicPhoneNumber;
 
     private boolean isExpanded;  // New field for expansion tracking
 
@@ -18,7 +20,7 @@ public class Clinic {
         // Default constructor required for Firestore
     }
 
-    public Clinic(String clinicId, String doctorId, String doctorName, Double latitude, Double longitude, long timestamp, String profileImageUrl, String specialization) {
+    public Clinic(String clinicId, String clinicName, String clinicPhoneNumber, String doctorId, String doctorName, Double latitude, Double longitude, long timestamp, String profileImageUrl, String specialization) {
         this.clinicId = clinicId;
         this.doctorId = doctorId;
         this.doctorName = doctorName;
@@ -27,6 +29,8 @@ public class Clinic {
         this.timestamp = timestamp;
         this.profileImageUrl = profileImageUrl;
         this.specialization = specialization;
+        this.clinicName = clinicName;
+        this.clinicPhoneNumber = clinicPhoneNumber;
     }
 
     /*public boolean isExpanded() {
@@ -100,5 +104,21 @@ public class Clinic {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getClinicPhoneNumber() {
+        return clinicPhoneNumber;
+    }
+
+    public void setClinicPhoneNumber(String clinicPhoneNumber) {
+        this.clinicPhoneNumber = clinicPhoneNumber;
+    }
+
+    public String getClinicName() {
+        return clinicName;
+    }
+
+    public void setClinicName(String clinicName) {
+        this.clinicName = clinicName;
     }
 }

@@ -25,6 +25,7 @@
             app:title="BabyBook"
             android:theme="@style/ToFontBold"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleMarginTop="13dp"
             app:titleTextColor="@color/white"
             app:subtitleTextColor="@android:color/white"/>
 

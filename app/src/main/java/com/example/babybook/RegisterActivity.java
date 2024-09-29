@@ -96,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser() {
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
+        String fullName = firstName + " " + lastName;
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
         String confirmPassword = editTextConfirmPassword.getText().toString();
@@ -168,20 +169,21 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         String userId = mAuth.getCurrentUser().getUid();
-                        uploadProfilePicture(userId, firstName, lastName, email, fullphoneNumber); // Pass phone number
+                        uploadProfilePicture(userId, firstName, lastName, fullName, email, fullphoneNumber); // Pass phone number
                     } else {
                         Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void saveUserData(String firstName, String lastName, String email, String fullphoneNumber, String profileImageUrl) {
+    private void saveUserData(String firstName, String lastName, String fullName, String email, String fullphoneNumber, String profileImageUrl) {
         String userId = mAuth.getCurrentUser().getUid();
 
         Map<String, Object> user = new HashMap<>();
         user.put("ParentID", userId);
         user.put("firstName", firstName); // Store the first name
         user.put("lastName", lastName);   // Store the last name
+        user.put("fullName", fullName);
         user.put("email", email);
         user.put("phoneNumber", fullphoneNumber); // Store the phone number
         user.put("profileImageUrl", profileImageUrl); // Store the profile image URL
@@ -222,7 +224,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadProfilePicture(String userId, String firstName, String lastName, String email, String fullphoneNumber) {
+    private void uploadProfilePicture(String userId, String firstName, String lastName, String fullName, String email, String fullphoneNumber) {
         if (selectedImageUri != null) {
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("parent_profile_pictures");
             StorageReference imageRef = storageRef.child(userId + ".jpg");
@@ -231,7 +233,7 @@ public class RegisterActivity extends AppCompatActivity {
                     .addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl().addOnCompleteListener(downloadUrlTask -> {
                         if (downloadUrlTask.isSuccessful()) {
                             // Save user data with profile image URL
-                            saveUserData(firstName, lastName, email, fullphoneNumber, downloadUrlTask.getResult().toString());
+                            saveUserData(firstName, lastName, fullName, email, fullphoneNumber, downloadUrlTask.getResult().toString());
                         } else {
                             Toast.makeText(RegisterActivity.this, "Failed to get image URL", Toast.LENGTH_SHORT).show();
                         }
