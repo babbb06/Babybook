@@ -1,6 +1,8 @@
 package com.example.babybook.model;
 
-import com.google.android.gms.maps.model.LatLng;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Clinic {
     private String clinicId;
@@ -10,9 +12,15 @@ public class Clinic {
     private Double longitude;
     private long timestamp;
     private String profileImageUrl;
+    private String clinicProfileUrl;
     private String specialization;
     private String clinicName;
     private String clinicPhoneNumber;
+    private String schedStartTime;
+    private String schedEndTime;
+    private List<String> schedDays;
+    private Map<String, Integer> vaccines;
+
 
     private boolean isExpanded;  // New field for expansion tracking
 
@@ -20,7 +28,7 @@ public class Clinic {
         // Default constructor required for Firestore
     }
 
-    public Clinic(String clinicId, String clinicName, String clinicPhoneNumber, String doctorId, String doctorName, Double latitude, Double longitude, long timestamp, String profileImageUrl, String specialization) {
+    public Clinic(String clinicId, String clinicName, String clinicPhoneNumber, String clinicProfileUrl, List<String> schedDays, String schedStartTime, String schedEndTime, String doctorId, String doctorName, Double latitude, Double longitude, long timestamp, String profileImageUrl, String specialization, Map<String, Integer> vaccines) {
         this.clinicId = clinicId;
         this.doctorId = doctorId;
         this.doctorName = doctorName;
@@ -31,6 +39,12 @@ public class Clinic {
         this.specialization = specialization;
         this.clinicName = clinicName;
         this.clinicPhoneNumber = clinicPhoneNumber;
+        this.clinicProfileUrl = clinicProfileUrl;
+        this.schedStartTime = schedStartTime;
+        this.schedEndTime = schedEndTime;
+        this.schedDays = schedDays;
+        this.vaccines = vaccines != null ? vaccines : new HashMap<>();
+
     }
 
     /*public boolean isExpanded() {
@@ -120,5 +134,45 @@ public class Clinic {
 
     public void setClinicName(String clinicName) {
         this.clinicName = clinicName;
+    }
+
+    public String getSchedEndTime() {
+        return schedEndTime;
+    }
+
+    public void setSchedEndTime(String schedEndTime) {
+        this.schedEndTime = schedEndTime;
+    }
+
+    public String getSchedStartTime() {
+        return schedStartTime;
+    }
+
+    public void setSchedStartTime(String schedStartTime) {
+        this.schedStartTime = schedStartTime;
+    }
+
+    public List<String> getSchedDays() {
+        return schedDays;
+    }
+
+    public void setSchedDays(List<String> schedDays) {
+        this.schedDays = schedDays;
+    }
+
+    public Map<String, Integer> getVaccines() {
+        return vaccines;
+    }
+
+    public void setVaccines(Map<String, Integer> vaccines) {
+        this.vaccines = vaccines;
+    }
+
+    public String getClinicProfileUrl() {
+        return clinicProfileUrl;
+    }
+
+    public void setClinicProfileUrl(String clinicProfileUrl) {
+        this.clinicProfileUrl = clinicProfileUrl;
     }
 }
