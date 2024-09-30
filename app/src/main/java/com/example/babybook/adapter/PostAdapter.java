@@ -44,7 +44,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         Glide.with(holder.itemView.getContext())
                 .load(post.getProfileImageUrl() + "?t=" + System.currentTimeMillis()) // Force refresh
-                .placeholder(R.drawable.baby_book_logo)
+                .placeholder(R.drawable.loading_image)
                 .error(R.drawable.add)
                 .into(holder.doctorImg);
 
