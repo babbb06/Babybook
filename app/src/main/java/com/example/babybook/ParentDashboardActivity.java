@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,14 +83,20 @@ public class ParentDashboardActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         Toast.makeText(ParentDashboardActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.nav_tracking:
-                        // Navigate to GeofenceActivity
-                        break; // Added break statement here
+
                     case R.id.nav_health:
                         // Navigate to HealthRecordActivity
                         Intent healthIntent = new Intent(ParentDashboardActivity.this, HealthRecordParentActivity.class);
                         startActivity(healthIntent);
                         break;
+
+                    case R.id.nav_clinic:
+                        // Navigate to HealthRecordActivity
+                        Intent clinicIntent = new Intent(ParentDashboardActivity.this, SearchClinicActivity.class);
+                        startActivity(clinicIntent);
+                        break;
+
+
                     case R.id.nav_chat:
                         // Navigate to SearchDoctorChatActivity
                         Intent chatIntent = new Intent(ParentDashboardActivity.this, SearchDoctorChatActivity.class);
