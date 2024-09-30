@@ -181,7 +181,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="13dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="220dp"
+                        android:layout_marginEnd="180dp"
                         android:background="@android:color/darker_gray"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -200,10 +200,10 @@
                             android:id="@+id/rdDay1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                          android:layout_gravity="left"
                             android:columnCount="3"
                             android:elevation="2dp"
-                            android:padding="8dp"
+                            android:padding="5dp"
                             android:rowCount="3">
 
                             <CheckBox
@@ -211,7 +211,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:padding="8dp"
+                                android:paddingEnd="2dp"
                                 android:text="Monday"
                                 android:textColor="@android:color/black" />
 
@@ -220,7 +220,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:padding="8dp"
+                                android:paddingEnd="4dp"
                                 android:text="Tuesday"
                                 android:textColor="@android:color/black" />
 
@@ -229,7 +229,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:padding="8dp"
+                                android:paddingEnd="4dp"
                                 android:text="Wednesday"
                                 android:textColor="@android:color/black" />
 
@@ -238,7 +238,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:padding="8dp"
+                                android:paddingEnd="4dp"
                                 android:text="Thursday"
                                 android:textColor="@android:color/black" />
 
@@ -247,7 +247,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:padding="8dp"
+                                android:paddingEnd="8dp"
                                 android:text="Friday"
                                 android:textColor="@android:color/black" />
 
@@ -256,7 +256,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:padding="8dp"
+                                android:paddingEnd="8dp"
                                 android:text="Saturday"
                                 android:textColor="@android:color/black" />
 
@@ -265,7 +265,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
-                                android:padding="8dp"
+                                android:paddingEnd="8dp"
                                 android:text="Sunday"
                                 android:textColor="@android:color/black" />
 

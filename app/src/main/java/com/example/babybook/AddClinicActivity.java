@@ -182,14 +182,18 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
         });
 
         btnSubmit.setOnClickListener(v -> {
-            if (selectedLocation != null) {
-                createClinic(selectedLocation.latitude, selectedLocation.longitude);
-                Log.d("ClinicData", "Latitude: " + selectedLocation.latitude + ", Longitude: " + selectedLocation.longitude);
-
+            if (validateInputs()) {  // Validate all inputs before creating the clinic
+                if (selectedLocation != null) {
+                    createClinic(selectedLocation.latitude, selectedLocation.longitude);
+                    Log.d("ClinicData", "Latitude: " + selectedLocation.latitude + ", Longitude: " + selectedLocation.longitude);
+                } else {
+                    Toast.makeText(this, "Please select a location on the map.", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(this, "Please select a location on the map.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please fill in all the required fields.", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         btnCancel.setOnClickListener(v -> {
             finish(); // Close the activity
@@ -199,6 +203,37 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
 
 
 
+    }
+    private boolean validateInputs() {
+
+
+        if (etClinicName.getText().toString().trim().isEmpty()) {
+            etClinicName.setError("Clinic name is required");
+            etClinicName.requestFocus();
+            return false;
+        }
+        if (etClinicNumber.getText().toString().trim().isEmpty()) {
+            etClinicNumber.setError("Phone number is required");
+            etClinicNumber.requestFocus();
+            return false;
+        }
+        if (etStartTime.getText().toString().trim().isEmpty()) {
+            etStartTime.setError("Start time is required");
+            etStartTime.requestFocus();
+            return false;
+        }
+        if (etEndTime.getText().toString().trim().isEmpty()) {
+            etEndTime.setError("End time is required");
+            etEndTime.requestFocus();
+            return false;
+        }
+        if (selectedImageUri == null) {
+            Toast.makeText(this, "Please select a clinic image", Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+
+        return true;
     }
 
     // STORE CLINIC DETAILS TO DB
