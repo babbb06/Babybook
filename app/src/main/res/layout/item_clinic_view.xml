@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/clinic_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clinic Name"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/clinic_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address of Clinic"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"/>
+         <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+        <TextView
+            android:id="@+id/clinic_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open: 8 AM - 5 PM"
+            android:textSize="16sp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="4dp"/>
+        <TextView
+            android:id="@+id/clinic_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(W, T, F)"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"/>
+
+         </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
