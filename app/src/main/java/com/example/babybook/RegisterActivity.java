@@ -71,7 +71,8 @@ public class RegisterActivity extends AppCompatActivity {
         editTextEmail.setFilters(new InputFilter[]{new EmojiInputFilter()}); // Email allowed special characters
         editTextPassword.setFilters(new InputFilter[]{new EmojiInputFilter()});
         editTextConfirmPassword.setFilters(new InputFilter[]{new EmojiInputFilter()});
-        editTextPhoneNumber.setFilters(new InputFilter[]{new EmojiInputFilter()}); // Phone number allowed special characters
+        editTextPhoneNumber.setFilters(new InputFilter[]{new EmojiInputFilter()});
+        editTextPhoneNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10), new EmojiInputFilter() });
 
         // SELECT PROFILE PICTURE
         btnUploadProfile.setOnClickListener(v -> {
