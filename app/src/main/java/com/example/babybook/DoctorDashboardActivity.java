@@ -261,12 +261,16 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                             post.setPostId(document.getId());
                             postList.add(post);
                         }
-                        postAdapter.notifyDataSetChanged();
+                        postAdapter.notifyDataSetChanged(); // Update UI after modifying postList
                     } else {
                         Toast.makeText(DoctorDashboardActivity.this, "Error loading posts", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+
+
+
 
     private void showLogoutConfirmation() {
         new AlertDialog.Builder(this)
@@ -281,5 +285,10 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         mAuth.signOut();
         startActivity(new Intent(DoctorDashboardActivity.this, LoginActivity.class));
         finish();
+    }
+
+    protected void onResume() {
+        super.onResume();
+        loadPosts();
     }
 }

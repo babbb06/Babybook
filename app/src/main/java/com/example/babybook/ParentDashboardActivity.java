@@ -227,4 +227,9 @@ public class ParentDashboardActivity extends AppCompatActivity {
         startActivity(new Intent(ParentDashboardActivity.this, LoginActivity.class));
         finish(); // Close this activity so user can't return using back button
     }
+
+    protected void onResume() {
+        super.onResume();
+        loadPosts();
+    }
 }

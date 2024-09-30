@@ -82,7 +82,7 @@
                         style="@style/LoginTextInputInnerFieldStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:fontFamily="@font/poppins"
                         android:hint="First Name"
                         android:inputType="textPersonName|textCapWords"
@@ -114,7 +114,7 @@
                         style="@style/LoginTextInputInnerFieldStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:fontFamily="@font/poppins"
                         android:hint="Last Name"
                         android:inputType="textPersonName|textCapWords"
@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:fontFamily="@font/poppins"
-                        android:hint="Specialitation"
+                        android:hint="Specialization"
                         android:inputType="textCapWords"
                         tools:ignore="TouchTargetSizeCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -258,7 +258,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/specializationLayout"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextPassword"
@@ -287,7 +288,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTextConfirmPassword"

@@ -1,6 +1,10 @@
 package com.example.babybook;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +28,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UpdateProfiledDoctor extends AppCompatActivity {
 
@@ -31,6 +42,9 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
     ImageView ivProfilePicture;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri selectedImageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +81,21 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
         // Fetch user data
         fetchUserData();
 
-        // Update profile and change password button click listener
+        // Update profile button click listener
         btnUpdateProfile.setOnClickListener(v -> {
+            updateProfile();
+        });
 
+        //SELECT PROFILE PICTURE
 
+        ivProfilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Profile Photo to Continue"), PICK_IMAGE_REQUEST);
+            }
         });
     }
 
@@ -127,36 +152,79 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
         }
     }
 
+    /*----------------------------TO Update ------------------------------*/
     private void updateProfile() {
-        // Logic to update profile (excluding password)
         String firstName = editTextFirstName.getText().toString();
         String lastName = editTextLastName.getText().toString();
-        String email = editTextEmail.getText().toString();
         String phoneNumber = etPhoneNumber.getText().toString();
-        String specialization = editTextSpecialization.getText().toString();
-        String fullphoneNumber = "+36" + phoneNumber;
+        String fullPhoneNumber = "+63" + phoneNumber;
         FirebaseUser currentUser = auth.getCurrentUser();
+        String fullName = firstName + " " + lastName;
+
         if (currentUser != null) {
             String userId = currentUser.getUid(); // Get the current user ID
 
-            // Update Firestore document
-            db.collection("users").document(userId)
-                    .update("firstName", firstName,
-                            "lastName", lastName,
-                            "email", email,
-                            "phoneNumber", fullphoneNumber,
-                            "specialization", specialization)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(this, "Update failed: " + task.getException(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            if (selectedImageUri != null) {
+                // Upload image to Firebase Storage
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference("doctor_profile_pictures/" + userId + ".jpg");
+                storageRef.putFile(selectedImageUri)
+                        .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String profileImageUrl = uri.toString();
+                            // Update Firestore document with new data
+                            updateFirestore(userId, firstName, lastName, fullName, fullPhoneNumber, profileImageUrl);
+                        }))
+                        .addOnFailureListener(e -> Toast.makeText(this, "Image upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            } else {
+                // Update Firestore without image
+                updateFirestore(userId, firstName, lastName, fullName, fullPhoneNumber, null);
+            }
         } else {
             Toast.makeText(this, "No user is logged in", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    private void updateFirestore(String userId, String firstName, String lastName, String fullName, String fullPhoneNumber, String profileImageUrl) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("firstName", firstName);
+        updates.put("lastName", lastName);
+        updates.put("phoneNumber", fullPhoneNumber);
+        updates.put("fullName", fullName);
+        if (profileImageUrl != null) {
+            updates.put("profileImageUrl", profileImageUrl);
+        }
+
+        db.collection("doctorUsers").document(userId)
+                .update(updates)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        updatePosts(userId, fullName);
+                        Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, DoctorDashboardActivity.class);
+                        finish();
+                        startActivity(intent);
+                        onBackPressed();
+                    } else {
+                        Toast.makeText(this, "Update failed: " + task.getException(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void updatePosts(String userId, String newFullName) {
+        db.collection("posts")
+                .whereEqualTo("doctorId", userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            db.collection("posts").document(document.getId())
+                                    .update("doctorName", newFullName);
+                        }
+                    }
+                });
+    }
+
+
 
 
 
@@ -168,5 +236,25 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //TO DISPLAY THE SELECTED IMAGE TO IMAGEVIEW
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedImageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                // Display the selected image or do any other processing as needed
+                // For example, you can set it in an ImageView:
+                ivProfilePicture.setImageBitmap(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

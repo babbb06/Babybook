@@ -43,10 +43,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.specialization.setText(post.getSpecialization());
 
         Glide.with(holder.itemView.getContext())
-                .load(post.getProfileImageUrl())
+                .load(post.getProfileImageUrl() + "?t=" + System.currentTimeMillis()) // Force refresh
                 .placeholder(R.drawable.baby_book_logo)
                 .error(R.drawable.add)
                 .into(holder.doctorImg);
+
 
         // Set initial visibility and number of lines
         if (post.isExpanded()) {
@@ -92,6 +93,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             specialization = itemView.findViewById(R.id.postDocSpecialization);
             doctorImg = itemView.findViewById(R.id.imageView2);
             seeMore = itemView.findViewById(R.id.seeMore);
+
 
         }
     }
