@@ -81,6 +81,8 @@
                 android:background="@drawable/rounded_border_black_btn"
                 android:text="BGC" />
 
+
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/hepatitis_b"
                 android:layout_width="wrap_content"
@@ -163,11 +165,52 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:id="@+id/mapslayout"
+        android:layout_below="@+id/horizontalScrollView"
+        android:layout_height="wrap_content">
+
+        <fragment
+            android:id="@+id/ivMapView"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle_radius_white_stroke_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMapView" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnbg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            app:cardBackgroundColor="#E4FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMapView">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToggleMap"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/maximize_icon"
+                android:backgroundTint="#5A5656"
+                android:onClick="onToggleMapButtonClick"
+                android:text=""
+                android:textColor="@color/clear"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.cardview.widget.CardView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDoctors"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/horizontalScrollView"
+        android:layout_below="@+id/mapslayout"
 
         android:fontFamily="@font/poppins"
         android:padding="16dp" />
