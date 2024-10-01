@@ -31,9 +31,11 @@
 
             <EditText
                 android:id="@+id/editTextSpecialization"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@id/buttonSearch"
                 android:background="@drawable/edittext_background"
                 android:fontFamily="@font/poppins"
                 android:hint="Enter clinic name"
