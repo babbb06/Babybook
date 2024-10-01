@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="buttonBackgroundColor">#6750a4</color> <!-- Example blue color -->
-    <color name="violet">#673ab7</color>
+    <color name="violet">#6750a4</color>
     <color name="blue">#2196F3</color>
     <color name="grey">#E1DFDF</color>
     <color name="black">#000000</color>
@@ -11,10 +11,15 @@
     <color name="clear">#00FFFFFF</color>
     <color name="white">#FFFFFF</color>
 
-
+    <color name="gray"> #C0C0C0</color>
     <color name="approve">#4CAF50</color>
     <color name="decline">#F44336</color>
 
+    <color name="radiobtnable">#5E5E5E</color>
+    <color name="radiobtnerror">#FF0000</color>
+
+    <color name="available_success">#4BB543</color>
+    <color name="occupied_error">#FF7276</color>
 
 
     <!--violets-->

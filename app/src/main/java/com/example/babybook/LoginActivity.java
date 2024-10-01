@@ -15,14 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
+    private TextInputLayout passwordLayout, emailLayout;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -36,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        passwordLayout = findViewById(R.id.passwordLayout);
+        emailLayout = findViewById(R.id.emailLayout);
 
         Button buttonLogin = findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -61,15 +67,21 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
-            editTextEmail.setError("Please enter your email");
+            emailLayout.setError("Please enter your email");
             editTextEmail.requestFocus();
             return;
+        }else {
+            // Clear the error if password is not empty
+            emailLayout.setError(null);
         }
 
         if (TextUtils.isEmpty(password)) {
-            editTextPassword.setError("Please enter your password");
+            passwordLayout.setError("Please enter your password");
             editTextPassword.requestFocus();
             return;
+        }else {
+            // Clear the error if password is not empty
+            passwordLayout.setError(null);
         }
 
         // Sign in user with Firebase Authentication
@@ -84,12 +96,29 @@ public class LoginActivity extends AppCompatActivity {
                             // Redirect user to appropriate dashboard based on their role
                             redirectToDashboard();
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            // If sign in fails, get the exception
+                            Exception exception = task.getException();
+
+                            if (exception != null) {
+                                // Check if the error is related to wrong password
+                                if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                                    Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_LONG).show();
+                                    editTextPassword.requestFocus();
+
+                                } else if (exception instanceof FirebaseAuthInvalidUserException) {
+                                    // Handle case where the user doesn't exist or is disabled
+                                    Toast.makeText(LoginActivity.this, "User not found. Please register or check your email.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    // Generic error message for other exceptions
+                                    Toast.makeText(LoginActivity.this, "Authentication failed: " + exception.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
+
     }
 
     private void redirectToDashboard() {

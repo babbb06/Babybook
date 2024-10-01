@@ -11,8 +11,16 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/header"
         android:theme="@style/ToFontBold"
+        app:titleMarginTop="13dp"
         app:titleTextColor="@color/white"
         app:subtitleTextColor="@android:color/white"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -21,7 +29,7 @@
         android:id="@+id/searchrela"
         android:layout_below="@id/toolbar"
         app:cardElevation="15dp"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="360dp"
         android:layout_height="50dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

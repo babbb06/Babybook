@@ -12,6 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/header"
         android:theme="@style/ToFontBold"
+        app:titleMarginTop="13dp"
         app:titleTextColor="@color/white"
         app:subtitleTextColor="@android:color/white">
 

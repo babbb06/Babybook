@@ -2,10 +2,14 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/hind_guntur_bold</item>
+        <item>@font/karla</item>
         <item>@font/poppins</item>
+        <item>@font/poppins_bold</item>
         <item>@font/poppins_semibold</item>
         <item>@font/roboto_bold</item>
         <item>@font/roboto_slab_bold</item>
+        <item>@font/source_sans_pro</item>
+        <item>@font/source_sans_pro_extralight</item>
 
     </array>
 </resources>

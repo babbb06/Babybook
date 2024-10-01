@@ -5,8 +5,9 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context=".ParentDashboardActivity">
+    tools:context=".ParentDashboardActivity"
+    android:background="@drawable/sidebarbg">
+    >
 
     <!-- Main content -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +26,7 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ToFontBold"
             app:title="BabyBook"
+            app:titleMarginTop="13dp"
             app:titleTextColor="@color/white"
             app:subtitleTextColor="@android:color/white"/>
 

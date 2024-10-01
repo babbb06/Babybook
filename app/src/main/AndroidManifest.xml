@@ -24,6 +24,12 @@
         android:theme="@style/Theme.BabyBook"
         tools:targetApi="31">
         <activity
+            android:name=".SearchClinicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddClinicActivity"
+            android:exported="false" />
+        <activity
             android:name=".UpdateProfile"
             android:exported="false" />
         <activity
@@ -38,7 +44,6 @@
         <activity
             android:name=".HealthRecordActivity"
             android:exported="false" />
-
         <activity
             android:name=".ChildDetailsParentActivity"
             android:exported="false" />
@@ -81,7 +86,6 @@
         <activity
             android:name=".DoctorRegisterActivity"
             android:exported="false" />
-
         <activity
             android:name=".ChooseUserActivity"
             android:exported="false" />
@@ -104,6 +108,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBUFo6Q1wZma0R4Fc7sSa1MlwDqKMQBDCY" />
     </application>
 
 </manifest>

@@ -13,7 +13,9 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.1"
+        vectorDrawables.useSupportLibrary = true
+
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,7 +63,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
     implementation ("com.google.firebase:firebase-storage:20.2.1") // Add this line for Firebase Storage
     implementation("com.google.firebase:firebase-auth")
-    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation ("androidx.appcompat:appcompat:1.7.0")
     implementation ("androidx.annotation:annotation:1.4.0")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("androidx.fragment:fragment:1.5.5")
@@ -69,6 +71,11 @@ dependencies {
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     implementation ("com.google.android.gms:play-services-maps:18.1.0")
+    implementation ("com.hbb20:ccp:2.7.3")
+    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+
+
 
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")

@@ -14,6 +14,7 @@
         android:elevation="4dp"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:theme="@style/ToFontBold"
+        app:titleMarginTop="13dp"
         app:titleTextColor="@color/white"
         app:subtitleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"

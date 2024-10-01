@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Menu Section -->
     <group android:checkableBehavior="single">
-        <item android:title="Menu">
+        <item android:title="Menu"> <!-- Section Header -->
             <menu>
                 <item
                     android:id="@+id/nav_home"
@@ -12,9 +14,9 @@
                     android:icon="@drawable/health"
                     android:title="Health Record" />
                 <item
-                    android:id="@+id/nav_tracking"
-                    android:icon="@drawable/tracking"
-                    android:title="Geofence" />
+                    android:id="@+id/nav_clinic"
+                    android:icon="@drawable/clinic_drawable"
+                    android:title="Clinic" />
                 <item
                     android:id="@+id/nav_chat"
                     android:icon="@drawable/chat_icon"
@@ -29,45 +31,24 @@
                     android:title="Appointment" />
             </menu>
         </item>
-
     </group>
 
+    <!-- Account Settings Section -->
     <group android:checkableBehavior="single">
-
-        <item android:title="Profile">
-
+        <item android:title="Account Settings"> <!-- Section Header -->
             <menu>
                 <item
                     android:id="@+id/nav_profile"
                     android:icon="@drawable/profile"
-                    android:title="Profile" />
+                    android:title="My Profile" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
             </menu>
         </item>
     </group>
 
 
-    <item android:title="Communicate">
-
-        <menu>
-
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/share"
-                android:title="Share" />
-
-            <item
-                android:id="@+id/nav_rate"
-                android:icon="@drawable/rate"
-                android:title="Rate Us" />
-
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/logout"
-                android:title="Logout" />
-
-
-        </menu>
-
-    </item>
 
 </menu>

@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="NavigationView" >
-        <item name="fontFamily">@font/poppins</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:listDivider"> @android:color/transparent </item>
     </style>
 
     <style name="ToFontBold" >
         <item name="fontFamily">@font/poppins_semibold</item>
         <item name="android:padding">1dp</item>
-        <item name="android:titleTextColor">@color/white</item>
         <item name="android:subtitleTextColor">@color/white</item>
         <item name="homeAsUpIndicator">@drawable/backbtn</item>
 
+
+    </style>
+
+    <style name="CustomMenuItemStyle">
+        <item name="android:paddingTop">40dp</item>     <!-- Adjust top padding -->
+        <item name="android:paddingBottom">4dp</item>  <!-- Adjust bottom padding -->
+    </style>
+
+
+
+    <style name="MyRadioButtonable" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:buttonTint">@color/radiobtnable</item>
+    </style>
+
+    <style name="MyRadioButtonerror" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:buttonTint">@color/radiobtnerror</item>
     </style>
 </resources>

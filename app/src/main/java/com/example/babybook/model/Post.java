@@ -6,17 +6,30 @@ public class Post {
     private String doctorName;
     private String content;
     private long timestamp;
+    private String profileImageUrl;
+    private String specialization;
+    private boolean isExpanded;  // New field for expansion tracking
 
     public Post() {
         // Default constructor required for Firestore
     }
 
-    public Post(String postId, String doctorId, String doctorName, String content, long timestamp) {
+    public Post(String postId, String doctorId, String doctorName, String content, long timestamp, String profileImageUrl, String specialization) {
         this.postId = postId;
         this.doctorId = doctorId;
         this.doctorName = doctorName;
         this.content = content;
         this.timestamp = timestamp;
+        this.profileImageUrl = profileImageUrl;
+        this.specialization = specialization;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
     }
 
     public String getPostId() {
@@ -33,6 +46,22 @@ public class Post {
 
     public void setDoctorId(String doctorId) {
         this.doctorId = doctorId;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 
     public String getDoctorName() {

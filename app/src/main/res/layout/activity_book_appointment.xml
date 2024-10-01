@@ -18,6 +18,7 @@
             android:background="@drawable/header"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/ToFontBold"
+            app:titleMarginTop="13dp"
             app:titleTextColor="@color/white"
             app:subtitleTextColor="@android:color/white"/>
 
