@@ -444,7 +444,7 @@
                                   android:layout_marginBottom="15dp"
                                   android:background="@drawable/rectangle_radius_white_stroke_black"
                                   app:layout_constraintEnd_toEndOf="parent"
-                                  app:layout_constraintStart_toStartOf="parent" /
+                                  app:layout_constraintStart_toStartOf="parent"/>
 
                               <TextView
                                   android:id="@+id/Exact"
