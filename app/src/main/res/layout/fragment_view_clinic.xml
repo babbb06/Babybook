@@ -14,6 +14,18 @@
         android:scrollbars="none">
 
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/header"
+            android:theme="@style/ToFontBold"
+            app:titleMarginTop="13dp"
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@android:color/white"/>
+
+
+
         <!-- ScrollView to enable scrolling if content exceeds screen height -->
         <ScrollView
 
