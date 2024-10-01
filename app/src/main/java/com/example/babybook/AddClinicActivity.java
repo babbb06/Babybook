@@ -99,7 +99,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
 
         NestedScrollView scrollView = findViewById(R.id.nestedScrollView);
 
-
+        TextView errorTextView = findViewById(R.id.errorTextView);
 
 
         // Set up the toolbar
@@ -182,6 +182,12 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
         });
 
         btnSubmit.setOnClickListener(v -> {
+            if (!validateCheckboxes()) {
+                // Show error message
+                Toast.makeText(getApplicationContext(), "Please select at least one day.", Toast.LENGTH_SHORT).show();
+            } else {
+                // Proceed with your logic, e.g., saving data
+            }
             if (validateInputs()) {  // Validate all inputs before creating the clinic
                 if (selectedLocation != null) {
                     createClinic(selectedLocation.latitude, selectedLocation.longitude);
@@ -531,6 +537,41 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
         });
     }
 
+    private boolean validateCheckboxes() {
+        CheckBox cbMonday = findViewById(R.id.cbMonday);
+        CheckBox cbTuesday = findViewById(R.id.cbTuesday);
+        CheckBox cbWednesday = findViewById(R.id.cbWednesday);
+        CheckBox cbThursday = findViewById(R.id.cbThursday);
+        CheckBox cbFriday = findViewById(R.id.cbFriday);
+        CheckBox cbSaturday = findViewById(R.id.cbSaturday);
+        CheckBox cbSunday = findViewById(R.id.cbSunday);
+
+        // Check if at least one checkbox is checked
+        boolean isAnyDayChecked = cbMonday.isChecked() || cbTuesday.isChecked() || cbWednesday.isChecked() ||
+                cbThursday.isChecked() || cbFriday.isChecked() || cbSaturday.isChecked() ||
+                cbSunday.isChecked();
+
+        TextView errorTextView = findViewById(R.id.errorTextView);
+
+        if (!isAnyDayChecked) {
+            showError("Please select at least one day.");
+            errorTextView.setVisibility(View.VISIBLE); // Show error message
+        } else {
+            errorTextView.setVisibility(View.GONE); // Hide error message
+        }
+
+        return isAnyDayChecked;
+    }
+
+    // Example of showError method
+    private void showError(String message) {
+        TextView errorTextView = findViewById(R.id.errorTextView);
+        errorTextView.setText(message);
+        errorTextView.setVisibility(View.VISIBLE);
+    }
+
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -545,6 +586,8 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
             }
         }
     }
+
+
 
 
 }
