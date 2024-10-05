@@ -94,7 +94,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        getSupportActionBar().setTitle("Health Record");
+        getSupportActionBar().setTitle("Health Record");// DOCTOR SIDE
 
         // Retrieve child ID from the intent
         childId = getIntent().getStringExtra("CHILD_ID");
