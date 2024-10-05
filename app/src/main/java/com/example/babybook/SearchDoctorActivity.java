@@ -70,6 +70,9 @@ public class SearchDoctorActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        // Load all doctors when the activity starts
+        loadAllDoctors();
+
         searchButton.setOnClickListener(v -> {
             String query = searchEditText.getText().toString();
             if (!TextUtils.isEmpty(query)) {
@@ -97,6 +100,7 @@ public class SearchDoctorActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+    // Method to search doctors based on the query
     private void searchDoctors(String query) {
         String lowerCaseQuery = query.trim().toLowerCase();
 
@@ -117,6 +121,28 @@ public class SearchDoctorActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(SearchDoctorActivity.this, "Error getting doctors.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    // Method to load all doctors when activity starts
+    private void loadAllDoctors() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("doctorUsers")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        doctors.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Doctor doctor = document.toObject(Doctor.class);
+                            if (doctor != null) {
+                                doctor.setId(document.getId());
+                                doctors.add(doctor);
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(SearchDoctorActivity.this, "Error loading doctors.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
