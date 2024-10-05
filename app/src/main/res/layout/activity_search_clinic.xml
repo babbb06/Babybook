@@ -67,7 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/searchrela"
-        android:layout_marginTop="-10dp">
+        android:layout_marginTop="-10dp"
+        android:layout_marginHorizontal="20dp">
         <LinearLayout
             android:id="@+id/scroll"
             android:layout_width="wrap_content"
@@ -168,22 +169,33 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:id="@+id/mapslayout"
-        android:layout_below="@+id/horizontalScrollView"
-        android:layout_height="wrap_content">
+    =
 
-        <fragment
-            android:id="@+id/ivMapView"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/horizontalScrollView"
+            android:id="@+id/mapslayout"
+            android:elevation="2dp"
+            app:cardCornerRadius="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rectangle_radius_white_stroke_black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMapView" />
+            android:layout_marginHorizontal="20dp"
+            >
+
+            <com.example.babybook.MapTouchableWrapper
+                android:id="@+id/map_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <fragment
+                    android:id="@+id/ivMapView"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.example.babybook.MapTouchableWrapper>
+        </androidx.cardview.widget.CardView>
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/btnbg"
             android:layout_width="wrap_content"
@@ -192,7 +204,8 @@
             android:layout_marginStart="5dp"
             app:cardBackgroundColor="#E4FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMapView">
+            android:elevation="2dp"
+            app:cardCornerRadius="10dp">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnToggleMap"
@@ -203,18 +216,17 @@
                 android:onClick="onToggleMapButtonClick"
                 android:text=""
                 android:textColor="@color/clear"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"/>
 
         </androidx.cardview.widget.CardView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
+=
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewDoctors"
+        android:id="@+id/recyclerViewClinics"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/mapslayout"
-
         android:fontFamily="@font/poppins"
         android:padding="16dp" />
 </RelativeLayout>
