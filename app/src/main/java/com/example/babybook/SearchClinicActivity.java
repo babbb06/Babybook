@@ -1,9 +1,13 @@
 package com.example.babybook;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class SearchClinicActivity extends AppCompatActivity {
 
@@ -29,6 +33,15 @@ public class SearchClinicActivity extends AppCompatActivity {
         mmr = findViewById(R.id.mmr);
         booster_3 = findViewById(R.id.booster_3);
 
+        // Set up toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Search Clinic");
+        }
+
         // Set onClickListeners for each button
         bgc.setOnClickListener(view -> handleButtonClick("BGC"));
         hepatitis_b.setOnClickListener(view -> handleButtonClick("Hepatitis B"));
@@ -48,5 +61,14 @@ public class SearchClinicActivity extends AppCompatActivity {
         // Implement your button click logic here
         // For example, you can show a toast message
         // Toast.makeText(this, buttonText + " clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

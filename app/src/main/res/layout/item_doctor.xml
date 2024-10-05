@@ -11,56 +11,68 @@
     android:background="#E1DFDF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/book_appointment_button"
+            app:layout_constraintHorizontal_bias="0.526"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <TextView
                 android:id="@+id/full_name_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="android studio"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:text="android studio"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textStyle="bold" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/specialization_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="android studio"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/full_name_text_view" />
+            <TextView
+                android:id="@+id/specialization_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="android studio"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/full_name_text_view" />
 
-        <TextView
-            android:id="@+id/clinic_address_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="android studio"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/specialization_text_view" />
+            <TextView
+                android:id="@+id/clinic_address_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="android studio"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/specialization_text_view" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/book_appointment_button"
             android:layout_width="145dp"
-            android:textSize="10sp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_gravity="end|center_vertical"
             android:fontFamily="@font/poppins_semibold"
             android:text="Book Appointment"
-            android:layout_gravity="end|center_vertical" />
+            android:textSize="10sp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

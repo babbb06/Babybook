@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,16 +28,24 @@ public class SearchDoctorActivity extends AppCompatActivity {
 
     private EditText searchEditText;
     private Button searchButton;
+    private ImageView filterButton;  // ImageView for the filter button
     private RecyclerView recyclerView;
     private DoctorAdapter adapter;
     private List<Doctor> doctors;
+    private final String[] specializations = {
+            "Pediatrician", "Hospitalist", "Child Abuse Pediatrician", "Neonatalists",
+            "Emergency Pediatric Medicine", "Pediatric Critical Care Medicine",
+            "Pediatric Cardiologist", "Pediatric Endocrinology", "Pediatric Gastroenterology",
+            "Pediatric Neurology", "Pediatric Hematology/Oncology", "Pediatric Pulmonology",
+            "Pediatric Nephrology", "Pediatric Infectious Disease", "Pediatric Rheumatology"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_doctor);
 
-        // Add toolbar with a return arrow
+        // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -43,10 +54,9 @@ public class SearchDoctorActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Search Doctor");
         }
 
-
-
         searchEditText = findViewById(R.id.search_edit_text);
         searchButton = findViewById(R.id.search_button);
+        filterButton = findViewById(R.id.filterbutton);  // Link the filter button
         recyclerView = findViewById(R.id.recycler_view);
 
         doctors = new ArrayList<>();
@@ -68,6 +78,23 @@ public class SearchDoctorActivity extends AppCompatActivity {
                 Toast.makeText(SearchDoctorActivity.this, "Please enter a specialization to search.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // Set up the filter button
+        filterButton.setOnClickListener(v -> showFilterMenu(v));  // Show filter menu when clicked
+    }
+
+    // Show filter menu for selecting a specialization
+    private void showFilterMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(SearchDoctorActivity.this, view);
+        for (String specialization : specializations) {
+            popupMenu.getMenu().add(specialization);
+        }
+        popupMenu.setOnMenuItemClickListener(item -> {
+            searchEditText.setText(item.getTitle());  // Set the selected specialization in the search bar
+            searchDoctors(item.getTitle().toString());  // Trigger the search
+            return true;
+        });
+        popupMenu.show();
     }
 
     private void searchDoctors(String query) {

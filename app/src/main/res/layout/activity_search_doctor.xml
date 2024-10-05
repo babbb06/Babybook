@@ -16,48 +16,77 @@
         app:subtitleTextColor="@android:color/white"/>
 
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_margin="20dp"
-        android:elevation="15dp"
-        android:id="@+id/searchrela"
+        android:id="@+id/searchlayout1"
         android:layout_below="@id/toolbar"
-        app:cardElevation="15dp"
-        app:cardCornerRadius="360dp"
-        android:layout_height="50dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+       android:paddingBottom="10dp"
+        android:layout_height="wrap_content">
 
 
-            <EditText
-                android:id="@+id/search_edit_text"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/poppins"
-                android:hint="Enter specialization to search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/searchrela"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:elevation="15dp"
+            app:cardCornerRadius="360dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
+            app:cardElevation="15dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/filterbutton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/search_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="20dp"
-                android:layout_alignTop="@+id/search_edit_text"
-                android:layout_alignEnd="@+id/search_edit_text"
-                android:background="@drawable/search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/searchlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
+                <EditText
+                    android:id="@+id/search_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/edittext_background"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Enter specialization to search"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/search_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/search_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@+id/search_edit_text"
+                    android:layout_alignEnd="@+id/search_edit_text"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/search"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/filterbutton"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="@color/clear"
+            android:src="@drawable/filter_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/searchrela"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/searchrela" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -65,6 +94,6 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchrela"
+        android:layout_below="@id/searchlayout1"
         android:padding="16dp" />
 </RelativeLayout>
