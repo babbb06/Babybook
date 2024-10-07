@@ -44,7 +44,6 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
     private FirebaseFirestore db;
     private GoogleMap mMap;
     private LatLng initialLocation;
-    private LatLng selectedLocation;
     private Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
 
 

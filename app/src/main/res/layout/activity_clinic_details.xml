@@ -8,6 +8,7 @@
 
     <!-- Main container LinearLayout holding the content -->
     <LinearLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -20,17 +21,18 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/header"
             android:theme="@style/ToFontBold"
+            app:subtitleTextColor="@android:color/white"
             app:titleMarginTop="13dp"
-            app:titleTextColor="@color/white"
-            app:subtitleTextColor="@android:color/white"/>
+            app:titleTextColor="@color/white" />
 
 
 
         <!-- ScrollView to enable scrolling if content exceeds screen height -->
         <ScrollView
-
+            android:id="@+id/scrollView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,16 +54,6 @@
                         app:cardCornerRadius="10dp"
                         app:cardElevation="6dp">
 
-                        <!-- Button for navigating back -->
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/backbtn"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/white" />
-
                         <!-- Clinic Image View -->
                         <ImageView
                             android:id="@+id/ivClinicImage"
@@ -69,7 +61,7 @@
                             android:layout_height="200dp"
                             android:layout_centerHorizontal="true"
                             android:contentDescription="Clinic Image"
-                            android:scaleType="centerCrop"
+                            android:scaleType="centerInside"
                             android:src="@drawable/baby_book_logo" />
                     </androidx.cardview.widget.CardView>
 
@@ -102,6 +94,7 @@
                             android:layout_marginBottom="5dp"
                             android:text="1 Fully Furnished Condo Unit for Rent in Quezon City"
                             android:textAlignment="viewStart"
+                            android:visibility="gone"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -197,11 +190,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="3dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/day_background_selected"
+                                android:background="@drawable/day_background_default"
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Wed"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/darker_gray" />
 
                             <TextView
                                 android:id="@+id/day_thu"
@@ -301,11 +294,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="6dp"
-                                android:background="@drawable/day_background_selected"
+                                android:background="@drawable/day_background_default"
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Hepatitis B"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/darker_gray" />
 
                             <TextView
                                 android:id="@+id/day_dpt"
@@ -366,11 +359,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="6dp"
-                                android:background="@drawable/day_background_selected"
+                                android:background="@drawable/day_background_default"
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="H Influenza B"
-                                android:textColor="@android:color/white" />
+                                android:textColor="@android:color/darker_gray" />
 
                             <TextView
                                 android:id="@+id/day_rotavirus"
@@ -446,23 +439,39 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                    <fragment
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_below="@+id/ClinicLocation"
+                            android:id="@+id/mapslayout"
+                            android:elevation="2dp"
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginHorizontal="20dp">
+
+                            <com.example.babybook.MapTouchableWrapper
+                                android:id="@+id/map_wrapper"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <fragment
                                   android:id="@+id/ivMapView"
                                   android:name="com.google.android.gms.maps.SupportMapFragment"
                                   android:layout_width="match_parent"
-                                  android:layout_height="300dp"
+                                  android:layout_height="match_parent"
                                   android:layout_below="@+id/ClinicLocation"
-                                  android:layout_marginTop="16dp"
-                                  android:layout_marginBottom="15dp"
                                   android:background="@drawable/rectangle_radius_white_stroke_black"
                                   app:layout_constraintEnd_toEndOf="parent"
                                   app:layout_constraintStart_toStartOf="parent"/>
+
+                            </com.example.babybook.MapTouchableWrapper>
+                        </androidx.cardview.widget.CardView>
 
                               <TextView
                                   android:id="@+id/Exact"
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:layout_below="@+id/ivMapView"
+                                  android:layout_below="@+id/mapslayout"
                                   android:layout_centerHorizontal="true"
                                   android:text="Exact location will be provided after visit schedule was approved."
                                   android:textSize="11sp"
@@ -486,7 +495,8 @@
                         android:id="@+id/Doctorinfolayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/ClinicLocationlayout">
+                        android:layout_below="@+id/ClinicLocationlayout"
+                        android:paddingBottom="20dp">
 
 
                         <TextView
@@ -511,7 +521,9 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="10dp"
                             android:elevation="1dp"
-                            app:cardCornerRadius="30dp">
+                            app:cardCornerRadius="30dp"
+                            android:visibility="gone"
+                            >
 
                             <ImageView
 
@@ -528,13 +540,14 @@
 
 
                         <TextView
-                            android:id="@+id/tvUserName"
+                            android:id="@+id/tvDocName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/Doctorinfo"
                             android:layout_marginTop="10dp"
                             android:layout_toEndOf="@+id/cardViewImage"
                             android:text="Username"
+                            android:layout_marginStart="20dp"
                             android:textColor="#000000"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -543,8 +556,9 @@
                             android:id="@+id/tvSpecialization"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/tvUserName"
+                            android:layout_below="@+id/tvDocName"
                             android:layout_marginTop="-7dp"
+                            android:layout_marginStart="20dp"
                             android:layout_toEndOf="@+id/cardViewImage"
                             android:text="Specialication"
                             android:textColor="#000000"
@@ -562,60 +576,6 @@
                     </RelativeLayout>
 
 
-                    <!--permit info-->
-
-                    <!-- <RelativeLayout
-                              android:id="@+id/permitlayout"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_below="@+id/Doctorinfolayout">
-
-
-                              <TextView
-
-                                  android:id="@+id/permittxt"
-                                  android:layout_width="340dp"
-                                  android:layout_height="wrap_content"
-                                  android:layout_alignParentStart="true"
-                                  android:layout_marginStart="21dp"
-                                  android:layout_marginTop="20dp"
-                                  android:text="Permit Detail"
-                                  android:textColor="#000000"
-                                  android:textSize="18sp"
-                                  android:textStyle="bold" />
-
-                              <androidx.cardview.widget.CardView
-                                  android:id="@+id/cardviewpermitImage"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:layout_below="@id/permittxt"
-                                  android:layout_centerInParent="true"
-                                  android:layout_centerHorizontal="true"
-                                  android:layout_marginTop="10dp"
-                                  android:layout_marginBottom="10dp"
-                                  android:scaleType="centerCrop"
-                                  app:cardCornerRadius="10dp"
-                                  app:cardElevation="5dp">
-
-                                  <ImageView
-                                      android:id="@+id/permitImage"
-                                      android:layout_width="350dp"
-                                      android:layout_height="400dp"
-                                      android:src="@drawable/baby_book_logo" />
-
-                              </androidx.cardview.widget.CardView>
-
-
-                              <View
-                                  android:layout_width="match_parent"
-                                  android:layout_height="1dp"
-                                  android:layout_below="@+id/cardviewpermitImage"
-                                  android:layout_marginTop="10dp"
-                                  android:background="#000000" />
-
-                          </RelativeLayout>-->
-
-
                 </RelativeLayout>
 
             </LinearLayout>
@@ -628,7 +588,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -639,10 +599,7 @@
         <RelativeLayout
             android:id="@+id/bottomlevel"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="50dp">
 
 
             <Button

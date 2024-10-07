@@ -5,6 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Clinic {
+    public String getClinicId() {
+        return clinicId;
+    }
+
+    public void setClinicId(String clinicId) {
+        this.clinicId = clinicId;
+    }
+
     private String clinicId;
     private String doctorId;
     private String doctorName;
