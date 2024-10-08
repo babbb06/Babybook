@@ -75,6 +75,9 @@
             android:name=".SearchDoctorChatActivity"
             android:exported="false" />
         <activity
+            android:name=".ClinicDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SchedulesAppointmentActivity"
             android:exported="false" />
         <activity
