@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+       >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/header"
+            android:theme="@style/ToFontBold"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:title="Medical Record Details"
+            app:titleTextColor="@color/white"
+            android:layout_gravity="top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/textViewonlyweight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight: " />
+        <TextView
+            android:id="@+id/textViewWeight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="86 " />
+
+
+            <TextView
+                android:id="@+id/textViewonlyDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: " />
+
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 02/02/2002" />
+        </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textViewonlytemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temperature: " />
+
+
+        <TextView
+            android:id="@+id/textViewTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="36.5 " />
+
+
+    </LinearLayout>
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardviewsummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewonly1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Summary of Diagnosis:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewSummaryDiagnosis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="asddasdas asd as dasd asd as daa dasd asd asd asd asd asd asd asd asd asd as d asd asd asdasd asd asd asd asd as "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewonly1" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardviewtreatment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewonly2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Treatment Plan: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewTreatmentPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginBottom="10dp"
+                android:text="asddasdas asd as dasd asd as daa dasd asd asd asd asd asd asd asd asd asd as d asd asd asdasd asd asd asd asd as "
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewonly2" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardviewfollow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewonly3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Follow Up Plan: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewFollowUpPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="asddasdas asd as dasd asd as daa dasd asd asd asd asd asd asd asd asd asd as d asd asd asdasd asd asd asd asd as "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewonly3" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Checklist:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkBoxSick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is the child TOO SICK?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxCough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have COUGH or DIFFICULT BREATHING?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxDiarrhea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have DIARRHOEA?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxFever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have FEVER?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMeasles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have MEASLES or had it in the last 3 months?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxEarPain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have EAR PAIN/DISCHARGE?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxPallor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check all children for PALLOR." />
+
+        <CheckBox
+            android:id="@+id/checkBoxMalnourished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check if the child is MALNOURISHED." />
+
+        <CheckBox
+            android:id="@+id/checkBoxFeeding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assess FEEDING if age &lt; 2 years/ANAEMIA/MALNUTRITION." />
+
+        <CheckBox
+            android:id="@+id/checkBoxBreastfeeding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assess BREAST FEEDING if aged up to 6 months." />
+
+        <CheckBox
+            android:id="@+id/checkBoxDiarrheaCough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have DIARRHOEA and/or COUGH for more than 2 WEEKS?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxImmunization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child need IMMUNIZATION?" />
+
+        <CheckBox
+            android:id="@+id/checkBoxOtherProblems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Always ask a caregiver; is there any OTHER PROBLEMS?" />
+
+    </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

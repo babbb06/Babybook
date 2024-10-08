@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+     >
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/listToolbar"
+            android:layout_width="match_parent"
+            android:background="@drawable/header"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:theme="@style/ToFontBold"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleMarginTop="13dp"
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@android:color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checklist for All Sick Children Age 2 Months up to 5 Years"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dateLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/violet"
+            app:boxStrokeErrorColor="@color/colorError"
+            app:errorTextColor="@color/clear">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextDate"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:hint="Date"
+                android:inputType="date"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/weightLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:layout_marginTop="-10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/violet"
+            app:boxStrokeErrorColor="@color/colorError"
+            app:errorTextColor="@color/clear">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextWeight"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:hint="Weight"
+                android:inputType="number"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/temperatureLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:layout_marginTop="-10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/violet"
+            app:boxStrokeErrorColor="@color/colorError"
+            app:errorTextColor="@color/clear">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTemperature"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:hint="Temperature"
+                android:inputType="numberDecimal"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checklist:" />
+
+        <CheckBox
+            android:id="@+id/check_sick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is the child TOO SICK?" />
+
+        <CheckBox
+            android:id="@+id/check_cough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have COUGH or DIFFICULT BREATHING?" />
+
+        <CheckBox
+            android:id="@+id/check_diarrhea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have DIARRHOEA?" />
+
+        <CheckBox
+            android:id="@+id/check_fever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have FEVER?" />
+
+        <CheckBox
+            android:id="@+id/check_measles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have MEASLES or had it in the last 3 months?" />
+
+        <CheckBox
+            android:id="@+id/check_ear_pain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have EAR PAIN/DISCHARGE?" />
+
+        <CheckBox
+            android:id="@+id/check_pallor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check all children for PALLOR." />
+
+        <CheckBox
+            android:id="@+id/check_malnourished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check if the child is MALNOURISHED." />
+
+        <CheckBox
+            android:id="@+id/check_feeding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assess FEEDING if age &lt; 2 years/ANAEMIA/MALNUTRITION." />
+
+        <CheckBox
+            android:id="@+id/check_breastfeeding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assess BREAST FEEDING if aged up to 6 months." />
+
+        <CheckBox
+            android:id="@+id/check_diarrhea_cough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child have DIARRHOEA and/or COUGH for more than 2 WEEKS?" />
+
+        <CheckBox
+            android:id="@+id/check_immunization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the child need IMMUNIZATION?" />
+
+        <CheckBox
+            android:id="@+id/check_other_problems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Always ask a caregiver; is there any OTHER PROBLEMS?" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/summaryDiagnosisLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/violet"
+
+            app:boxStrokeErrorColor="@color/colorError"
+            app:errorTextColor="@color/clear">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/summary_diagnosis"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:hint="Summary of Diagnosis"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/treatmentPlanLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/violet"
+            app:boxStrokeErrorColor="@color/colorError"
+            android:layout_marginTop="-10dp"
+            app:errorTextColor="@color/clear">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/treatment_plan"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:hint="Treatment Plan"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/followUpPlanLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:paddingHorizontal="10dp"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/violet"
+            app:boxStrokeErrorColor="@color/colorError"
+            app:errorTextColor="@color/clear">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/follow_up_plan"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:hint="Follow Up Plan"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Young Infant Checklist Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Young Infant Checklist (for infants &lt; 2 months)" />
+
+        <CheckBox
+            android:id="@+id/check_baby_sick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is the baby Too Sick?" />
+
+        <CheckBox
+            android:id="@+id/check_baby_fever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Does the baby have Fever?" />
+
+        <CheckBox
+            android:id="@+id/check_baby_jaundice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is the Baby Jaundice?" />
+
+        <CheckBox
+            android:id="@+id/check_baby_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assess Baby's Weight?" />
+
+        <CheckBox
+            android:id="@+id/check_baby_feeding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ask about Baby's Feeding?" />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:backgroundTint="@color/violet"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="50dp"/>
+    </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

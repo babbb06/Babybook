@@ -53,7 +53,7 @@ public class HealthRecordParentActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("List of Children");
+        getSupportActionBar().setTitle("List of Children");//parent side
 
         recyclerViewHealthRecords = findViewById(R.id.recyclerViewHealthRecords);
         healthRecords = new ArrayList<>();

@@ -53,7 +53,7 @@ public class HealthRecordActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("List of Patient");
+        getSupportActionBar().setTitle("List of Patient"); //doctor side
 
         recyclerViewHealthRecords = findViewById(R.id.recyclerViewHealthRecords);
         healthRecords = new ArrayList<>();

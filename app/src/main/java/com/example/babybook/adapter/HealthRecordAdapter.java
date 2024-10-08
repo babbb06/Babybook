@@ -45,11 +45,10 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
             context.startActivity(intent);
         });
 
-        // Handle the menu button click
-        holder.imageViewMenu.setOnClickListener(v -> {
-            // Show menu or handle click event here
-        });
+
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -65,10 +64,5 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
             textViewChildName = itemView.findViewById(R.id.textViewChildName);
             imageViewMenu = itemView.findViewById(R.id.imageViewMenu);
         }
-    }
-
-    // Define an interface for item click handling
-    public interface OnItemClickListener {
-        void onItemClick(HealthRecord record);
     }
 }

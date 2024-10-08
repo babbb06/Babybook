@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!-- Main container LinearLayout holding the content -->
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="none">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/header"
+            android:theme="@style/ToFontBold"
+            app:subtitleTextColor="@android:color/white"
+            app:titleMarginTop="13dp"
+            app:titleTextColor="@color/white" />
+
+
+
+        <!-- ScrollView to enable scrolling if content exceeds screen height -->
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+
+                <!-- Clinic Image CardView -->
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/ivClinicImagecardview"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="6dp">
+
+                        <!-- Clinic Image View -->
+                        <ImageView
+                            android:id="@+id/ivClinicImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_centerHorizontal="true"
+                            android:contentDescription="Clinic Image"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/baby_book_logo" />
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Clinic Details Section -->
+                    <RelativeLayout
+                        android:id="@+id/Cliniclayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivClinicImagecardview">
+                        <!-- Clinic Name -->
+
+                        <TextView
+                            android:id="@+id/textClinicName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="10dp"
+                            android:text="ClinicName"
+                            android:textColor="#000000"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+
+                        <!-- Clinic Location Description -->
+                        <TextView
+                            android:id="@+id/textClinicloc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textClinicName"
+                            android:layout_marginBottom="5dp"
+                            android:text="1 Fully Furnished Condo Unit for Rent in Quezon City"
+                            android:textAlignment="viewStart"
+                            android:visibility="gone"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <!-- Clinic Status: Open/Closed -->
+                        <TextView
+                            android:id="@+id/tvopen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textClinicloc"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="OPEN"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/approve"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <!-- Clinic Operating Hours -->
+                        <TextView
+                            android:id="@+id/texttime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textClinicloc"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toEndOf="@id/tvopen"
+                            android:text="8:00am to 5:00pm"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+                    <!-- Day Selection Section -->
+                    <LinearLayout
+
+                        android:id="@+id/daylayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/Cliniclayout"
+                        android:orientation="vertical">
+
+                        <!-- Label for Day Selection -->
+                        <TextView
+                            android:id="@+id/day_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Day : "
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+
+                        <!-- Horizontal Layout for Day Options -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:id="@+id/day_mon"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Mon"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_tue"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Tue"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_wed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Wed"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_thu"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Thu"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_fri"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Fri"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_sat"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Sat"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_sun"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Sun"
+                                android:textColor="@android:color/darker_gray" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <!-- Additional Sections for Vaccine Info, Clinic Location, and Doctor Information -->
+                    <RelativeLayout
+                        android:id="@+id/RI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/daylayout">
+
+
+                        <TextView
+
+                            android:id="@+id/vaccinetxt"
+                            android:layout_width="340dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="20dp"
+                            android:text="Vaccine Available"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vaccinetxt"
+                            android:layout_marginTop="-1dp"
+                            app:flexDirection="row"
+                            app:flexWrap="wrap"
+                            app:justifyContent="flex_start">
+
+
+                            <TextView
+                                android:id="@+id/day_bcg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="BCG"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_hepatitis_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Hepatitis B"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_dpt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="DPT"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_booster1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Booster 1"
+                                android:textColor="@android:color/darker_gray" />
+                            <TextView
+                                android:id="@+id/day_mmr"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="MMR"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_opv_ipv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="OPV IPV"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_booster2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Booster 2"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_h_influenza_b"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="H Influenza B"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_rotavirus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Rotavirus"
+                                android:textColor="@android:color/darker_gray" />
+
+                            <TextView
+                                android:id="@+id/day_measles"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Measles"
+                                android:textColor="@android:color/darker_gray" />
+
+
+
+                            <TextView
+                                android:id="@+id/day_booster3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="6dp"
+                                android:background="@drawable/day_background_default"
+                                android:gravity="center"
+                                android:padding="9dp"
+                                android:text="Booster 3"
+                                android:textColor="@android:color/darker_gray" />
+
+                        </com.google.android.flexbox.FlexboxLayout>
+
+
+
+
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="13dp"
+                            android:layout_marginVertical="8dp"
+                            android:background="@android:color/darker_gray" />
+
+
+                    </RelativeLayout>
+
+
+                    <!-- Clinic location -->
+
+                    <RelativeLayout
+                        android:id="@+id/ClinicLocationlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/RI">
+
+                        <TextView
+                            android:id="@+id/ClinicLocation"
+                            android:layout_width="340dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="21dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Clinic Location"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_below="@+id/ClinicLocation"
+                            android:id="@+id/mapslayout"
+                            android:elevation="2dp"
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginHorizontal="20dp">
+
+                            <com.example.babybook.MapTouchableWrapper
+                                android:id="@+id/map_wrapper"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <fragment
+                                  android:id="@+id/ivMapView"
+                                  android:name="com.google.android.gms.maps.SupportMapFragment"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:layout_below="@+id/ClinicLocation"
+                                  android:background="@drawable/rectangle_radius_white_stroke_black"
+                                  app:layout_constraintEnd_toEndOf="parent"
+                                  app:layout_constraintStart_toStartOf="parent"/>
+
+                            </com.example.babybook.MapTouchableWrapper>
+                        </androidx.cardview.widget.CardView>
+
+                              <TextView
+                                  android:id="@+id/Exact"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_below="@+id/mapslayout"
+                                  android:layout_centerHorizontal="true"
+                                  android:text="Exact location will be provided after visit schedule was approved."
+                                  android:textSize="11sp"
+                                  android:textStyle="italic"
+                                  android:visibility="invisible" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/Exact"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#000000" />
+
+
+                    </RelativeLayout>
+
+                    <!--Doctor info-->
+
+                    <RelativeLayout
+                        android:id="@+id/Doctorinfolayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ClinicLocationlayout"
+                        android:paddingBottom="20dp">
+
+
+                        <TextView
+
+                            android:id="@+id/Doctorinfo"
+                            android:layout_width="340dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="21dp"
+                            android:text="Doctor Information"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewImage"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_below="@+id/Doctorinfo"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="10dp"
+                            android:elevation="1dp"
+                            app:cardCornerRadius="30dp"
+                            android:visibility="gone"
+                            >
+
+                            <ImageView
+
+                                android:id="@+id/ivProfilePicture"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/baby_book_logo_nobg"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <TextView
+                            android:id="@+id/tvDocName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/Doctorinfo"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@+id/cardViewImage"
+                            android:text="Username"
+                            android:layout_marginStart="20dp"
+                            android:textColor="#000000"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvSpecialization"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvDocName"
+                            android:layout_marginTop="-7dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_toEndOf="@+id/cardViewImage"
+                            android:text="Specialication"
+                            android:textColor="#000000"
+                            android:textSize="14sp" />
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/tvSpecialization"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#000000" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <!-- bottom nav -->
+        <RelativeLayout
+            android:id="@+id/bottomlevel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+
+            <Button
+                android:id="@+id/Bookbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Book Appointment"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="6dp"
-    android:layout_marginVertical="8dp"
+    android:layout_margin="16dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
@@ -16,30 +15,29 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/clinic_name"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clinic Name"
+            android:text="Name"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/violet"/>
+            android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/clinic_address"
+            android:id="@+id/doctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Address of Clinic"
+            android:text="Name of Doctor"
             android:textSize="16sp"
             android:layout_marginTop="4dp"/>
          <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
         <TextView
             android:id="@+id/clinic_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Open: 8 AM - 5 PM"
+            android:text="Date:"
             android:textSize="16sp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="4dp"/>
@@ -47,27 +45,11 @@
             android:id="@+id/clinic_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(W, T, F)"
+            android:text="02/20/2002"
             android:textSize="16sp"
             android:layout_marginTop="4dp"/>
-         <TextView
-             android:id="@+id/vaccinesTitle"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="Available vaccines:"
-             android:textSize="16sp"
-             android:fontFamily="@font/poppins_semibold"
-             android:layout_marginTop="14dp"/>
-             <TextView
-             android:id="@+id/vaccines"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="vaccine 1, vaccine 2"
-             android:textSize="16sp" />
 
          </LinearLayout>
     </LinearLayout>
-
-
 
 </androidx.cardview.widget.CardView>

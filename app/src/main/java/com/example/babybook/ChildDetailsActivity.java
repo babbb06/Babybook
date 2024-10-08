@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.health.connect.HealthPermissions;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -23,9 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+
+import com.example.babybook.medicalrecord.AddMedicalRecord;
+import com.example.babybook.medicalrecord.ListOfMedicalRecord;
 import com.google.firebase.Timestamp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -94,10 +97,23 @@ public class ChildDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        getSupportActionBar().setTitle("Health Record");
+        getSupportActionBar().setTitle("Health Record");// DOCTOR SIDE
 
         // Retrieve child ID from the intent
         childId = getIntent().getStringExtra("CHILD_ID");
+
+
+        // Find the CardView by its ID
+        CardView medicalRecordCardView = findViewById(R.id.medicalrecordcardview);
+
+        // Set an OnClickListener to navigate to ViewMedicalRecord.java
+        medicalRecordCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(ChildDetailsActivity.this, ListOfMedicalRecord.class);
+
+            // Optionally, pass some data using intent if needed
+            intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
+            startActivity(intent);
+        });
 
         // Get the current parent ID
         currentParentId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Fetch current user ID from FirebaseAuth
