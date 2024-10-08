@@ -16,6 +16,7 @@ import com.example.babybook.ClinicDetailsActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ClinicAdapter extends RecyclerView.Adapter<ClinicAdapter.ClinicViewHolder> {
 
@@ -45,7 +46,7 @@ public class ClinicAdapter extends RecyclerView.Adapter<ClinicAdapter.ClinicView
 
     static class ClinicViewHolder extends RecyclerView.ViewHolder {
 
-        TextView clinicName, clinicPhoneNumber, clinicTime, clinicDay;
+        TextView clinicName, clinicPhoneNumber, clinicTime, clinicDay, clinicVaccines;
 
         public ClinicViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,6 +54,8 @@ public class ClinicAdapter extends RecyclerView.Adapter<ClinicAdapter.ClinicView
             clinicTime = itemView.findViewById(R.id.clinic_time);
             clinicDay = itemView.findViewById(R.id.clinic_day);
             clinicPhoneNumber = itemView.findViewById(R.id.clinic_address);
+            clinicVaccines = itemView.findViewById(R.id.vaccines);
+
         }
 
         public void bind(Clinic clinic, Context context) {
@@ -60,6 +63,23 @@ public class ClinicAdapter extends RecyclerView.Adapter<ClinicAdapter.ClinicView
             clinicPhoneNumber.setText(clinic.getClinicPhoneNumber());
             clinicTime.setText("Open: " + clinic.getSchedStartTime() + " - " + clinic.getSchedEndTime());
             clinicDay.setText(String.join(", ", clinic.getSchedDays()));
+
+            // Retrieve vaccines and format the string
+            StringBuilder vaccinesDisplay = new StringBuilder();
+            for (Map.Entry<String, Integer> entry : clinic.getVaccines().entrySet()) {
+                vaccinesDisplay.append(entry.getKey())  // Vaccine name
+                        //.append(": ")
+                        //.append(entry.getValue())  // Quantity
+                        .append("\n"); // New line for each vaccine
+            }
+
+            // Remove the last newline character if any
+            if (vaccinesDisplay.length() > 0) {
+                vaccinesDisplay.setLength(vaccinesDisplay.length() - 1);
+            }
+
+            clinicVaccines.setText(vaccinesDisplay.toString());
+
 
             // Set the click listener for the item
             itemView.setOnClickListener(view -> {
