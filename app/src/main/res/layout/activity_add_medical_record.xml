@@ -5,12 +5,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+     >
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/listToolbar"
+            android:layout_width="match_parent"
+            android:background="@drawable/header"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:theme="@style/ToFontBold"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleMarginTop="13dp"
+            app:titleTextColor="@color/white"
+            app:subtitleTextColor="@android:color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/title"
@@ -287,6 +309,6 @@
             android:backgroundTint="@color/violet"
             android:textColor="@android:color/white"
             android:layout_marginBottom="50dp"/>
-
+    </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
