@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -73,6 +75,13 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
         tvMeasles = findViewById(R.id.day_measles);
         tvBooster3 = findViewById(R.id.day_booster3);
 
+        // Define your button
+        Button bookBtn = findViewById(R.id.Bookbtn);
+
+// Set an onClick listener
+
+
+
 
         // Retrieve the data from the intent
         Intent intent = getIntent();
@@ -106,6 +115,17 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle("Clinic Details");
         }
+
+        bookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle book appointment button click
+                Intent intent = new Intent(ClinicDetailsActivity.this, BookAppointmentActivity.class);
+                intent.putExtra("doctorId", doctorId); // Remove `.getId()` since doctorId is already a String
+                startActivity(intent);
+            }
+        });
+
 
 
 
