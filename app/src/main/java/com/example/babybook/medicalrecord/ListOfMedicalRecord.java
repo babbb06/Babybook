@@ -32,7 +32,7 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         fabCreatePost.setOnClickListener(v -> {
             // Create an Intent to navigate to AddMedicalRecord Activity
             Intent intent = new Intent(ListOfMedicalRecord.this, AddMedicalRecord.class);
-
+            intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
             startActivity(intent);
         });
     }
