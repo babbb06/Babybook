@@ -26,6 +26,7 @@ public class Clinic {
     private String clinicPhoneNumber;
     private String schedStartTime;
     private String schedEndTime;
+    private  String clinicAddress;
     private List<String> schedDays;
     private Map<String, Integer> vaccines;
 
@@ -36,7 +37,7 @@ public class Clinic {
         // Default constructor required for Firestore
     }
 
-    public Clinic(String clinicId, String clinicName, String clinicPhoneNumber, String clinicProfileUrl, List<String> schedDays, String schedStartTime, String schedEndTime, String doctorId, String doctorName, Double latitude, Double longitude, long timestamp, String profileImageUrl, String specialization, Map<String, Integer> vaccines) {
+    public Clinic(String clinicId, String clinicName, String clinicPhoneNumber, String clinicProfileUrl, List<String> schedDays, String schedStartTime, String schedEndTime, String clinicAddress, String doctorId, String doctorName, Double latitude, Double longitude, long timestamp, String profileImageUrl, String specialization, Map<String, Integer> vaccines) {
         this.clinicId = clinicId;
         this.doctorId = doctorId;
         this.doctorName = doctorName;
@@ -50,6 +51,7 @@ public class Clinic {
         this.clinicProfileUrl = clinicProfileUrl;
         this.schedStartTime = schedStartTime;
         this.schedEndTime = schedEndTime;
+        this.clinicAddress = clinicAddress;
         this.schedDays = schedDays;
         this.vaccines = vaccines != null ? vaccines : new HashMap<>();
 
@@ -151,6 +153,18 @@ public class Clinic {
     public void setSchedEndTime(String schedEndTime) {
         this.schedEndTime = schedEndTime;
     }
+
+
+    public String getClinicAddress() {
+        return clinicAddress;
+    }
+
+    public void setClinicAddress(String clinicAddress) {
+        this.clinicAddress = clinicAddress;
+    }
+
+
+
 
     public String getSchedStartTime() {
         return schedStartTime;

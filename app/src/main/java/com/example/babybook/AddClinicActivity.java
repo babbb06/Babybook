@@ -73,7 +73,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
     private List<String> vaccines;
     private Map<String, Integer> vaccineMap = new HashMap<>();
 
-    private TextInputEditText etStartTime, etEndTime;
+    private TextInputEditText etStartTime, etEndTime, eTClinicAddress;
     private TextView tvNoPin, tvPinSuccess;
     private GoogleMap mMap;
     private LatLng initialLocation;
@@ -137,6 +137,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
         Button addButton = findViewById(R.id.addButton);
         etStartTime = findViewById(R.id.etStartTime);
         etEndTime = findViewById(R.id.etEndTime);
+        eTClinicAddress= findViewById(R.id.eTClinicAddress);
         tvNoPin = findViewById(R.id.tvnoPin);
         tvPinSuccess = findViewById(R.id.tvPinSuccess);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -233,11 +234,21 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
             etEndTime.requestFocus();
             return false;
         }
+
+        if (eTClinicAddress.getText().toString().trim().isEmpty()) {
+            eTClinicAddress.setError("Clinic Address is required");
+            eTClinicAddress.requestFocus();
+            return false;
+        }
+
+
         if (selectedImageUri == null) {
             Toast.makeText(this, "Please select a clinic image", Toast.LENGTH_SHORT).show();
 
             return false;
         }
+
+
 
         return true;
     }
@@ -259,6 +270,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
                         String clinicPhoneNumber = "+63" + etClinicNumber.getText().toString().trim();
                         String schedStartTime = etStartTime.getText().toString().trim();
                         String schedEndTime = etEndTime.getText().toString().trim();
+                        String clinicAddress = eTClinicAddress.getText().toString().trim();
                         List<String> selectedDays = getSelectedDays();
 
                         // Ensure required fields are not null
@@ -274,7 +286,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
                                             String clinicProfileUrl = uri.toString(); // Get the image URL
 
                                             // Create Clinic object with clinicProfileUrl
-                                            Clinic clinic = new Clinic(null, clinicName, clinicPhoneNumber, clinicProfileUrl, selectedDays, schedStartTime, schedEndTime, userId, doctorName, latitude, longitude, System.currentTimeMillis(), doctorProfile, specialization, vaccineMap);
+                                            Clinic clinic = new Clinic(null, clinicName, clinicPhoneNumber, clinicProfileUrl, selectedDays, schedStartTime, schedEndTime,clinicAddress, userId, doctorName, latitude, longitude, System.currentTimeMillis(), doctorProfile, specialization, vaccineMap);
 
                                             // Add Clinic to Firestore
                                             db.collection("clinics").add(clinic).addOnSuccessListener(documentReference -> {
