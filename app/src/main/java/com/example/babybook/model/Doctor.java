@@ -19,32 +19,11 @@ public class Doctor {
     private List<String> schedDays;
 
 
-    public List<String> getSchedDays() {
-        return schedDays;
-    }
 
-    public void setSchedDays(List<String> schedDays) {
-        this.schedDays = schedDays;
-    }
-
-    public String getSchedEndTime() {
-        return schedEndTime;
-    }
-
-    public void setSchedEndTime(String schedEndTime) {
-        this.schedEndTime = schedEndTime;
-    }
-
-    public String getSchedStartTime() {
-        return schedStartTime;
-    }
-
-    public void setSchedStartTime(String schedStartTime) {
-        this.schedStartTime = schedStartTime;
-    }
 
 
     // Getters and setters
+
     public String getId() {
         return id;
     }
@@ -123,5 +102,29 @@ public class Doctor {
 
     public void setClinicAddress(String clinicAddress) {
         this.clinicAddress = clinicAddress;
+    }
+
+
+    public void setSchedDays(List<String> schedDays) {
+        this.schedDays = schedDays;
+    }
+
+    public String getSchedEndTime() {
+        return schedEndTime;
+    }
+
+    public void setSchedEndTime(String schedEndTime) {
+        this.schedEndTime = schedEndTime;
+    }
+
+    public String getSchedStartTime() {
+        return schedStartTime;
+    }
+    public List<String> getSchedDays() {
+        return schedDays;
+    }
+
+    public void setSchedStartTime(String schedStartTime) {
+        this.schedStartTime = schedStartTime;
     }
 }
