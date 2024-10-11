@@ -286,7 +286,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
                                             String clinicProfileUrl = uri.toString(); // Get the image URL
 
                                             // Create Clinic object with clinicProfileUrl
-                                            Clinic clinic = new Clinic(null, clinicName, clinicPhoneNumber, clinicProfileUrl, selectedDays, schedStartTime, schedEndTime,clinicAddress, userId, doctorName, latitude, longitude, System.currentTimeMillis(), doctorProfile, specialization, vaccineMap);
+                                            Clinic clinic = new Clinic(null, clinicName, clinicPhoneNumber, clinicProfileUrl, selectedDays, schedStartTime, schedEndTime, userId, doctorName, latitude, longitude, clinicAddress, System.currentTimeMillis(), doctorProfile, specialization, vaccineMap);
 
                                             // Add Clinic to Firestore
                                             db.collection("clinics").add(clinic).addOnSuccessListener(documentReference -> {

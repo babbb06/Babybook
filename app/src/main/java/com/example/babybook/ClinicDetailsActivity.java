@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ClinicDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private TextView tvClinicName, tvDoctorName, tvDoctorSpecialization, tvTime, tvDayMon, tvDayTue, tvDayWed, tvDayThu, tvDayFri, tvDaySat, tvDaySun;
+    private TextView tvClinicName, tvDoctorName, tvDoctorSpecialization, tvClinicAddress, tvTime, tvDayMon, tvDayTue, tvDayWed, tvDayThu, tvDayFri, tvDaySat, tvDaySun;
     private TextView tvBcg, tvHepatitisB, tvDpt, tvBooster1, tvMmr, tvOpvIpv, tvBooster2, tvHInfluenzaB, tvRotavirus, tvMeasles, tvBooster3;
     private ImageView ivClinicImg;
 
@@ -52,6 +52,7 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
         tvTime = findViewById(R.id.texttime);
         tvDoctorName = findViewById(R.id.tvDocName);
         tvDoctorSpecialization = findViewById(R.id.tvSpecialization);
+        tvClinicAddress = findViewById(R.id.tvClinicAddress);
         ivClinicImg = findViewById(R.id.ivClinicImage);
 
         tvDayMon = findViewById(R.id.day_mon);
@@ -96,6 +97,7 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
         String doctorName = intent.getStringExtra("doctorName");
         latitude = intent.getDoubleExtra("latitude", 0); // class level
         longitude = intent.getDoubleExtra("longitude", 0); // class level
+        String clinicAddress = intent.getStringExtra("clinicAddress");
         long timestamp = intent.getLongExtra("timestamp", 0);
         String profileImageUrl = intent.getStringExtra("profileImageUrl");
         String specialization = intent.getStringExtra("specialization");
@@ -105,6 +107,7 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
         tvClinicName.setText(clinicName);
         tvDoctorName.setText(doctorName);
         tvDoctorSpecialization.setText(specialization);
+        tvClinicAddress.setText(clinicAddress);
         tvTime.setText(schedStartTime + " to " + schedEndTime);
 
         // Set up toolbar

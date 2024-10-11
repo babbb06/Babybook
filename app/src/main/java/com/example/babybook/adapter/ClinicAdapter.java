@@ -96,6 +96,7 @@ public class ClinicAdapter extends RecyclerView.Adapter<ClinicAdapter.ClinicView
                 intent.putExtra("doctorName", clinic.getDoctorName());
                 intent.putExtra("latitude", clinic.getLatitude());
                 intent.putExtra("longitude", clinic.getLongitude());
+                intent.putExtra("clinicAddress", clinic.getClinicAddress());
                 intent.putExtra("timestamp", clinic.getTimestamp());
                 intent.putExtra("profileImageUrl", clinic.getProfileImageUrl());
                 intent.putExtra("specialization", clinic.getSpecialization());

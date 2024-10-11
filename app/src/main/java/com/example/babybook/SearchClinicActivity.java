@@ -163,8 +163,8 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
                             // Create a Clinic object
                             Clinic clinic = new Clinic(clinicId, clinicName, clinicPhoneNumber, clinicProfileUrl,
-                                    schedDays, schedStartTime, schedEndTime,clinicAddress, doctorId, doctorName,
-                                    latitude, longitude, timestamp, profileImageUrl, specialization, vaccines);
+                                    schedDays, schedStartTime, schedEndTime, doctorId, doctorName,
+                                    latitude, longitude, clinicAddress, timestamp, profileImageUrl, specialization, vaccines);
 
                             // Add to the list
                             clinicList.add(clinic);

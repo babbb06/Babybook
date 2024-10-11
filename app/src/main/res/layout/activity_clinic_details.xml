@@ -468,20 +468,19 @@
                         </androidx.cardview.widget.CardView>
 
                               <TextView
-                                  android:id="@+id/Exact"
+                                  android:id="@+id/tvClinicAddress"
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:layout_below="@+id/mapslayout"
-                                  android:layout_centerHorizontal="true"
-                                  android:text="Exact location will be provided after visit schedule was approved."
-                                  android:textSize="11sp"
-                                  android:textStyle="italic"
-                                  android:visibility="invisible" />
+                                  android:layout_marginStart="30dp"
+                                  android:layout_marginTop="10dp"
+                                  android:text="Address"
+                                  android:textSize="12sp" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_below="@+id/Exact"
+                            android:layout_below="@+id/tvClinicAddress"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
                             android:background="#000000" />
