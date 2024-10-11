@@ -176,9 +176,10 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
         if (schedDays.contains(day)) {
             textView.setBackgroundResource(R.drawable.day_background_selected);
             textView.setTextColor(getResources().getColor(android.R.color.white));
+            textView.setVisibility(View.VISIBLE);
         } else {
-            textView.setBackgroundResource(R.drawable.day_background_default);
-            textView.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            textView.setVisibility(View.GONE);
+
         }
     }
 
@@ -237,9 +238,9 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
         if (quantity > 0) {
             textView.setBackgroundResource(R.drawable.day_background_selected);
             textView.setTextColor(getResources().getColor(android.R.color.white));
+            textView.setVisibility(View.VISIBLE);
         } else {
-            textView.setBackgroundResource(R.drawable.day_background_default);
-            textView.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            textView.setVisibility(View.GONE);
         }
     }
 

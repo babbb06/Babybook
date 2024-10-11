@@ -287,6 +287,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="BCG"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -298,6 +299,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Hepatitis B"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -309,6 +311,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="DPT"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -320,6 +323,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Booster 1"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
                             <TextView
                                 android:id="@+id/day_mmr"
@@ -330,6 +334,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="MMR"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -341,6 +346,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="OPV IPV"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -352,6 +358,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Booster 2"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -363,6 +370,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="H Influenza B"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -374,6 +382,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Rotavirus"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                             <TextView
@@ -385,6 +394,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Measles"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
 
@@ -398,6 +408,7 @@
                                 android:gravity="center"
                                 android:padding="9dp"
                                 android:text="Booster 3"
+                                android:visibility="gone"
                                 android:textColor="@android:color/darker_gray" />
 
                         </com.google.android.flexbox.FlexboxLayout>
