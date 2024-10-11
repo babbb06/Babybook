@@ -1,6 +1,7 @@
 package com.example.babybook.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Doctor {
     private String id;
@@ -13,6 +14,35 @@ public class Doctor {
     private String PRCLicenseNumber;
     private String specialization;
     private String clinicAddress;
+    private String schedStartTime;
+    private String schedEndTime;
+    private List<String> schedDays;
+
+
+    public List<String> getSchedDays() {
+        return schedDays;
+    }
+
+    public void setSchedDays(List<String> schedDays) {
+        this.schedDays = schedDays;
+    }
+
+    public String getSchedEndTime() {
+        return schedEndTime;
+    }
+
+    public void setSchedEndTime(String schedEndTime) {
+        this.schedEndTime = schedEndTime;
+    }
+
+    public String getSchedStartTime() {
+        return schedStartTime;
+    }
+
+    public void setSchedStartTime(String schedStartTime) {
+        this.schedStartTime = schedStartTime;
+    }
+
 
     // Getters and setters
     public String getId() {

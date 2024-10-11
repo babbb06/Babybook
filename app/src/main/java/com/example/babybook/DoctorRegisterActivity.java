@@ -15,6 +15,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,8 +42,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DoctorRegisterActivity extends AppCompatActivity {
@@ -207,6 +210,10 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         String clinicAddress = editTextClinicAddress.getText().toString().trim();
         int selectedSpecializationPosition = spinnerSpecialization.getSelectedItemPosition();
         String specialization = spinnerSpecialization.getSelectedItem().toString().trim();
+        String schedStartTime = etStartTime.getText().toString().trim();
+        String schedEndTime = etEndTime.getText().toString().trim();
+        List<String> selectedDays = getSelectedDays();
+
         TextView selectProfile = findViewById(R.id.textView4);
 
         // Concatenate country code with the phone number
@@ -388,7 +395,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             String userId = mAuth.getCurrentUser().getUid();
 
                             // Call the uploadProfilePicture method
-                            uploadProfilePicture(userId, fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress);
+                            uploadProfilePicture(userId, fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, schedStartTime, schedEndTime, selectedDays);
 
                             Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
                             // Redirect to doctor dashboard
@@ -424,7 +431,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private boolean containsNumber(String text) {
         return text.matches(".*\\d.*");
     }
-    private void saveDoctorData(String fullName,String firstName,String lastName,String birthday, String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String profileImageUrl) {
+    private void saveDoctorData(String fullName,String firstName,String lastName,String birthday, String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String profileImageUrl, String schedStartTime, String schedEndTime, List<String> selectedDays) {
         // Ensure user is authenticated
         if (mAuth.getCurrentUser() == null) {
             Log.w(TAG, "saveDoctorData: no authenticated user");
@@ -445,6 +452,9 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         doctor.put("specialization", specialization);
         doctor.put("clinicAddress", clinicAddress);
         doctor.put("profileImageUrl", profileImageUrl); // Store the profile image URL
+        doctor.put("schedStartTime", schedStartTime);
+        doctor.put("schedEndTime", schedEndTime);
+        doctor.put("schedDays", selectedDays);
 
 
         // Add a new document with a generated ID
@@ -500,7 +510,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     }
 
     // uploadProfilePicture to accept fullName and email
-    private void uploadProfilePicture(String userId, String fullName,String firstName,String lastName ,String birthday,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress) {
+    private void uploadProfilePicture(String userId, String fullName,String firstName,String lastName ,String birthday,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String schedStartTime, String schedEndTime, List <String> schedDays) {
         if (selectedImageUri != null) {
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("doctor_profile_pictures");
             StorageReference imageRef = storageRef.child(userId + ".jpg");
@@ -513,7 +523,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                                 String imageUrl = downloadUrlTask.getResult().toString();
 
                                 // After successfully uploading the image, save user data with profile image URL
-                                saveDoctorData(fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, imageUrl);
+                                saveDoctorData(fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, imageUrl, schedStartTime, schedEndTime, schedDays);
                             } else {
                                 // Handle error while getting the image URL
                             }
@@ -566,6 +576,19 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         };
 
         timePickerDialog.show();
+    }
+
+    // DAYS SCHEDULE
+    private List<String> getSelectedDays() {
+        List<String> selectedDays = new ArrayList<>();
+        if (((CheckBox) findViewById(R.id.cbMonday)).isChecked()) selectedDays.add("Monday");
+        if (((CheckBox) findViewById(R.id.cbTuesday)).isChecked()) selectedDays.add("Tuesday");
+        if (((CheckBox) findViewById(R.id.cbWednesday)).isChecked()) selectedDays.add("Wednesday");
+        if (((CheckBox) findViewById(R.id.cbThursday)).isChecked()) selectedDays.add("Thursday");
+        if (((CheckBox) findViewById(R.id.cbFriday)).isChecked()) selectedDays.add("Friday");
+        if (((CheckBox) findViewById(R.id.cbSaturday)).isChecked()) selectedDays.add("Saturday");
+        if (((CheckBox) findViewById(R.id.cbSunday)).isChecked()) selectedDays.add("Sunday");
+        return selectedDays;
     }
 }
 
