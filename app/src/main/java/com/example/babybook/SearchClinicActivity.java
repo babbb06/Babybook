@@ -151,6 +151,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
                             List<String> schedDays = (List<String>) document.get("schedDays");
                             String schedStartTime = document.getString("schedStartTime");
                             String schedEndTime = document.getString("schedEndTime");
+                            String clinicAddress = document.getString("clinicAddress");
                             String doctorId = document.getString("doctorId");
                             String doctorName = document.getString("doctorName");
                             Double latitude = document.getDouble("latitude");
@@ -162,7 +163,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
                             // Create a Clinic object
                             Clinic clinic = new Clinic(clinicId, clinicName, clinicPhoneNumber, clinicProfileUrl,
-                                    schedDays, schedStartTime, schedEndTime, doctorId, doctorName,
+                                    schedDays, schedStartTime, schedEndTime,clinicAddress, doctorId, doctorName,
                                     latitude, longitude, timestamp, profileImageUrl, specialization, vaccines);
 
                             // Add to the list
