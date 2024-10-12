@@ -1,0 +1,54 @@
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/doctor_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".medicalrecord.ListOfMedicalRecord"
+        android:background="@drawable/sidebarbg">
+
+        <!-- Main content -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Toolbar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/listToolbar"
+                android:layout_width="match_parent"
+                android:background="@drawable/header"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:theme="@style/ToFontBold"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:titleMarginTop="13dp"
+                app:titleTextColor="@color/white"
+                app:subtitleTextColor="@android:color/white"/>
+
+            <!-- Newsfeed RecyclerView -->
+
+            <!-- Floating Action Button to create new post -->
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/listOfMedicalRecordRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTintMode="add"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/listToolbar"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>

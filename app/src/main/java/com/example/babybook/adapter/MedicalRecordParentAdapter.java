@@ -6,24 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.babybook.R;
 import com.example.babybook.ViewMedicalRecord;
+import com.example.babybook.ViewMedicalRecordParent;
 import com.example.babybook.model.HealthChecklist;
 
 import java.util.List;
 
-public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdapter.ViewHolder> {
+public class MedicalRecordParentAdapter extends RecyclerView.Adapter<MedicalRecordParentAdapter.ViewHolder> {
 
     private List<HealthChecklist> healthChecklists;
     private String childId,FirstName,LastName,dateToday, name,clinic_day; // Store childId
     private Context context; // Store the context
 
     // Updated constructor to accept Context
-    public MedicalRecordAdapter(List<HealthChecklist> healthChecklists, String childId,String FirstName,String LastName,String dateToday, Context context) {
+    public MedicalRecordParentAdapter(List<HealthChecklist> healthChecklists, String childId, String FirstName, String LastName, String dateToday, Context context) {
         this.healthChecklists = healthChecklists;
         this.childId = childId;
         this.FirstName = FirstName;
@@ -44,17 +44,12 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
         HealthChecklist checklist = healthChecklists.get(position);
         holder.name.setText(FirstName +  " " + LastName);
         holder.clinic_day.setText(dateToday);
-        String firstName = checklist.getFirstName(); // Adjust this if the names come from the checklist
-        String lastName = checklist.getLastName();   // Adjust as needed
-
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ViewMedicalRecord.class); // Use the stored context
+            Intent intent = new Intent(context, ViewMedicalRecordParent.class); // Use the stored context
             intent.putExtra("childId", childId); // Pass the specific child's ID
             intent.putExtra("FirstName", FirstName);
             intent.putExtra("LastName", LastName);
-
-            Toast.makeText(context, lastName + " " + firstName, Toast.LENGTH_SHORT).show();
             context.startActivity(intent); // Start the activity using the context
         });
     }

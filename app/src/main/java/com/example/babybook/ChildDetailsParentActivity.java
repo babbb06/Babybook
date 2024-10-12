@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +42,7 @@ import java.util.Map;
 public class ChildDetailsParentActivity extends AppCompatActivity {
 
     private String currentParentId;
-    private String childId; // Store the child ID
+    private String childId,FirstName,LastName; // Store the child ID
     private GestureDetector gestureDetector;
     private ImageView imageViewMenuBCG;
     private ImageView imageViewMenuHepatitisB;
@@ -97,6 +98,22 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
 
         // Retrieve child ID from the intent
         childId = getIntent().getStringExtra("CHILD_ID");
+        FirstName = getIntent().getStringExtra("FirstName");
+        LastName = getIntent().getStringExtra("LastName");
+
+        // Find the CardView by its ID
+        CardView medicalRecordCardView = findViewById(R.id.medicalrecordcv);
+
+        // Set an OnClickListener to navigate to ViewMedicalRecord.java
+        medicalRecordCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(ChildDetailsParentActivity.this, com.example.babybook.ListOfMedicalRecordParent.class);
+
+            // Optionally, pass some data using intent if needed
+            intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
+            intent.putExtra("FirstName", FirstName); // Pass the child ID
+            intent.putExtra("LastName", LastName);
+            startActivity(intent);
+        });
 
         // Get the current parent ID
         currentParentId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Fetch current user ID from FirebaseAuth

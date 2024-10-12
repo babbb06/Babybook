@@ -45,6 +45,8 @@ public class HealthRecordParentAdapter extends RecyclerView.Adapter<HealthRecord
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChildDetailsParentActivity.class);
             intent.putExtra("CHILD_ID", record.getId()); // Pass the child ID
+            intent.putExtra("FirstName", record.getFirstName()); // Pass the child ID
+            intent.putExtra("LastName", record.getLastName());
             context.startActivity(intent);
         });
 
