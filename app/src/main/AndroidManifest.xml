@@ -24,13 +24,13 @@
         android:theme="@style/Theme.BabyBook"
         tools:targetApi="31" >
         <activity
-            android:name=".medicalrecord.ListOfMedicalRecord"
+            android:name=".ListOfMedicalRecord"
             android:exported="false" />
         <activity
-            android:name=".medicalrecord.ViewMedicalRecord"
+            android:name=".ViewMedicalRecord"
             android:exported="false" />
         <activity
-            android:name=".medicalrecord.AddMedicalRecord"
+            android:name=".AddMedicalRecord"
             android:exported="false" />
         <activity
             android:name=".SearchClinicActivity"

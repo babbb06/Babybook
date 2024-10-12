@@ -118,9 +118,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginBottom="10dp"
-                    android:text="asddasdas asd as dasd asd as daa dasd asd asd asd asd asd asd asd asd asd as d asd asd asdasd asd asd asd asd as "
+                    android:text="asddasda asd asd asd as "
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewonly1" />
 
@@ -157,9 +156,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginBottom="10dp"
-                android:text="asddasdas asd as dasd asd as daa dasd asd asd asd asd asd asd asd asd asd as d asd asd asdasd asd asd asd asd as "
+                android:text="asddad ad asd asd as "
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewonly2" />
 
@@ -199,9 +197,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginBottom="10dp"
-                    android:text="asddasdas asd as dasd asd as daa dasd asd asd asd asd asd asd asd asd asd as d asd asd asdasd asd asd asd asd as "
+                    android:text="asddasdasd asdasd asd asd asd asd as "
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewonly3" />
 
