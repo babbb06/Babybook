@@ -1,7 +1,7 @@
 
-package com.example.babybook;
+package com.example.babybook.adapter;
 
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.babybook.R;
 import com.example.babybook.model.Doctor;
 
 import java.util.List;
@@ -38,6 +39,20 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
         holder.specializationTextView.setText(doctor.getSpecialization());
         holder.clinicAddressTextView.setText(doctor.getClinicAddress());
 
+        if(doctor.getSchedStartTime() == null && doctor.getSchedEndTime() == null){
+            holder.schedTimeTextView.setText("No scheduled time.");
+        } else{
+            holder.schedTimeTextView.setText(doctor.getSchedStartTime() + " - " + doctor.getSchedEndTime());
+        }
+
+        List<String> schedDays = doctor.getSchedDays();
+        if(schedDays != null) {
+            holder.schedDaysTextview.setText(String.join(", ", schedDays));
+        } else {
+            holder.schedDaysTextview.setText("No scheduled days. ");
+        }
+
+
         holder.bookAppointmentButton.setOnClickListener(v -> {
             if (onDoctorClickListener != null) {
                 onDoctorClickListener.onDoctorClick(doctor);
@@ -58,6 +73,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
         TextView fullNameTextView;
         TextView specializationTextView;
         TextView clinicAddressTextView;
+        TextView schedTimeTextView, schedDaysTextview;
         Button bookAppointmentButton;
 
         public DoctorViewHolder(@NonNull View itemView) {
@@ -66,6 +82,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorView
             specializationTextView = itemView.findViewById(R.id.specialization_text_view);
             clinicAddressTextView = itemView.findViewById(R.id.clinic_address_text_view);
             bookAppointmentButton = itemView.findViewById(R.id.book_appointment_button);
+            schedTimeTextView = itemView.findViewById(R.id.tvSchedTime);
+            schedDaysTextview = itemView.findViewById(R.id.tvSchedDays);
         }
     }
 }

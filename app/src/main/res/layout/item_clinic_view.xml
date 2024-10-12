@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:text="Clinic Name"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/violet"/>
 
         <TextView
             android:id="@+id/clinic_address"
@@ -49,6 +50,20 @@
             android:text="(W, T, F)"
             android:textSize="16sp"
             android:layout_marginTop="4dp"/>
+         <TextView
+             android:id="@+id/vaccinesTitle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Available vaccines:"
+             android:textSize="16sp"
+             android:fontFamily="@font/poppins_semibold"
+             android:layout_marginTop="14dp"/>
+             <TextView
+             android:id="@+id/vaccines"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="vaccine 1, vaccine 2"
+             android:textSize="16sp" />
 
          </LinearLayout>
     </LinearLayout>

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +46,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
     private GoogleMap mMap;
     private LatLng initialLocation;
     private Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
+    private ScrollView scrollView;
 
 
     @Override
@@ -66,6 +68,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
         measles = findViewById(R.id.measles);
         mmr = findViewById(R.id.mmr);
         booster_3 = findViewById(R.id.booster_3);
+        scrollView = findViewById(R.id.scrollView);
 
         // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -102,7 +105,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
         MapTouchableWrapper mapWrapper = findViewById(R.id.map_wrapper);
         mapWrapper.setOnTouchListener(() -> {
             // Disable parent scroll when interacting with the map
-            //scrollView.requestDisallowInterceptTouchEvent(true);
+            scrollView.requestDisallowInterceptTouchEvent(true);
         });
 
         // Initialize the map fragment
@@ -160,8 +163,8 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
                             // Create a Clinic object
                             Clinic clinic = new Clinic(clinicId, clinicName, clinicPhoneNumber, clinicProfileUrl,
-                                    schedDays, schedStartTime, schedEndTime,clinicAddress, doctorId, doctorName,
-                                    latitude, longitude, timestamp, profileImageUrl, specialization, vaccines);
+                                    schedDays, schedStartTime, schedEndTime, doctorId, doctorName,
+                                    latitude, longitude, clinicAddress, timestamp, profileImageUrl, specialization, vaccines);
 
                             // Add to the list
                             clinicList.add(clinic);
