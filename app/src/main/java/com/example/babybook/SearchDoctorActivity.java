@@ -63,8 +63,11 @@ public class SearchDoctorActivity extends AppCompatActivity {
         doctors = new ArrayList<>();
         adapter = new DoctorAdapter(doctors, doctor -> {
             // Handle book appointment button click
-            Intent intent = new Intent(SearchDoctorActivity.this, BookAppointmentActivity.class);
+            Intent intent = new Intent(SearchDoctorActivity.this, BookCheckupAppointmentActivity.class);
             intent.putExtra("doctorId", doctor.getId());
+            intent.putExtra("schedStartTime", doctor.getSchedStartTime());
+            intent.putExtra("schedEndTime", doctor.getSchedEndTime());
+            intent.putStringArrayListExtra("schedDays", (ArrayList<String>) doctor.getSchedDays());
             startActivity(intent);
         });
 

@@ -7,6 +7,7 @@ public class AppointmentRequest {
     private String id;
     private String firstName;
     private String lastName;
+    private String childFullName;
     private String birthDay;
     private String birthPlace;
     private String address;
@@ -22,10 +23,11 @@ public class AppointmentRequest {
         // Default constructor required for Firestore serialization
     }
 
-    public AppointmentRequest(String id, String firstName, String lastName, String birthDay, String birthPlace, String address, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime) {
+    public AppointmentRequest(String id, String firstName, String lastName,  String childFullName, String birthDay, String birthPlace, String address, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.childFullName = childFullName;
         this.birthDay = birthDay;
         this.birthPlace = birthPlace;
         this.address = address;
@@ -57,6 +59,14 @@ public class AppointmentRequest {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getChildFullName() {
+        return childFullName;
+    }
+
+    public void setChildFullName(String childFullName) {
+        this.childFullName = childFullName;
     }
 
     public void setLastName(String lastName) {
@@ -145,7 +155,7 @@ public class AppointmentRequest {
 
     @Override
     public String toString() {
-        return "Child's Name: " + firstName + " " + lastName + "\n" +
+        return "Child's Name: " + childFullName + "\n" +
                 "Birth Date: " + birthDay + "\n" +
                 "Birth Place: " + birthPlace + "\n" +
                 "Address: " + address + "\n" +
