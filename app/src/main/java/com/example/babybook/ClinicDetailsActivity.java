@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -123,8 +124,11 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onClick(View v) {
                 // Handle book appointment button click
-                Intent intent = new Intent(ClinicDetailsActivity.this, BookAppointmentActivity.class);
-                intent.putExtra("doctorId", doctorId); // Remove `.getId()` since doctorId is already a String
+                Intent intent = new Intent(ClinicDetailsActivity.this, BookVaccineAppointmentActivity.class);
+                intent.putExtra("doctorId", doctorId);
+                intent.putExtra("schedStartTime", schedStartTime);
+                intent.putExtra("schedEndTime", schedEndTime);
+                intent.putStringArrayListExtra("schedDays", (ArrayList<String>) schedDays);
                 startActivity(intent);
             }
         });

@@ -84,7 +84,10 @@
             android:name=".ManageAppointmentsActivity"
             android:exported="false" />
         <activity
-            android:name=".BookAppointmentActivity"
+            android:name=".BookVaccineAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BookCheckupAppointmentActivity"
             android:exported="false" />
         <activity
             android:name=".SearchDoctorActivity"
