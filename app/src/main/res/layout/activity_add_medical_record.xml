@@ -42,73 +42,98 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateLayout"
-            style="@style/LoginTextInputOuterFieldStyle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/violet"
-            app:boxStrokeErrorColor="@color/colorError"
-            app:errorTextColor="@color/clear">
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextDate"
-                style="@style/LoginTextInputInnerFieldStyle"
-                android:layout_width="match_parent"
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dateLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:hint="Date"
-                android:inputType="date"
-                tools:ignore="TouchTargetSizeCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1"
+                android:paddingHorizontal="3dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:layout_constraintEnd_toStartOf="@+id/weightLayout"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.32">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/weightLayout"
-            style="@style/LoginTextInputOuterFieldStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:layout_marginTop="-10dp"
-            android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/violet"
-            app:boxStrokeErrorColor="@color/colorError"
-            app:errorTextColor="@color/clear">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextDate"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Date"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextWeight"
-                style="@style/LoginTextInputInnerFieldStyle"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/weightLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:hint="Weight"
-                android:inputType="number"
-                tools:ignore="TouchTargetSizeCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:layout_constraintEnd_toStartOf="@+id/temperatureLayout"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/dateLayout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.35">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/temperatureLayout"
-            style="@style/LoginTextInputOuterFieldStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:layout_marginTop="-10dp"
-            android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/violet"
-            app:boxStrokeErrorColor="@color/colorError"
-            app:errorTextColor="@color/clear">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextWeight"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Weight(Kg)"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextTemperature"
-                style="@style/LoginTextInputInnerFieldStyle"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/temperatureLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:hint="Temperature"
-                android:inputType="numberDecimal"
-                tools:ignore="TouchTargetSizeCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:paddingHorizontal="3dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/weightLayout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.35">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextTemperature"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:maxLength="2"/>/with decimal number
+                    android:hint="Temp(°C)"
+                    android:inputType="numberDecimal"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -263,41 +288,7 @@
                 tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Young Infant Checklist Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Young Infant Checklist (for infants &lt; 2 months)" />
 
-        <CheckBox
-            android:id="@+id/check_baby_sick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Is the baby Too Sick?" />
-
-        <CheckBox
-            android:id="@+id/check_baby_fever"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Does the baby have Fever?" />
-
-        <CheckBox
-            android:id="@+id/check_baby_jaundice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Is the Baby Jaundice?" />
-
-        <CheckBox
-            android:id="@+id/check_baby_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Assess Baby's Weight?" />
-
-        <CheckBox
-            android:id="@+id/check_baby_feeding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ask about Baby's Feeding?" />
 
         <Button
             android:id="@+id/submit_button"

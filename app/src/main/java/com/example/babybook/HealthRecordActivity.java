@@ -66,12 +66,13 @@ public class HealthRecordActivity extends AppCompatActivity {
 
         loadHealthRecords();
 
-        findViewById(R.id.fabAddRecord).setOnClickListener(new View.OnClickListener() {
+       /*findViewById(R.id.fabAddRecord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //   showAddRecordDialog();
             }
-        });
+        });*/
+
     }
 
     private void loadHealthRecords() {

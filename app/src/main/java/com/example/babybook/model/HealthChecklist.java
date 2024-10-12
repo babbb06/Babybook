@@ -8,6 +8,8 @@ public class HealthChecklist {
     private String date;
     private String weight;
     private String temperature;
+
+
     private boolean isSick;
     private boolean hasCough;
     private boolean hasDiarrhea;
@@ -21,16 +23,18 @@ public class HealthChecklist {
     private boolean hasLongDiarrheaOrCough;
     private boolean needsImmunization;
     private boolean hasOtherProblems;
+
+
     private String summaryDiagnosis;
     private String treatmentPlan;
     private String followUpPlan;
 
-    // Young Infant Checklist
-    private boolean isBabySick;
-    private boolean hasBabyFever;
-    private boolean isBabyJaundice;
-    private boolean assessBabyWeight;
-    private boolean askAboutBabyFeeding;
+
+    private String LastName;
+    private String FirstName;
+    private String doctorId;
+    private String uniqueId;
+    private String datetoday;
 
     private String parentId;       // ID of the parent
     private String childId;        // ID of the child
@@ -44,6 +48,8 @@ public class HealthChecklist {
         this.date = date;
     }
 
+
+
     public String getWeight() {
         return weight;
     }
@@ -51,6 +57,66 @@ public class HealthChecklist {
     public void setWeight(String weight) {
         this.weight = weight;
     }
+
+
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+
+
+
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+
+
+
+    public String getDateToday() {
+        return datetoday;
+    }
+
+    public void setDateToday(String dateToday) {
+        this.datetoday = dateToday;
+    }
+
+
+
+
+
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.FirstName = firstName;
+    }
+
+    public String getLastName() {
+        return FirstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.LastName = lastName;
+    }
+
+
+
+
+
+
+
 
     public String getTemperature() {
         return temperature;
@@ -64,9 +130,12 @@ public class HealthChecklist {
         return isSick;
     }
 
+
     public void setSick(boolean sick) {
         isSick = sick;
     }
+
+
 
     public boolean hasCough() {
         return hasCough;
@@ -188,45 +257,7 @@ public class HealthChecklist {
         this.followUpPlan = followUpPlan;
     }
 
-    public boolean isBabySick() {
-        return isBabySick;
-    }
 
-    public void setBabySick(boolean babySick) {
-        isBabySick = babySick;
-    }
-
-    public boolean hasBabyFever() {
-        return hasBabyFever;
-    }
-
-    public void setBabyFever(boolean babyFever) {
-        hasBabyFever = babyFever;
-    }
-
-    public boolean isBabyJaundice() {
-        return isBabyJaundice;
-    }
-
-    public void setBabyJaundice(boolean babyJaundice) {
-        isBabyJaundice = babyJaundice;
-    }
-
-    public boolean isAssessBabyWeight() {
-        return assessBabyWeight;
-    }
-
-    public void setAssessBabyWeight(boolean assessBabyWeight) {
-        this.assessBabyWeight = assessBabyWeight;
-    }
-
-    public boolean isAskAboutBabyFeeding() {
-        return askAboutBabyFeeding;
-    }
-
-    public void setAskAboutBabyFeeding(boolean askAboutBabyFeeding) {
-        this.askAboutBabyFeeding = askAboutBabyFeeding;
-    }
     // New getters and setters for parentId, childId, and timestamp
     public String getParentId() {
         return parentId;
