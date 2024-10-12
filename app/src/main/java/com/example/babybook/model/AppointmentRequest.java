@@ -5,31 +5,40 @@ import java.util.Date;
 public class AppointmentRequest {
 
     private String id;
-    private String childName;
+    private String firstName;
+    private String lastName;
+    private String birthDay;
+    private String birthPlace;
+    private String address;
     private String service;
     private String date;
     private String time;
     private String status;
     private String userId;
-    private String doctorId; // Added field for doctor ID
+    private String doctorId;
     private Date bookingTime;
 
     public AppointmentRequest() {
         // Default constructor required for Firestore serialization
     }
 
-    public AppointmentRequest(String id, String childName, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime) {
+    public AppointmentRequest(String id, String firstName, String lastName, String birthDay, String birthPlace, String address, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime) {
         this.id = id;
-        this.childName = childName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
+        this.birthPlace = birthPlace;
+        this.address = address;
         this.service = service;
         this.date = date;
         this.time = time;
         this.status = status;
         this.userId = userId;
-        this.doctorId = doctorId; // Initialize doctor ID
+        this.doctorId = doctorId;
         this.bookingTime = bookingTime;
     }
 
+    // Getter and Setter methods for all fields
     public String getId() {
         return id;
     }
@@ -38,12 +47,44 @@ public class AppointmentRequest {
         this.id = id;
     }
 
-    public String getChildName() {
-        return childName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setChildName(String childName) {
-        this.childName = childName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public String getBirthPlace() {
+        return birthPlace;
+    }
+
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getService() {
@@ -91,7 +132,7 @@ public class AppointmentRequest {
     }
 
     public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId; // Getter and setter for doctor ID
+        this.doctorId = doctorId;
     }
 
     public Date getBookingTime() {
@@ -104,7 +145,10 @@ public class AppointmentRequest {
 
     @Override
     public String toString() {
-        return "Child's Name: " + childName + "\n" +
+        return "Child's Name: " + firstName + " " + lastName + "\n" +
+                "Birth Date: " + birthDay + "\n" +
+                "Birth Place: " + birthPlace + "\n" +
+                "Address: " + address + "\n" +
                 "Service: " + service + "\n" +
                 "Date: " + date + "\n" +
                 "Time: " + time + "\n" +

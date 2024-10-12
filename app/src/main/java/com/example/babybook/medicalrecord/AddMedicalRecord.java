@@ -1,6 +1,7 @@
 package com.example.babybook.medicalrecord;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -80,17 +81,39 @@ public class AddMedicalRecord extends AppCompatActivity {
             FirebaseUser user = auth.getCurrentUser();
 
             if (user == null) {
-                Toast.makeText(AddMedicalRecord.this, "Please log in to submit a medical record.", Toast.LENGTH_SHORT).show();
+                showToast("Please log in to submit a medical record.");
                 return; // Exit early if not authenticated
             }
 
-            // Call createMedicalRecord without latitude and longitude
-            createMedicalRecord(editTextDate, editTextWeight, editTextTemperature, summaryDiagnosis, treatmentPlan, followUpPlan,
-                    checkSick, checkCough, checkDiarrhea, checkFever, checkMeasles, checkEarPain,
-                    checkPallor, checkMalnourished, checkFeeding, checkBreastfeeding, checkDiarrheaCough,
-                    checkImmunization, checkOtherProblems, checkBabySick, checkBabyFever, checkBabyJaundice,
-                    checkBabyWeight, checkBabyFeeding);
+            // Validate inputs
+            if (validateInputs(editTextDate, editTextWeight, editTextTemperature)) {
+                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature, summaryDiagnosis, treatmentPlan, followUpPlan,
+                        checkSick, checkCough, checkDiarrhea, checkFever, checkMeasles, checkEarPain,
+                        checkPallor, checkMalnourished, checkFeeding, checkBreastfeeding, checkDiarrheaCough,
+                        checkImmunization, checkOtherProblems, checkBabySick, checkBabyFever, checkBabyJaundice,
+                        checkBabyWeight, checkBabyFeeding);
+            }
         });
+    }
+
+    private boolean validateInputs(EditText date, EditText weight, EditText temperature) {
+        if (TextUtils.isEmpty(date.getText())) {
+            showToast("Date is required.");
+            return false;
+        }
+        if (TextUtils.isEmpty(weight.getText())) {
+            showToast("Weight is required.");
+            return false;
+        }
+        if (TextUtils.isEmpty(temperature.getText())) {
+            showToast("Temperature is required.");
+            return false;
+        }
+        return true;
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(AddMedicalRecord.this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature,
@@ -141,13 +164,12 @@ public class AddMedicalRecord extends AppCompatActivity {
         db.collection("medicalRecords")
                 .add(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
-                    // Successfully saved
-                    Toast.makeText(AddMedicalRecord.this, "Medical record submitted successfully!", Toast.LENGTH_SHORT).show();
+                    showToast("Medical record submitted successfully!");
                     finish(); // Close the activity
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FirestoreError", "Error submitting data: " + e.getMessage());
-                    Toast.makeText(AddMedicalRecord.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    showToast("Error: " + e.getMessage());
                 });
     }
 
@@ -168,7 +190,7 @@ public class AddMedicalRecord extends AppCompatActivity {
                                 String userEmail = document.getString("email");
 
                                 // You can now use this data as needed, e.g., display it in the UI
-                                Toast.makeText(this, "User: " + userName + ", Email: " + userEmail, Toast.LENGTH_SHORT).show();
+                                showToast("User: " + userName + ", Email: " + userEmail);
                             } else {
                                 Log.d("FetchUserData", "No such document");
                             }
