@@ -115,6 +115,14 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                     case R.id.doctor_nav_logout:
                         showLogoutConfirmation();
                         break;
+                    case R.id.doctor_nav_about:
+                        startActivity(new Intent(DoctorDashboardActivity.this, About.class));
+                        break;
+                    //new added layout
+                    case R.id.doctor_nav_terms:
+                        startActivity(new Intent(DoctorDashboardActivity.this, Terms.class));
+                        break;
+
                 }
                 drawerLayout.closeDrawers();
                 return true;

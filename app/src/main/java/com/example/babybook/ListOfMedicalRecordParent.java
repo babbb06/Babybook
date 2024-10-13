@@ -2,9 +2,11 @@ package com.example.babybook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +40,12 @@ public class ListOfMedicalRecordParent extends AppCompatActivity {
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
 
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getSupportActionBar().setTitle("Medical Records ");// PARENT SIDe
 
         recyclerView = findViewById(R.id.listOfMedicalRecordRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,6 +83,7 @@ public class ListOfMedicalRecordParent extends AppCompatActivity {
                     Toast.makeText(ListOfMedicalRecordParent.this, "Failed to load records: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
 
 
 

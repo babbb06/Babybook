@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".About">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/header"
+            android:theme="@style/ToFontBold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:subtitleTextColor="@android:color/white"
+            app:titleMarginTop="13dp"
+            app:titleTextColor="@color/white" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+
+            >
+
+            <ImageView
+                android:id="@+id/olog"
+                android:layout_width="95dp"
+                android:layout_height="109dp"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/baby_book_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lblDormDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="About"
+                android:textColor="#000000"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/olog" />
+
+
+            <TextView
+                android:id="@+id/asad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins"
+                android:text="We are a dedicated team of Bachelor of Science in Information Technology (BSIT) 4B students passionate about leveraging technology to improve healthcare for children. Our capstone project, Baby Book Plus, is designed to modernize traditional baby health records by providing a more efficient and effective digital solution for parents and healthcare professionals.
+\n\nOur goal is to simplify the management of pediatric health records, making it easier for parents to monitor their child’s health and vaccinations while providing healthcare professionals with a seamless platform to access and update important medical data.
+\n\n\nMeet the Team - BSIT 4B:\n\nKobe Blake Castro\n\nBryan Gerzy Centeno\n\nGene Kenneth G. Dela Cruz\n\nJayrho G. Laguitan\n\nEthan Gabriel P. Tanchiatco\n\n
+\n\n\nWith a shared vision of improving healthcare accessibility and outcomes through innovative digital solutions, we are committed to making Baby Book Plus an indispensable tool for child health management. By integrating the latest technologies like geolocation and mobile healthcare applications, we bring convenience and real-time information to parents and healthcare providers alike.
+\n\nThrough collaboration, research, and cutting-edge development practices, we aim to bring our vision to life and contribute to the future of pediatric healthcare."
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblDormDetails" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
+

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.babybook.model.HealthChecklist;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,6 +26,14 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
         // Get the child ID from the intent
         childId = getIntent().getStringExtra("childId");
         FirstName = getIntent().getStringExtra("FirstName");
+
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getSupportActionBar().setTitle("Medical Records Details");// PARENT SIDe
+
 
 
         Toast.makeText(this, "Child ID: " + childId, Toast.LENGTH_SHORT).show();
@@ -104,6 +113,21 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
                             checkBoxDiarrheaCough.setChecked(document.getBoolean("HasDiarrheaCough"));
                             checkBoxImmunization.setChecked(document.getBoolean("HasImmunization"));
                             checkBoxOtherProblems.setChecked(document.getBoolean("HasOtherProblems"));
+
+                            // Disable all checkboxes
+                            checkBoxSick.setEnabled(false);
+                            checkBoxCough.setEnabled(false);
+                            checkBoxDiarrhea.setEnabled(false);
+                            checkBoxFever.setEnabled(false);
+                            checkBoxMeasles.setEnabled(false);
+                            checkBoxEarPain.setEnabled(false);
+                            checkBoxPallor.setEnabled(false);
+                            checkBoxMalnourished.setEnabled(false);
+                            checkBoxFeeding.setEnabled(false);
+                            checkBoxBreastfeeding.setEnabled(false);
+                            checkBoxDiarrheaCough.setEnabled(false);
+                            checkBoxImmunization.setEnabled(false);
+                            checkBoxOtherProblems.setEnabled(false);
                         }
                     } else {
                         Toast.makeText(ViewMedicalRecordParent.this, "No record found", Toast.LENGTH_SHORT).show();
