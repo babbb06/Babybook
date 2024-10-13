@@ -47,13 +47,13 @@
         <item android:title="Communicate">
             <menu>
                 <item
-                    android:id="@+id/doctor_nav_share"
+                    android:id="@+id/doctor_nav_about"
                     android:icon="@drawable/share"
-                    android:title="Share App" />
+                    android:title="About" />
                 <item
-                    android:id="@+id/doctor_nav_rate"
+                    android:id="@+id/doctor_nav_terms"
                     android:icon="@drawable/rate"
-                    android:title="Rate Us" />
+                    android:title="Terms&amp; Condition" />
                 <item
                     android:id="@+id/doctor_nav_logout"
                     android:icon="@drawable/logout"

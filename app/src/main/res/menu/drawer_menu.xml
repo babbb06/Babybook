@@ -35,16 +35,32 @@
 
     <!-- Account Settings Section -->
     <group android:checkableBehavior="single">
-        <item android:title="Account Settings"> <!-- Section Header -->
+        <item android:title="Profile"> <!-- Section Header -->
             <menu>
                 <item
                     android:id="@+id/nav_profile"
                     android:icon="@drawable/profile"
-                    android:title="My Profile" />
+                    android:title="View Profile" />
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Communicate">
+            <menu>
+                <item
+                    android:id="@+id/nav_about"
+                    android:icon="@drawable/share"
+                    android:title="About" />
+                <item
+                    android:id="@+id/nav_terms"
+                    android:icon="@drawable/rate"
+                    android:title="Terms&amp; Condition" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/logout"
                     android:title="Logout" />
+
             </menu>
         </item>
     </group>

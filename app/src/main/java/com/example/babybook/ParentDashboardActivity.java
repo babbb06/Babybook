@@ -114,9 +114,21 @@ public class ParentDashboardActivity extends AppCompatActivity {
                         Intent schedulesIntent = new Intent(ParentDashboardActivity.this, SchedulesAppointmentActivity.class);
                         startActivity(schedulesIntent);
                         break;
+
+
+                    case R.id.nav_about:
+                        Intent aboutIntent = new Intent(ParentDashboardActivity.this, About.class);
+                        startActivity(aboutIntent);
+                        break;
+                    //new added layout
+                    case R.id.nav_terms:
+                        Intent termsIntent = new Intent(ParentDashboardActivity.this, Terms.class);
+                        startActivity(termsIntent);
+                        break;
                     case R.id.nav_logout:
                         showLogoutConfirmation();
                         break;
+
                 }
 
                 drawerLayout.closeDrawers();

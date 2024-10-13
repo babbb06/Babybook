@@ -104,6 +104,21 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
                             checkBoxDiarrheaCough.setChecked(document.getBoolean("HasDiarrheaCough"));
                             checkBoxImmunization.setChecked(document.getBoolean("HasImmunization"));
                             checkBoxOtherProblems.setChecked(document.getBoolean("HasOtherProblems"));
+
+                            // Disable all checkboxes
+                            checkBoxSick.setEnabled(false);
+                            checkBoxCough.setEnabled(false);
+                            checkBoxDiarrhea.setEnabled(false);
+                            checkBoxFever.setEnabled(false);
+                            checkBoxMeasles.setEnabled(false);
+                            checkBoxEarPain.setEnabled(false);
+                            checkBoxPallor.setEnabled(false);
+                            checkBoxMalnourished.setEnabled(false);
+                            checkBoxFeeding.setEnabled(false);
+                            checkBoxBreastfeeding.setEnabled(false);
+                            checkBoxDiarrheaCough.setEnabled(false);
+                            checkBoxImmunization.setEnabled(false);
+                            checkBoxOtherProblems.setEnabled(false);
                         }
                     } else {
                         Toast.makeText(ViewMedicalRecordParent.this, "No record found", Toast.LENGTH_SHORT).show();
