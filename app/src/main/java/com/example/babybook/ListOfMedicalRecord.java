@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +42,12 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         childId = getIntent().getStringExtra("CHILD_ID");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getSupportActionBar().setTitle("Medical Record");// DOCTOR SIDE
 
 
         recyclerView = findViewById(R.id.listOfMedicalRecordRecyclerView);
@@ -88,8 +95,11 @@ public class ListOfMedicalRecord extends AppCompatActivity {
                 });
     }
 
-
-
-
-
 }
+
+
+
+
+
+
+

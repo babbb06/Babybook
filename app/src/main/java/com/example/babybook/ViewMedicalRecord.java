@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.babybook.model.HealthChecklist;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,6 +26,12 @@ public class ViewMedicalRecord extends AppCompatActivity {
         // Get the child ID from the intent
         childId = getIntent().getStringExtra("childId");
         FirstName = getIntent().getStringExtra("FirstName");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getSupportActionBar().setTitle("Medical Records Details");// DOCTOR SIDe
 
 
         Toast.makeText(this, "Child ID: " + childId, Toast.LENGTH_SHORT).show();

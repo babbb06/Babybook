@@ -22,6 +22,9 @@ public class Terms extends AppCompatActivity {
         setContentView(R.layout.activity_terms);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getSupportActionBar().setTitle("Terms & Conditions");// DOCTOR SIDE
 
         TextView asad = findViewById(R.id.asad);
         asad.setText(Html.fromHtml("Welcome to <b><big>Baby Book Plus</big></b>, a mobile application designed to store and manage pediatric health records, schedule appointments, and track available vaccines in healthcare facilities. Please read the following Terms and Conditions carefully before using the application. By downloading, accessing, or using Baby Book Plus, you agree to comply with and be bound by these terms.", Html.FROM_HTML_MODE_LEGACY));
