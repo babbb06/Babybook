@@ -4,6 +4,10 @@ public class Post {
     private String postId;
     private String doctorId;
     private String doctorName;
+    private String headline;
+    private String date;
+    private String time;
+    private String location;
     private String content;
     private long timestamp;
     private String profileImageUrl;
@@ -14,10 +18,14 @@ public class Post {
         // Default constructor required for Firestore
     }
 
-    public Post(String postId, String doctorId, String doctorName, String content, long timestamp, String profileImageUrl, String specialization) {
+    public Post(String postId, String doctorId, String doctorName, String headline, String date, String time, String location, String content, long timestamp, String profileImageUrl, String specialization) {
         this.postId = postId;
         this.doctorId = doctorId;
         this.doctorName = doctorName;
+        this.headline = headline;
+        this.date = date;
+        this.time = time;
+        this.location = location;
         this.content = content;
         this.timestamp = timestamp;
         this.profileImageUrl = profileImageUrl;
@@ -86,5 +94,37 @@ public class Post {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 }

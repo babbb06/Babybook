@@ -35,6 +35,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
         holder.doctorName.setText(post.getDoctorName());
+        holder.postHeadline.setText(post.getHeadline());
+        holder.postDate.setText("When:  " + post.getDate());
+        holder.postTime.setText(post.getTime());
+        holder.postLocation.setText("Venue:  " + post.getLocation());
         holder.content.setText(post.getContent());
 
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM/dd/yyyy   HH:mm");
@@ -82,12 +86,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
 
-        TextView doctorName, content, timestamp, specialization, seeMore;
+        TextView doctorName, content, timestamp, specialization, seeMore, postHeadline, postDate, postTime, postLocation;
         ImageView doctorImg;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             doctorName = itemView.findViewById(R.id.postDoctorName);
+            postHeadline = itemView.findViewById(R.id.postHeadline);
+            postDate = itemView.findViewById(R.id.postDate);
+            postTime = itemView.findViewById(R.id.postTime);
+            postLocation = itemView.findViewById(R.id.postLocation);
             content = itemView.findViewById(R.id.postContent);
             timestamp = itemView.findViewById(R.id.postTimestamp);
             specialization = itemView.findViewById(R.id.postDocSpecialization);

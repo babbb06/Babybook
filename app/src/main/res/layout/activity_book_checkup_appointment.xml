@@ -226,6 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:text="Available Days"
+                android:textColor="@color/available_success"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select_date_text" />
@@ -278,6 +279,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-2dp"
                 android:text="Available Time"
+                android:textColor="@color/available_success"
                 app:layout_constraintStart_toStartOf="@+id/select_time_text"
                 app:layout_constraintTop_toBottomOf="@+id/select_time_text" />
 
@@ -309,15 +311,15 @@
 
             <Button
                 android:id="@+id/submit_button"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="20dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:padding="16dp"
                 android:text="Submit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/etTimeLayout"
+                app:layout_constraintStart_toStartOf="@+id/etTimeLayout"
                 app:layout_constraintTop_toBottomOf="@id/etTimeLayout" />
 
 
