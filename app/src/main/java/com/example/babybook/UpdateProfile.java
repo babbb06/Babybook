@@ -1,5 +1,8 @@
 package com.example.babybook;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -7,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -46,6 +50,7 @@ public class UpdateProfile extends AppCompatActivity {
     private FirebaseFirestore db;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,16 +202,21 @@ public class UpdateProfile extends AppCompatActivity {
             updates.put("profileImageUrl", profileImageUrl);
         }
 
+        showProgressDialog(this);
         db.collection("parentUsers").document(userId)
                 .update(updates)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, ParentDashboardActivity.class);
-                        startActivity(intent);
-                        finish();
+                        // Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                        showMessageDialog("Profile updated successfully!", () -> {
+                            startActivity(new Intent(UpdateProfile.this, ParentDashboardActivity.class));
+                            finish();
+                            hideProgressDialog();
+                        });
+
                     } else {
-                        Toast.makeText(this, "Update failed: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(this, "Update failed: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        showMessageDialog("Update profile failed. Please Try again.", null);
                     }
                 });
     }
@@ -240,5 +250,41 @@ public class UpdateProfile extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

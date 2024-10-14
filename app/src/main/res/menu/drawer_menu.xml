@@ -55,7 +55,7 @@
                 <item
                     android:id="@+id/nav_terms"
                     android:icon="@drawable/rate"
-                    android:title="Terms&amp; Condition" />
+                    android:title="Terms &amp; Conditions" />
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/logout"

@@ -1,12 +1,16 @@
 package com.example.babybook;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -43,6 +47,8 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
     private String doctorId, schedStartTime, schedEndTime;
     private List<String> schedDays;
     private TextView tvAvailableDays, tvAvailableTime;
+    private Dialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +155,8 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
                 selectedDate = String.format(Locale.getDefault(), "%d-%02d-%02d", year, month + 1, dayOfMonth);
                 Toast.makeText(BookCheckupAppointmentActivity.this, "Selected date: " + selectedDate, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(BookCheckupAppointmentActivity.this, "Selected day is not available for appointments.", Toast.LENGTH_SHORT).show();
+                showMessageDialog("Selected day is not available for appointments.",null);
+                //Toast.makeText(BookCheckupAppointmentActivity.this, "Selected day is not available for appointments.", Toast.LENGTH_SHORT).show();
                 appointmentCalendar.setDate(System.currentTimeMillis(), true, true); // Reset to today or previous valid date
             }
         });
@@ -161,6 +168,7 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
             if (areFieldsValid()) {
                 // Create AppointmentRequest
                 AppointmentRequest appointmentRequest = createAppointmentRequest();
+                showProgressDialog(this);
 
                 // Proceed to book appointment
                 db.collection("appointments")
@@ -170,22 +178,32 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
                             appointmentRequest.setId(appointmentId);
                             documentReference.set(appointmentRequest)
                                     .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(BookCheckupAppointmentActivity.this, "Appointment booked successfully with ID: " + appointmentId, Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(BookCheckupAppointmentActivity.this, SchedulesAppointmentActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        // Toast.makeText(BookCheckupAppointmentActivity.this, "Appointment booked successfully with ID: " + appointmentId, Toast.LENGTH_SHORT).show();
+                                        showMessageDialog("Appointment booked successfully", () -> {
+                                            startActivity(new Intent(BookCheckupAppointmentActivity.this, SchedulesAppointmentActivity.class));
+                                            finish();
+                                            hideProgressDialog();
+                                        });
                                     })
                                     .addOnFailureListener(e -> {
                                         Log.e("BookAppointmentActivity", "Error updating appointment ID", e);
-                                        Toast.makeText(BookCheckupAppointmentActivity.this, "Error updating appointment ID", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(BookCheckupAppointmentActivity.this, "Error updating appointment ID", Toast.LENGTH_SHORT).show();
+                                        showMessageDialog("Error booking an appointment. Please Try again.", null);
+                                        hideProgressDialog();
+
                                     });
                         })
                         .addOnFailureListener(e -> {
                             Log.e("BookAppointmentActivity", "Error booking appointment", e);
-                            Toast.makeText(BookCheckupAppointmentActivity.this, "Error booking appointment", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(BookCheckupAppointmentActivity.this, "Error booking appointment", Toast.LENGTH_SHORT).show();
+                            // showMessageDialog("Error booking an appointment. Please Try again.", null);
+                            showMessageDialog("Error booking an appointment. Please Try again.", null);
+                            hideProgressDialog();
                         });
             } else {
-                Toast.makeText(BookCheckupAppointmentActivity.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(BookCheckupAppointmentActivity.this, "Please complete all fields", Toast.LENGTH_SHORT).show();
+                showMessageDialog("Please complete all fields", null);
+
             }
         });
     }
@@ -220,7 +238,8 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
                 (view, selectedHour, selectedMinute) -> {
                     int selectedMinutes = selectedHour * 60 + selectedMinute; // Total minutes of the selected time
                     if (selectedMinutes < startMinutes || selectedMinutes > endMinutes) {
-                        Toast.makeText(this, "Please select a time between " + schedStartTime + " and " + schedEndTime, Toast.LENGTH_SHORT).show();
+                        showMessageDialog("Please select a time between " + schedStartTime + " and " + schedEndTime, null);
+                        // Toast.makeText(this, "Please select a time between " + schedStartTime + " and " + schedEndTime, Toast.LENGTH_SHORT).show();
                     } else {
                         String time = String.format("%02d:%02d %s",
                                 selectedHour % 12 == 0 ? 12 : selectedHour % 12,
@@ -355,5 +374,41 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
 
 
         datePickerDialog.show();
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

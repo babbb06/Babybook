@@ -1,7 +1,10 @@
 package com.example.babybook;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,6 +16,7 @@ import android.util.Log;
 
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -61,6 +65,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private boolean isImageSelected = false;
     private ImageView backBtn, selectedImage;
     private Uri selectedImageUri;
+    private Dialog progressDialog;
 
 
     @Override
@@ -379,7 +384,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             lblUploadImage.setText("Upload Profile Photo");
         }
 
-
+        showProgressDialog(this);
 
 
         // Register doctor with Firebase Authentication
@@ -397,9 +402,9 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             // Call the uploadProfilePicture method
                             uploadProfilePicture(userId, fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, schedStartTime, schedEndTime, selectedDays);
 
-                            Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
                             // Redirect to doctor dashboard
-                            redirectToLogin();
+                            //redirectToLogin();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -466,11 +471,20 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");
-                            Toast.makeText(DoctorRegisterActivity.this, "Doctor data saved to Firestore", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DoctorRegisterActivity.this, "Doctor data saved to Firestore", Toast.LENGTH_SHORT).show();
+                            showMessageDialog("Doctor Account has been registered.", this::redirectToLogin);
+                            hideProgressDialog();
                         } else {
                             Log.w(TAG, "Error writing document", task.getException());
-                            Toast.makeText(DoctorRegisterActivity.this, "Failed to save doctor data to Firestore", Toast.LENGTH_SHORT).show();
+                            showMessageDialog("Failed to save user data to Firestore. Please try again",null);
                         }
+                    }
+
+                    private void redirectToLogin() {
+                        // Redirect user to LoginActivity after registration
+                        Intent intent = new Intent(DoctorRegisterActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish(); // Finish the current activity to prevent going back to it via back button
                     }
                 });
     }
@@ -589,6 +603,42 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         if (((CheckBox) findViewById(R.id.cbSaturday)).isChecked()) selectedDays.add("Saturday");
         if (((CheckBox) findViewById(R.id.cbSunday)).isChecked()) selectedDays.add("Sunday");
         return selectedDays;
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
 

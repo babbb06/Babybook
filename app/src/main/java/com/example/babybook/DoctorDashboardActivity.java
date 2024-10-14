@@ -2,7 +2,9 @@ package com.example.babybook;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +54,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,10 +214,10 @@ public class DoctorDashboardActivity extends AppCompatActivity {
             String time = etTime.getText().toString();
             String location = etLocation.getText().toString();
             String content = input.getText().toString();
-            if (!content.isEmpty()) {
-                createPost(headline, date, time, location, content);
+            if (headline.isEmpty() || date.isEmpty() || time.isEmpty() || location.isEmpty() || content.isEmpty()) {
+                showMessageDialog("Please fill all fields and try again.", null);
             } else {
-                Toast.makeText(DoctorDashboardActivity.this, "Post content cannot be empty", Toast.LENGTH_SHORT).show();
+                createPost(headline, date, time, location, content);
             }
         });
 
@@ -233,6 +237,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
 
     private void createPost(String headline, String date, String time, String location, String content) {
+        showProgressDialog(this);
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
@@ -254,17 +260,22 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                                 String postId = documentReference.getId();
                                 documentReference.update("postId", postId)
                                         .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(DoctorDashboardActivity.this, "Post created", Toast.LENGTH_SHORT).show();
-                                            loadPosts(); // Reload posts after successful creation
+                                            // Toast.makeText(DoctorDashboardActivity.this, "Post created", Toast.LENGTH_SHORT).show();
+                                            showMessageDialog("Your post has been created.", this::loadPosts);
+                                            hideProgressDialog();
+                                            //loadPosts(); // Reload posts after successful creation
                                         })
                                         .addOnFailureListener(e -> {
-                                            Toast.makeText(DoctorDashboardActivity.this, "Error updating postId", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(DoctorDashboardActivity.this, "Error updating postId", Toast.LENGTH_SHORT).show();
+                                            showMessageDialog("Error creating post. Please try again later.", null);
                                         });
                             }).addOnFailureListener(e -> {
-                                Toast.makeText(DoctorDashboardActivity.this, "Error creating post", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(DoctorDashboardActivity.this, "Error creating post", Toast.LENGTH_SHORT).show();
+                                showMessageDialog("Error creating post. Please try again later.", null);
                             });
                         } else {
-                            Toast.makeText(DoctorDashboardActivity.this, "Doctor profile data missing", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DoctorDashboardActivity.this, "Doctor profile data missing", Toast.LENGTH_SHORT).show();
+                            showMessageDialog("Error creating post. Please try again later.", null);
                         }
                     }
                 }
@@ -368,6 +379,42 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
         datePickerDialog.show();
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
