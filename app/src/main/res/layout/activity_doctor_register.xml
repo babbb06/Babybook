@@ -434,6 +434,220 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
+                    <TextView
+                        android:id="@+id/lblDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Select Days Available"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                      app:layout_constraintTop_toBottomOf="@+id/clinicaddLayout" />
+
+                    <TextView
+                        android:id="@+id/errorTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginStart="10dp"
+                        android:text="Please select at least one day!"
+                        android:textColor="@android:color/holo_red_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/lblDay" />
+
+
+
+                    <TextView
+                        android:id="@+id/lblDay2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-2dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_light"
+                        app:layout_constraintStart_toEndOf="@+id/lblDay"
+                        app:layout_constraintTop_toTopOf="@+id/lblDay" />
+
+
+
+
+                    <RadioGroup
+                        android:id="@+id/rdDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lblDay2">
+
+                        <GridLayout
+                            android:id="@+id/rdDay1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:columnCount="3"
+                            android:elevation="2dp"
+                            android:padding="5dp"
+                            android:rowCount="3">
+
+                            <CheckBox
+                                android:id="@+id/cbMonday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:paddingEnd="2dp"
+                                android:text="Monday"
+                                android:textColor="@android:color/black" />
+
+                            <CheckBox
+                                android:id="@+id/cbTuesday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:paddingEnd="4dp"
+                                android:text="Tuesday"
+                                android:textColor="@android:color/black" />
+
+                            <CheckBox
+                                android:id="@+id/cbWednesday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:paddingEnd="4dp"
+                                android:text="Wednesday"
+                                android:textColor="@android:color/black" />
+
+                            <CheckBox
+                                android:id="@+id/cbThursday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:paddingEnd="4dp"
+                                android:text="Thursday"
+                                android:textColor="@android:color/black" />
+
+                            <CheckBox
+                                android:id="@+id/cbFriday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:paddingEnd="8dp"
+                                android:text="Friday"
+                                android:textColor="@android:color/black" />
+
+                            <CheckBox
+                                android:id="@+id/cbSaturday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:paddingEnd="8dp"
+                                android:text="Saturday"
+                                android:textColor="@android:color/black" />
+
+                            <CheckBox
+                                android:id="@+id/cbSunday"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:paddingEnd="8dp"
+                                android:text="Sunday"
+                                android:textColor="@android:color/black" />
+
+                        </GridLayout>
+
+                    </RadioGroup>
+
+
+                    <!-- Time Picker Layout -->
+                    <TextView
+                        android:id="@+id/tvSelectTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Select Time Range"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rdDay" />
+
+
+                    <TextView
+                        android:id="@+id/tvSelectTime2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-2dp"
+                        android:text="*"
+                        android:textColor="@android:color/holo_red_light"
+                        app:layout_constraintStart_toEndOf="@+id/tvSelectTime"
+                        app:layout_constraintTop_toTopOf="@+id/tvSelectTime" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etStartTimeLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:layout_constraintEnd_toStartOf="@+id/etEndTimeLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSelectTime2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etStartTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="Start Time (e.g., 8:00 AM)" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/etEndTimeLayout"
+                        style="@style/LoginTextInputOuterFieldStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:textColorHint="@color/black"
+                        app:boxStrokeColor="@color/violet"
+                        app:boxStrokeErrorColor="@color/colorError"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/etStartTimeLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSelectTime2">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEndTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:hint="End Time (e.g., 5:00 PM)" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <!-- profile pic -->
             <TextView
                 android:id="@+id/lbletbtnAddImage"
@@ -442,8 +656,10 @@
                 android:layout_marginTop="15dp"
                 android:text="Upload Profile Photo"
                 android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/clinicaddLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/etStartTimeLayout" />
 
             <TextView
                 android:id="@+id/lbletbtnAddImage2"

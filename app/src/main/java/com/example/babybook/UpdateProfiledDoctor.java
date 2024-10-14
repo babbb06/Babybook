@@ -1,5 +1,8 @@
 package com.example.babybook;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -7,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -44,6 +47,7 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
     private FirebaseAuth auth;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri selectedImageUri;
+    private Dialog progressDialog;
 
 
     @Override
@@ -194,18 +198,24 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
             updates.put("profileImageUrl", profileImageUrl);
         }
 
+        showProgressDialog(this);
         db.collection("doctorUsers").document(userId)
                 .update(updates)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         updatePosts(userId, fullName);
-                        Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, DoctorDashboardActivity.class);
-                        finish();
-                        startActivity(intent);
-                        onBackPressed();
+                        // Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+
+                        showMessageDialog("Profile updated successfully!", () -> {
+                            startActivity(new Intent(UpdateProfiledDoctor.this, DoctorDashboardActivity.class));
+                            finish();
+                            onBackPressed();
+                            hideProgressDialog();
+                        });
                     } else {
-                        Toast.makeText(this, "Update failed: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(this, "Update failed: " + task.getException(), Toast.LENGTH_SHORT).show();
+                        showMessageDialog("Update profile failed. Please Try again.", null);
+
                     }
                 });
     }
@@ -256,5 +266,41 @@ public class UpdateProfiledDoctor extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

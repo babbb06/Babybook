@@ -1,9 +1,13 @@
 package com.example.babybook;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout passwordLayout, emailLayout;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +89,18 @@ public class LoginActivity extends AppCompatActivity {
             passwordLayout.setError(null);
         }
 
+        showProgressDialog(this);
+
         // Sign in user with Firebase Authentication
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        hideProgressDialog();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                             // Redirect user to appropriate dashboard based on their role
                             redirectToDashboard();
@@ -102,12 +111,14 @@ public class LoginActivity extends AppCompatActivity {
                             if (exception != null) {
                                 // Check if the error is related to wrong password
                                 if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                    Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(LoginActivity.this, "Incorrect password. Please try again.", Toast.LENGTH_LONG).show();
+                                    showMessageDialog("Incorrect password. Please try again.");
                                     editTextPassword.requestFocus();
 
                                 } else if (exception instanceof FirebaseAuthInvalidUserException) {
                                     // Handle case where the user doesn't exist or is disabled
-                                    Toast.makeText(LoginActivity.this, "User not found. Please register or check your email.", Toast.LENGTH_LONG).show();
+                                    // Toast.makeText(LoginActivity.this, "User not found. Please register or check your email.", Toast.LENGTH_LONG).show();
+                                    showMessageDialog("User not found. Please register or check your email.");
                                 } else {
                                     // Generic error message for other exceptions
                                     Toast.makeText(LoginActivity.this, "Authentication failed: " + exception.getMessage(), Toast.LENGTH_LONG).show();
@@ -164,4 +175,34 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }

@@ -48,7 +48,7 @@ public class AppointmentAdapter extends ArrayAdapter<AppointmentRequest> {
 
         // Set the text for each field
         tvAppointmentTitle.setText("Service: " + appointment.getService());
-        tvChildName.setText("Child's Name: " + appointment.getChildName());
+        tvChildName.setText("Child's Name: " + appointment.getChildFullName());
         tvAppointmentDate.setText("Date: " + appointment.getDate());
         tvAppointmentTime.setText("Time: " + appointment.getTime());
         tvAppointmentStatus.setText("Status: " + appointment.getStatus());

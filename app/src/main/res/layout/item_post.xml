@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    >
+    android:layout_marginTop="10dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -77,35 +76,93 @@
 
 
             <TextView
+                android:id="@+id/postHeadline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="-15dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:text="Headline"
+                android:textColor="@color/violet"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postTimestamp" />
+
+            <TextView
+                android:id="@+id/postDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="-30dp"
+
+                android:text="Date"
+                android:textColor="#E44E4E4E"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postHeadline" />
+
+            <TextView
+                android:id="@+id/postTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="-30dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:text="Time"
+                android:textColor="#E44E4E4E"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/postDate"
+                app:layout_constraintTop_toBottomOf="@+id/postHeadline" />
+
+            <TextView
+                android:id="@+id/postLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="-30dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:text="Location"
+                android:textColor="#E44E4E4E"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postTime" />
+
+
+            <TextView
                 android:id="@+id/postContent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="13dp"
-                android:layout_marginTop="-10dp"
-                android:paddingBottom="10dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/poppins"
+                android:maxLines="5"
                 android:paddingHorizontal="15dp"
+                android:paddingBottom="10dp"
                 android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
                 android:textSize="13sp"
-                android:maxLines="5"
-                android:ellipsize="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/postTimestamp" />
+                app:layout_constraintTop_toBottomOf="@+id/postLocation" />
 
             <TextView
                 android:id="@+id/seeMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins"
                 android:paddingEnd="15dp"
                 android:text="See More"
                 android:textColor="@color/violet"
                 android:textSize="13sp"
                 android:visibility="visible"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="-10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/postContent"
                 app:layout_constraintTop_toBottomOf="@+id/postContent" />
@@ -120,10 +177,10 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginStart="35dp"
+        android:layout_marginBottom="-30dp"
         android:elevation="12dp"
         android:translationZ="3dp"
         app:cardCornerRadius="50dp"
-        android:layout_marginBottom="-30dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent">
 

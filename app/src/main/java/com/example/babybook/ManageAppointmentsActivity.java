@@ -65,12 +65,16 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                 // Show confirmation dialog for accepting
                 new androidx.appcompat.app.AlertDialog.Builder(ManageAppointmentsActivity.this)
                         .setTitle("Confirm Acceptance")
-                        .setMessage("Are you sure you want to accept the appointment for " + request.getChildName() + "?")
+                        .setMessage("Are you sure you want to accept the appointment for " + request.getFirstName() + "?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             updateAppointmentStatus(
                                     request.getId(),
                                     "Accepted",
-                                    request.getChildName(),
+                                    request.getFirstName(),
+                                    request.getLastName(),
+                                    request.getBirthDay(),
+                                    request.getBirthPlace(),
+                                    request.getAddress(),
                                     request.getService(),
                                     request.getDate(),
                                     request.getTime(),
@@ -106,12 +110,16 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         loadAppointments();
     }
 
-    private void updateAppointmentStatus(String id, String status, String childName, String service, String date, String time, String userId, String doctorId) {
+    private void updateAppointmentStatus(String id, String status, String firstName,String lastName,String birthDay,String birthPlace,String address, String service, String date, String time, String userId, String doctorId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Create a new HealthRecord object with all the details
         HealthRecord healthRecord = new HealthRecord();
-        healthRecord.setChildName(childName);
+        healthRecord.setFirstName(firstName);
+        healthRecord.setLastName(lastName);
+        healthRecord.setBirthDay(birthDay);
+        healthRecord.setBirthPlace(birthPlace);
+        healthRecord.setAddress(address);
         healthRecord.setAddedBy(userId); // Assuming userId is the one adding the record
         healthRecord.setId(id);
         healthRecord.setDate(date);
@@ -126,7 +134,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                 .set(healthRecord)
                 .addOnSuccessListener(aVoid -> {
                     // Log success or show success message if needed
-                    Log.d("ManageAppointments", "Health record successfully saved for " + childName);
+                    Log.d("ManageAppointments", "Health record successfully saved for " + firstName);
 
                     // Reload appointments to reflect updated status
                     loadAppointments();

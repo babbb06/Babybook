@@ -1,5 +1,8 @@
 package com.example.babybook;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,6 +12,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean isImageSelected = false;
     private ImageView backBtn, selectedImage;
     private Uri selectedImageUri;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +171,8 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        showProgressDialog(this);
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -194,10 +201,13 @@ public class RegisterActivity extends AppCompatActivity {
                 .set(user)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(RegisterActivity.this, "User data saved to Firestore", Toast.LENGTH_SHORT).show();
-                        redirectToLogin();
+                        //Toast.makeText(RegisterActivity.this, "User data saved to Firestore", Toast.LENGTH_SHORT).show();
+                        showMessageDialog("Parent Account has been registered.",this::redirectToLogin);
+                        hideProgressDialog();
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Failed to save user data to Firestore", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RegisterActivity.this, "Failed to save user data to Firestore", Toast.LENGTH_SHORT).show();
+                        showMessageDialog("Failed to save user data to Firestore. Please try again",null);
+                        hideProgressDialog(); // Keep this here to hide after uploading the picture.
                     }
                 });
     }
@@ -242,4 +252,42 @@ public class RegisterActivity extends AppCompatActivity {
                     .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, "Image upload failed.", Toast.LENGTH_SHORT).show());
         }
     }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 }

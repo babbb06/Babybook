@@ -18,6 +18,7 @@ public class Clinic {
     private String doctorName;
     private Double latitude;
     private Double longitude;
+    private String clinicAddress;
     private long timestamp;
     private String profileImageUrl;
     private String clinicProfileUrl;
@@ -36,12 +37,13 @@ public class Clinic {
         // Default constructor required for Firestore
     }
 
-    public Clinic(String clinicId, String clinicName, String clinicPhoneNumber, String clinicProfileUrl, List<String> schedDays, String schedStartTime, String schedEndTime, String doctorId, String doctorName, Double latitude, Double longitude, long timestamp, String profileImageUrl, String specialization, Map<String, Integer> vaccines) {
+    public Clinic(String clinicId, String clinicName, String clinicPhoneNumber, String clinicProfileUrl, List<String> schedDays, String schedStartTime, String schedEndTime, String doctorId, String doctorName, Double latitude, Double longitude, String clinicAddress, long timestamp, String profileImageUrl, String specialization, Map<String, Integer> vaccines) {
         this.clinicId = clinicId;
         this.doctorId = doctorId;
         this.doctorName = doctorName;
         this.latitude = latitude; // Assign latitude
         this.longitude = longitude; // Assign longitude
+        this.clinicAddress = clinicAddress;
         this.timestamp = timestamp;
         this.profileImageUrl = profileImageUrl;
         this.specialization = specialization;
@@ -52,7 +54,6 @@ public class Clinic {
         this.schedEndTime = schedEndTime;
         this.schedDays = schedDays;
         this.vaccines = vaccines != null ? vaccines : new HashMap<>();
-
     }
 
     /*public boolean isExpanded() {
@@ -151,6 +152,18 @@ public class Clinic {
     public void setSchedEndTime(String schedEndTime) {
         this.schedEndTime = schedEndTime;
     }
+
+
+    public String getClinicAddress() {
+        return clinicAddress;
+    }
+
+    public void setClinicAddress(String clinicAddress) {
+        this.clinicAddress = clinicAddress;
+    }
+
+
+
 
     public String getSchedStartTime() {
         return schedStartTime;

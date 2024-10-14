@@ -1,6 +1,10 @@
 package com.example.babybook;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,13 +16,16 @@ import android.util.Log;
 
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +38,7 @@ import com.example.babybook.emoji.EmojiInputFilter;
 import com.example.babybook.emoji.EmojispaceInputFilter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,8 +46,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DoctorRegisterActivity extends AppCompatActivity {
@@ -48,12 +58,14 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private EditText editTextFirstName, editTextLastName,editTextBirthday, editTextEmail, editTextPassword, editTextConfirmPassword,editTextPRCLicenseNumber,
             editTextSpecialization, editTextClinicAddress,etPhoneNumber;
     private Spinner spinnerSpecialization;
+    private TextInputEditText etStartTime, etEndTime;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private static final int PICK_IMAGE_REQUEST = 1;
     private boolean isImageSelected = false;
     private ImageView backBtn, selectedImage;
     private Uri selectedImageUri;
+    private Dialog progressDialog;
 
 
     @Override
@@ -78,6 +90,11 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         selectedImage = findViewById(R.id.ivSelectedImage);
         backBtn = findViewById(R.id.imageView);
 
+
+        //time
+        etStartTime = findViewById(R.id.etStartTime);
+        etEndTime = findViewById(R.id.etEndTime);
+
         ConstraintLayout btnUploadProfile = findViewById(R.id.btnAddImage);
 
         //disabled emojies and special character on first and last name
@@ -93,7 +110,10 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
 
 
+//TIME SHOW WHEN PRESS START AND END
 
+        etStartTime.setOnClickListener(v -> showTimePickerDialog(true));
+        etEndTime.setOnClickListener(v -> showTimePickerDialog(false));
 
         //SELECT PROFILE PICTURE
 
@@ -195,6 +215,10 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         String clinicAddress = editTextClinicAddress.getText().toString().trim();
         int selectedSpecializationPosition = spinnerSpecialization.getSelectedItemPosition();
         String specialization = spinnerSpecialization.getSelectedItem().toString().trim();
+        String schedStartTime = etStartTime.getText().toString().trim();
+        String schedEndTime = etEndTime.getText().toString().trim();
+        List<String> selectedDays = getSelectedDays();
+
         TextView selectProfile = findViewById(R.id.textView4);
 
         // Concatenate country code with the phone number
@@ -317,6 +341,21 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         }
 
 
+        // TIME ERROR HANDLING OR VALIDATION
+
+
+        if (etStartTime.getText().toString().trim().isEmpty()) {
+            etStartTime.setError("Start time is required");
+            etStartTime.requestFocus();
+            return;
+        }
+        if (etEndTime.getText().toString().trim().isEmpty()) {
+            etEndTime.setError("End time is required");
+            etEndTime.requestFocus();
+            return;
+        }
+
+
 
 
 //PHOTO ERROR HANDLING
@@ -345,7 +384,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             lblUploadImage.setText("Upload Profile Photo");
         }
 
-
+        showProgressDialog(this);
 
 
         // Register doctor with Firebase Authentication
@@ -361,11 +400,11 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             String userId = mAuth.getCurrentUser().getUid();
 
                             // Call the uploadProfilePicture method
-                            uploadProfilePicture(userId, fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress);
+                            uploadProfilePicture(userId, fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, schedStartTime, schedEndTime, selectedDays);
 
-                            Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
                             // Redirect to doctor dashboard
-                            redirectToLogin();
+                            //redirectToLogin();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -397,7 +436,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private boolean containsNumber(String text) {
         return text.matches(".*\\d.*");
     }
-    private void saveDoctorData(String fullName,String firstName,String lastName,String birthday, String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String profileImageUrl) {
+    private void saveDoctorData(String fullName,String firstName,String lastName,String birthday, String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String profileImageUrl, String schedStartTime, String schedEndTime, List<String> selectedDays) {
         // Ensure user is authenticated
         if (mAuth.getCurrentUser() == null) {
             Log.w(TAG, "saveDoctorData: no authenticated user");
@@ -418,6 +457,9 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         doctor.put("specialization", specialization);
         doctor.put("clinicAddress", clinicAddress);
         doctor.put("profileImageUrl", profileImageUrl); // Store the profile image URL
+        doctor.put("schedStartTime", schedStartTime);
+        doctor.put("schedEndTime", schedEndTime);
+        doctor.put("schedDays", selectedDays);
 
 
         // Add a new document with a generated ID
@@ -429,11 +471,20 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "DocumentSnapshot successfully written!");
-                            Toast.makeText(DoctorRegisterActivity.this, "Doctor data saved to Firestore", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DoctorRegisterActivity.this, "Doctor data saved to Firestore", Toast.LENGTH_SHORT).show();
+                            showMessageDialog("Doctor Account has been registered.", this::redirectToLogin);
+                            hideProgressDialog();
                         } else {
                             Log.w(TAG, "Error writing document", task.getException());
-                            Toast.makeText(DoctorRegisterActivity.this, "Failed to save doctor data to Firestore", Toast.LENGTH_SHORT).show();
+                            showMessageDialog("Failed to save user data to Firestore. Please try again",null);
                         }
+                    }
+
+                    private void redirectToLogin() {
+                        // Redirect user to LoginActivity after registration
+                        Intent intent = new Intent(DoctorRegisterActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish(); // Finish the current activity to prevent going back to it via back button
                     }
                 });
     }
@@ -473,7 +524,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     }
 
     // uploadProfilePicture to accept fullName and email
-    private void uploadProfilePicture(String userId, String fullName,String firstName,String lastName ,String birthday,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress) {
+    private void uploadProfilePicture(String userId, String fullName,String firstName,String lastName ,String birthday,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String schedStartTime, String schedEndTime, List <String> schedDays) {
         if (selectedImageUri != null) {
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("doctor_profile_pictures");
             StorageReference imageRef = storageRef.child(userId + ".jpg");
@@ -486,7 +537,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                                 String imageUrl = downloadUrlTask.getResult().toString();
 
                                 // After successfully uploading the image, save user data with profile image URL
-                                saveDoctorData(fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, imageUrl);
+                                saveDoctorData(fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, imageUrl, schedStartTime, schedEndTime, schedDays);
                             } else {
                                 // Handle error while getting the image URL
                             }
@@ -496,6 +547,98 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                         // Handle image upload failure
                     });
         }
+    }
+
+
+    private void showTimePickerDialog(final boolean isStartTime) {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // Adjust the minute to the nearest 00 or 30
+        minute = (minute < 15) ? 0 : (minute < 45) ? 30 : 0;
+        if (minute == 0 && calendar.get(Calendar.HOUR_OF_DAY) == 23) {
+            hour = 0; // Wrap around to 0 when it's 23:00
+        }
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                (view, selectedHour, selectedMinute) -> {
+                    String time = String.format("%02d:%02d %s",
+                            selectedHour % 12 == 0 ? 12 : selectedHour % 12,
+                            selectedMinute,
+                            selectedHour < 12 ? "AM" : "PM");
+
+                    if (isStartTime) {
+                        etStartTime.setText(time);
+                    } else {
+                        etEndTime.setText(time);
+                    }
+                },
+                hour,
+                minute, // Use adjusted minute
+                false // Use 12-hour format
+        ) {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                // Restrict minutes to 00 or 30
+                if (minute != 0 && minute != 30) {
+                    view.setMinute(minute < 15 ? 0 : 30);
+                }
+                super.onTimeChanged(view, hourOfDay, minute);
+            }
+        };
+
+        timePickerDialog.show();
+    }
+
+    // DAYS SCHEDULE
+    private List<String> getSelectedDays() {
+        List<String> selectedDays = new ArrayList<>();
+        if (((CheckBox) findViewById(R.id.cbMonday)).isChecked()) selectedDays.add("Monday");
+        if (((CheckBox) findViewById(R.id.cbTuesday)).isChecked()) selectedDays.add("Tuesday");
+        if (((CheckBox) findViewById(R.id.cbWednesday)).isChecked()) selectedDays.add("Wednesday");
+        if (((CheckBox) findViewById(R.id.cbThursday)).isChecked()) selectedDays.add("Thursday");
+        if (((CheckBox) findViewById(R.id.cbFriday)).isChecked()) selectedDays.add("Friday");
+        if (((CheckBox) findViewById(R.id.cbSaturday)).isChecked()) selectedDays.add("Saturday");
+        if (((CheckBox) findViewById(R.id.cbSunday)).isChecked()) selectedDays.add("Sunday");
+        return selectedDays;
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
 

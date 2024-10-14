@@ -46,21 +46,6 @@
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabCreatePost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="30dp"
-                android:backgroundTint="@color/violet"
-                app:backgroundTintMode="add"
-                app:elevation="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/add2"
-                app:tint="@android:color/white"
-                app:shapeAppearance="@style/Widget.Material3.CircularProgressIndicator.ExtraSmall"/>
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

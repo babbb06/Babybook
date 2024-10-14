@@ -563,20 +563,49 @@
 
                     <TextView
                         android:id="@+id/tvnoPin"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/poppins_semibold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Long press on the map to pin your clinic location"
-                        android:visibility="visible"
+                        android:fontFamily="@font/poppins_semibold"
                         android:paddingBottom="20dp"
-                        android:textColor="@color/occupied_error" />
+                        android:text="Long press on the map to pin your clinic location"
+                        android:textColor="@color/occupied_error"
+                        android:textSize="15sp"
+                        android:visibility="visible" />
 
                 </LinearLayout>
 
 
+
+
+
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/clinicaddLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.32"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eTClinicAddress"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Clinic Address"
+                    android:fontFamily="@font/poppins"
+                    android:inputType="textCapWords"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/lblClinicDoctorDetails"
@@ -588,7 +617,7 @@
                 android:textColor="#000000"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/clinicaddLayout" />
 
 
             <!-- First name -->

@@ -1,4 +1,4 @@
-package com.example.babybook;
+package com.example.babybook.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.babybook.R;
 import com.example.babybook.model.Message;
 import com.google.firebase.auth.FirebaseAuth;
 import java.text.SimpleDateFormat;

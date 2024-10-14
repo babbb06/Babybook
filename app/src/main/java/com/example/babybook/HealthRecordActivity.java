@@ -66,12 +66,13 @@ public class HealthRecordActivity extends AppCompatActivity {
 
         loadHealthRecords();
 
-        findViewById(R.id.fabAddRecord).setOnClickListener(new View.OnClickListener() {
+       /*findViewById(R.id.fabAddRecord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddRecordDialog();
+                //   showAddRecordDialog();
             }
-        });
+        });*/
+
     }
 
     private void loadHealthRecords() {
@@ -105,7 +106,7 @@ public class HealthRecordActivity extends AppCompatActivity {
         }
     }
 
-    private void showAddRecordDialog() {
+   /* private void showAddRecordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_child, null);
@@ -138,7 +139,7 @@ public class HealthRecordActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-    }
+    }*/
 
 
     private void addRecordToDatabase(HealthRecord healthRecord) {

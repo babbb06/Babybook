@@ -36,12 +36,15 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HealthRecord record = healthRecords.get(position);
-        holder.textViewChildName.setText("Child Name: " + record.getChildName());
+        holder.textViewChildName.setText("Child Name: " + record.getFirstName() + " " + record.getLastName());
 
         // Handle card click
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChildDetailsActivity.class);
-            intent.putExtra("CHILD_ID", record.getId()); // Pass the child ID
+            intent.putExtra("CHILD_ID", record.getId());
+            intent.putExtra("FirstName", record.getFirstName()); // Pass the child ID
+            intent.putExtra("LastName", record.getLastName());
+
             context.startActivity(intent);
         });
 

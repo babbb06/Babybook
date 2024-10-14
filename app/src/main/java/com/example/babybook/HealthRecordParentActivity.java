@@ -105,7 +105,7 @@ public class HealthRecordParentActivity extends AppCompatActivity {
         }
     }
 
-    private void showAddRecordDialog() {
+  /*  private void showAddRecordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_child, null);
@@ -139,7 +139,7 @@ public class HealthRecordParentActivity extends AppCompatActivity {
             }
         });
     }
-
+*/
 
     private void addRecordToDatabase(HealthRecord healthRecord) {
         healthRecordsCollection.add(healthRecord)

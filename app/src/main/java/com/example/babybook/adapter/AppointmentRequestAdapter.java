@@ -39,7 +39,7 @@ public class AppointmentRequestAdapter extends RecyclerView.Adapter<AppointmentR
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AppointmentRequest request = appointmentRequests.get(position);
 
-        holder.textViewChildName.setText("Child's Name: " + request.getChildName());
+        holder.textViewChildName.setText("Child's Name: " + request.getChildFullName());
         holder.textViewService.setText("Service: " + request.getService());
         holder.textViewDate.setText("Date: " + request.getDate());
         holder.textViewTime.setText("Time: " + request.getTime());

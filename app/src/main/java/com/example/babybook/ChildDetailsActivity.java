@@ -23,8 +23,6 @@ import android.widget.Toast;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.example.babybook.medicalrecord.AddMedicalRecord;
-import com.example.babybook.medicalrecord.ListOfMedicalRecord;
 import com.google.firebase.Timestamp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,7 +41,7 @@ import java.util.Map;
 public class ChildDetailsActivity extends AppCompatActivity {
 
     private String currentParentId;
-    private String childId; // Store the child ID
+    private String childId,LastName,FirstName; // Store the child ID
     private GestureDetector gestureDetector;
     private ImageView imageViewMenuBCG;
     private ImageView imageViewMenuHepatitisB;
@@ -101,6 +99,8 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
         // Retrieve child ID from the intent
         childId = getIntent().getStringExtra("CHILD_ID");
+        FirstName = getIntent().getStringExtra("FirstName");
+        LastName = getIntent().getStringExtra("LastName");
 
 
         // Find the CardView by its ID
@@ -108,10 +108,12 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
         // Set an OnClickListener to navigate to ViewMedicalRecord.java
         medicalRecordCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(ChildDetailsActivity.this, ListOfMedicalRecord.class);
+            Intent intent = new Intent(ChildDetailsActivity.this, com.example.babybook.ListOfMedicalRecord.class);
 
             // Optionally, pass some data using intent if needed
             intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
+            intent.putExtra("FirstName", FirstName); // Pass the child ID
+            intent.putExtra("LastName", LastName);
             startActivity(intent);
         });
 

@@ -1,7 +1,9 @@
 package com.example.babybook;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -73,7 +76,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
     private List<String> vaccines;
     private Map<String, Integer> vaccineMap = new HashMap<>();
 
-    private TextInputEditText etStartTime, etEndTime;
+    private TextInputEditText etStartTime, etEndTime, eTClinicAddress;
     private TextView tvNoPin, tvPinSuccess;
     private GoogleMap mMap;
     private LatLng initialLocation;
@@ -86,6 +89,8 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
     private Uri selectedImageUri;
     private ImageView selectedClinicImage;
     private boolean isImageSelected = false;
+    private Dialog progressDialog;
+
 
 
 
@@ -137,6 +142,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
         Button addButton = findViewById(R.id.addButton);
         etStartTime = findViewById(R.id.etStartTime);
         etEndTime = findViewById(R.id.etEndTime);
+        eTClinicAddress= findViewById(R.id.eTClinicAddress);
         tvNoPin = findViewById(R.id.tvnoPin);
         tvPinSuccess = findViewById(R.id.tvPinSuccess);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -233,11 +239,21 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
             etEndTime.requestFocus();
             return false;
         }
+
+        if (eTClinicAddress.getText().toString().trim().isEmpty()) {
+            eTClinicAddress.setError("Clinic Address is required");
+            eTClinicAddress.requestFocus();
+            return false;
+        }
+
+
         if (selectedImageUri == null) {
             Toast.makeText(this, "Please select a clinic image", Toast.LENGTH_SHORT).show();
 
             return false;
         }
+
+
 
         return true;
     }
@@ -245,6 +261,8 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
     // STORE CLINIC DETAILS TO DB
 
     private void createClinic(Double latitude, Double longitude) {
+        showProgressDialog(this);
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
@@ -259,6 +277,7 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
                         String clinicPhoneNumber = "+63" + etClinicNumber.getText().toString().trim();
                         String schedStartTime = etStartTime.getText().toString().trim();
                         String schedEndTime = etEndTime.getText().toString().trim();
+                        String clinicAddress = eTClinicAddress.getText().toString().trim();
                         List<String> selectedDays = getSelectedDays();
 
                         // Ensure required fields are not null
@@ -274,29 +293,38 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
                                             String clinicProfileUrl = uri.toString(); // Get the image URL
 
                                             // Create Clinic object with clinicProfileUrl
-                                            Clinic clinic = new Clinic(null, clinicName, clinicPhoneNumber, clinicProfileUrl, selectedDays, schedStartTime, schedEndTime, userId, doctorName, latitude, longitude, System.currentTimeMillis(), doctorProfile, specialization, vaccineMap);
+                                            Clinic clinic = new Clinic(null, clinicName, clinicPhoneNumber, clinicProfileUrl, selectedDays, schedStartTime, schedEndTime, userId, doctorName, latitude, longitude, clinicAddress, System.currentTimeMillis(), doctorProfile, specialization, vaccineMap);
 
                                             // Add Clinic to Firestore
                                             db.collection("clinics").add(clinic).addOnSuccessListener(documentReference -> {
                                                 String clinicId = documentReference.getId();
                                                 documentReference.update("clinicId", clinicId)
                                                         .addOnSuccessListener(aVoid -> {
-                                                            Toast.makeText(AddClinicActivity.this, "Clinic created", Toast.LENGTH_SHORT).show();
-                                                            startActivity(new Intent(AddClinicActivity.this, DoctorDashboardActivity.class));
-                                                            finish();
+                                                            // Toast.makeText(AddClinicActivity.this, "Clinic created", Toast.LENGTH_SHORT).show();
+                                                            showMessageDialog("Clinic has been created.", () -> {
+                                                                startActivity(new Intent(AddClinicActivity.this, DoctorDashboardActivity.class));
+                                                                finish();
+                                                                hideProgressDialog();
+                                                            });
+
                                                         })
                                                         .addOnFailureListener(e -> {
-                                                            Toast.makeText(AddClinicActivity.this, "Error updating clinicId", Toast.LENGTH_SHORT).show();
+                                                            //Toast.makeText(AddClinicActivity.this, "Error updating clinicId", Toast.LENGTH_SHORT).show();
+                                                            showMessageDialog("Error creating clinic. Please try again.", null);
                                                         });
                                             }).addOnFailureListener(e -> {
-                                                Toast.makeText(AddClinicActivity.this, "Error creating Clinic", Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(AddClinicActivity.this, "Error creating Clinic", Toast.LENGTH_SHORT).show();
+                                                showMessageDialog("Error creating clinic. Please try again.", null);
+
                                             });
                                         }).addOnFailureListener(e -> {
-                                            Toast.makeText(AddClinicActivity.this, "Error getting image URL", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(AddClinicActivity.this, "Error getting image URL", Toast.LENGTH_SHORT).show();
+                                            showMessageDialog("Error creating clinic. Please try again.", null);
                                         });
                                     })
                                     .addOnFailureListener(e -> {
-                                        Toast.makeText(AddClinicActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(AddClinicActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show();
+                                        showMessageDialog("Error creating clinic. Please try again.", null);
                                     });
                         } else {
                             Toast.makeText(AddClinicActivity.this, "Doctor profile or clinic image missing", Toast.LENGTH_SHORT).show();
@@ -585,6 +613,42 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
                 // Permission denied
             }
         }
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

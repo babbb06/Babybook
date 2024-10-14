@@ -1,6 +1,10 @@
 package com.example.babybook;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +40,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -47,6 +54,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +119,14 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                     case R.id.doctor_nav_logout:
                         showLogoutConfirmation();
                         break;
+                    case R.id.doctor_nav_about:
+                        startActivity(new Intent(DoctorDashboardActivity.this, About.class));
+                        break;
+                    //new added layout
+                    case R.id.doctor_nav_terms:
+                        startActivity(new Intent(DoctorDashboardActivity.this, Terms.class));
+                        break;
+
                 }
                 drawerLayout.closeDrawers();
                 return true;
@@ -176,7 +192,15 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_create_post, null);
 
         // Get the EditText from the custom layout
-        final EditText input = dialogView.findViewById(R.id.input_post);
+        EditText etHeadline = dialogView.findViewById(R.id.etHeadline);
+        EditText etDate = dialogView.findViewById(R.id.etDate);
+        EditText etTime = dialogView.findViewById(R.id.etTime);
+        EditText etLocation = dialogView.findViewById(R.id.etLocation);
+        EditText input = dialogView.findViewById(R.id.input_post);
+
+        etDate.setOnClickListener(v -> showDatePickerDialog(etDate)); // Pass etDate to the method
+        etTime.setOnClickListener(v -> showTimePickerDialog(etTime)); // Pass etTime to the method
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Create New Post");
@@ -185,11 +209,15 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         builder.setView(dialogView);
 
         builder.setPositiveButton("Post", (dialog, which) -> {
+            String headline = etHeadline.getText().toString();
+            String date = etDate.getText().toString();
+            String time = etTime.getText().toString();
+            String location = etLocation.getText().toString();
             String content = input.getText().toString();
-            if (!content.isEmpty()) {
-                createPost(content);
+            if (headline.isEmpty() || date.isEmpty() || time.isEmpty() || location.isEmpty() || content.isEmpty()) {
+                showMessageDialog("Please fill all fields and try again.", null);
             } else {
-                Toast.makeText(DoctorDashboardActivity.this, "Post content cannot be empty", Toast.LENGTH_SHORT).show();
+                createPost(headline, date, time, location, content);
             }
         });
 
@@ -208,7 +236,9 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     }
 
 
-    private void createPost(String content) {
+    private void createPost(String headline, String date, String time, String location, String content) {
+        showProgressDialog(this);
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
@@ -222,7 +252,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
                         // Ensure name and profile are not null
                         if (doctorName != null && doctorProfile != null) {
-                            Post post = new Post(null, userId, doctorName, content, System.currentTimeMillis(), doctorProfile, specialization);
+                            Post post = new Post(null, userId, doctorName, headline, date, time, location, content, System.currentTimeMillis(), doctorProfile, specialization);
 
                             // Add the post to Firestore
                             db.collection("posts").add(post).addOnSuccessListener(documentReference -> {
@@ -230,17 +260,22 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                                 String postId = documentReference.getId();
                                 documentReference.update("postId", postId)
                                         .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(DoctorDashboardActivity.this, "Post created", Toast.LENGTH_SHORT).show();
-                                            loadPosts(); // Reload posts after successful creation
+                                            // Toast.makeText(DoctorDashboardActivity.this, "Post created", Toast.LENGTH_SHORT).show();
+                                            showMessageDialog("Your post has been created.", this::loadPosts);
+                                            hideProgressDialog();
+                                            //loadPosts(); // Reload posts after successful creation
                                         })
                                         .addOnFailureListener(e -> {
-                                            Toast.makeText(DoctorDashboardActivity.this, "Error updating postId", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(DoctorDashboardActivity.this, "Error updating postId", Toast.LENGTH_SHORT).show();
+                                            showMessageDialog("Error creating post. Please try again later.", null);
                                         });
                             }).addOnFailureListener(e -> {
-                                Toast.makeText(DoctorDashboardActivity.this, "Error creating post", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(DoctorDashboardActivity.this, "Error creating post", Toast.LENGTH_SHORT).show();
+                                showMessageDialog("Error creating post. Please try again later.", null);
                             });
                         } else {
-                            Toast.makeText(DoctorDashboardActivity.this, "Doctor profile data missing", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DoctorDashboardActivity.this, "Doctor profile data missing", Toast.LENGTH_SHORT).show();
+                            showMessageDialog("Error creating post. Please try again later.", null);
                         }
                     }
                 }
@@ -291,4 +326,97 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         super.onResume();
         loadPosts();
     }
+
+    // TIME DIALOG TO ETTIME
+    private void showTimePickerDialog(EditText etTime) { // Accept etTime as a parameter
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // Adjust the minute to the nearest 00 or 30
+        minute = (minute < 15) ? 0 : (minute < 45) ? 30 : 0;
+        if (minute == 0 && hour == 23) {
+            hour = 0; // Wrap around to 0 when it's 23:00
+        }
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                (view, selectedHour, selectedMinute) -> {
+                    String time = String.format("%02d:%02d %s",
+                            selectedHour % 12 == 0 ? 12 : selectedHour % 12,
+                            selectedMinute,
+                            selectedHour < 12 ? "AM" : "PM");
+                    etTime.setText(time); // Set the selected time to etTime
+                },
+                hour,
+                minute, // Use adjusted minute
+                false // Use 12-hour format
+        );
+
+        timePickerDialog.show();
+    }
+
+    // DATE DIALOG TO ETTIME
+    private void showDatePickerDialog(EditText etDate) { // Accept etDate as a parameter
+        // Get the current date
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String date = String.format("%02d/%02d/%d", selectedMonth + 1, selectedDay, selectedYear);
+                    etDate.setText(date); // Set the selected date to etDate
+                },
+                year,
+                month,
+                day
+        );
+
+        // Set the minimum date to today
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
+        datePickerDialog.show();
+    }
+
+    private void showProgressDialog(Context context) {
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false); // Disable dismissing the dialog by tapping outside
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showMessageDialog(String message, Runnable onOkPressed) {
+        // Create a new AlertDialog Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // Set the message
+        builder.setMessage(message);
+
+        // Set the "OK" button
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+            // Call the provided Runnable
+            if (onOkPressed != null) {
+                onOkPressed.run();
+            }
+        });
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+
 }

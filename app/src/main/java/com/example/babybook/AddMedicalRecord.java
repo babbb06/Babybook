@@ -1,29 +1,36 @@
-package com.example.babybook.medicalrecord;
+package com.example.babybook;
 
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.babybook.R;
+import com.example.babybook.emoji.DecimalDigitsInputFilter;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddMedicalRecord extends AppCompatActivity {
 
-    private String childId; // Store the child ID
+    private String childId,LastName,FirstName; // Store the child ID
     private FirebaseFirestore db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +64,25 @@ public class AddMedicalRecord extends AppCompatActivity {
         CheckBox checkImmunization = findViewById(R.id.check_immunization);
         CheckBox checkOtherProblems = findViewById(R.id.check_other_problems);
 
-        // Young Infant Checklist
-        CheckBox checkBabySick = findViewById(R.id.check_baby_sick);
-        CheckBox checkBabyFever = findViewById(R.id.check_baby_fever);
-        CheckBox checkBabyJaundice = findViewById(R.id.check_baby_jaundice);
-        CheckBox checkBabyWeight = findViewById(R.id.check_baby_weight);
-        CheckBox checkBabyFeeding = findViewById(R.id.check_baby_feeding);
-
         // Get reference to the Submit button
         Button submitButton = findViewById(R.id.submit_button);
 
         // Retrieve child ID from the intent
-        childId = getIntent().getStringExtra("CHILD_ID");
+        childId = getIntent().getStringExtra("childId");
+        LastName = getIntent().getStringExtra("LastName");
+        FirstName = getIntent().getStringExtra("FirstName");
+        Toast.makeText(this, "Child ID: " + childId, Toast.LENGTH_SHORT).show();
+
+
+        editTextTemperature.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
+
 
         // Fetch user data
         fetchUserData();
+
+        // Get today's date
+        String datetoday = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
+        editTextDate.setText(datetoday);
 
         // Set an onClickListener on the submit button
         submitButton.setOnClickListener(v -> {
@@ -80,17 +91,38 @@ public class AddMedicalRecord extends AppCompatActivity {
             FirebaseUser user = auth.getCurrentUser();
 
             if (user == null) {
-                Toast.makeText(AddMedicalRecord.this, "Please log in to submit a medical record.", Toast.LENGTH_SHORT).show();
+                showToast("Please log in to submit a medical record.");
                 return; // Exit early if not authenticated
             }
 
-            // Call createMedicalRecord without latitude and longitude
-            createMedicalRecord(editTextDate, editTextWeight, editTextTemperature, summaryDiagnosis, treatmentPlan, followUpPlan,
-                    checkSick, checkCough, checkDiarrhea, checkFever, checkMeasles, checkEarPain,
-                    checkPallor, checkMalnourished, checkFeeding, checkBreastfeeding, checkDiarrheaCough,
-                    checkImmunization, checkOtherProblems, checkBabySick, checkBabyFever, checkBabyJaundice,
-                    checkBabyWeight, checkBabyFeeding);
+            // Validate inputs
+            if (validateInputs(editTextDate, editTextWeight, editTextTemperature)) {
+                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature, summaryDiagnosis, treatmentPlan, followUpPlan,
+                        checkSick, checkCough, checkDiarrhea, checkFever, checkMeasles, checkEarPain,
+                        checkPallor, checkMalnourished, checkFeeding, checkBreastfeeding, checkDiarrheaCough,
+                        checkImmunization, checkOtherProblems, user.getUid()); // Pass user ID as doctorId
+            }
         });
+    }
+
+    private boolean validateInputs(EditText date, EditText weight, EditText temperature) {
+        if (TextUtils.isEmpty(date.getText())) {
+            showToast("Date is required.");
+            return false;
+        }
+        if (TextUtils.isEmpty(weight.getText())) {
+            showToast("Weight is required.");
+            return false;
+        }
+        if (TextUtils.isEmpty(temperature.getText())) {
+            showToast("Temperature is required.");
+            return false;
+        }
+        return true;
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(AddMedicalRecord.this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature,
@@ -99,9 +131,12 @@ public class AddMedicalRecord extends AppCompatActivity {
                                      CheckBox checkFever, CheckBox checkMeasles, CheckBox checkEarPain,
                                      CheckBox checkPallor, CheckBox checkMalnourished, CheckBox checkFeeding,
                                      CheckBox checkBreastfeeding, CheckBox checkDiarrheaCough,
-                                     CheckBox checkImmunization, CheckBox checkOtherProblems,
-                                     CheckBox checkBabySick, CheckBox checkBabyFever, CheckBox checkBabyJaundice,
-                                     CheckBox checkBabyWeight, CheckBox checkBabyFeeding) {
+                                     CheckBox checkImmunization, CheckBox checkOtherProblems, String doctorId ) {
+
+        // Create a unique ID for the medical record
+        String uniqueId = UUID.randomUUID().toString();
+
+
 
         // Create a HashMap to store the data
         Map<String, Object> medicalRecordData = new HashMap<>();
@@ -110,44 +145,43 @@ public class AddMedicalRecord extends AppCompatActivity {
         medicalRecordData.put("Date", editTextDate.getText().toString());
         medicalRecordData.put("Weight", editTextWeight.getText().toString());
         medicalRecordData.put("Temperature", editTextTemperature.getText().toString());
-        medicalRecordData.put("Summary of Diagnosis", summaryDiagnosis.getText().toString());
-        medicalRecordData.put("Treatment Plan", treatmentPlan.getText().toString());
-        medicalRecordData.put("Follow Up Plan", followUpPlan.getText().toString());
-        medicalRecordData.put("Child ID", childId);  // Add the child ID to the record
+        medicalRecordData.put("childId", childId);
+
+        medicalRecordData.put("LastName", LastName);
+        medicalRecordData.put("FirstName", FirstName);  // Add the child ID to the record
+        medicalRecordData.put("doctorId", doctorId); // Add the doctor ID to the record
+        medicalRecordData.put("uniqueId", uniqueId); // Add unique ID to the record
 
         // Store CheckBox states
-        medicalRecordData.put("Is the child TOO SICK?", checkSick.isChecked());
-        medicalRecordData.put("COUGH or DIFFICULT BREATHING?", checkCough.isChecked());
-        medicalRecordData.put("Has DIARRHOEA?", checkDiarrhea.isChecked());
-        medicalRecordData.put("Has FEVER?", checkFever.isChecked());
-        medicalRecordData.put("Has MEASLES in the last 3 months?", checkMeasles.isChecked());
-        medicalRecordData.put("EAR PAIN/DISCHARGE?", checkEarPain.isChecked());
-        medicalRecordData.put("Check for PALLOR?", checkPallor.isChecked());
-        medicalRecordData.put("Child MALNOURISHED?", checkMalnourished.isChecked());
-        medicalRecordData.put("Assess FEEDING?", checkFeeding.isChecked());
-        medicalRecordData.put("Assess BREAST FEEDING?", checkBreastfeeding.isChecked());
-        medicalRecordData.put("DIARRHOEA/COUGH > 2 WEEKS?", checkDiarrheaCough.isChecked());
-        medicalRecordData.put("IMMUNIZATION needed?", checkImmunization.isChecked());
-        medicalRecordData.put("Other problems?", checkOtherProblems.isChecked());
+        medicalRecordData.put("IsSick", checkSick.isChecked());
+        medicalRecordData.put("HasCough", checkCough.isChecked());
+        medicalRecordData.put("HasDiarrhea", checkDiarrhea.isChecked());
+        medicalRecordData.put("HasFever", checkFever.isChecked());
+        medicalRecordData.put("HasMeasles", checkMeasles.isChecked());
+        medicalRecordData.put("HasEarPain", checkEarPain.isChecked());
+        medicalRecordData.put("IsPallor", checkPallor.isChecked());
+        medicalRecordData.put("IsMalnourished", checkMalnourished.isChecked());
+        medicalRecordData.put("IsFeeding", checkFeeding.isChecked());
+        medicalRecordData.put("IsBreastfeeding", checkBreastfeeding.isChecked());
+        medicalRecordData.put("HasDiarrheaCough", checkDiarrheaCough.isChecked());
+        medicalRecordData.put("HasImmunization", checkImmunization.isChecked());
+        medicalRecordData.put("HasOtherProblems", checkOtherProblems.isChecked());
 
-        // Young Infant Checklist
-        medicalRecordData.put("Baby TOO SICK?", checkBabySick.isChecked());
-        medicalRecordData.put("Baby has FEVER?", checkBabyFever.isChecked());
-        medicalRecordData.put("Baby JAUNDICE?", checkBabyJaundice.isChecked());
-        medicalRecordData.put("Assess Baby's Weight?", checkBabyWeight.isChecked());
-        medicalRecordData.put("Baby's Feeding?", checkBabyFeeding.isChecked());
+        medicalRecordData.put("Summary", summaryDiagnosis.getText().toString());
+        medicalRecordData.put("Treatment", treatmentPlan.getText().toString());
+        medicalRecordData.put("Follow", followUpPlan.getText().toString());
+        medicalRecordData.put("MedicalrecordId", uniqueId); // Assign unique ID here
 
         // Save data to Firestore
         db.collection("medicalRecords")
                 .add(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
-                    // Successfully saved
-                    Toast.makeText(AddMedicalRecord.this, "Medical record submitted successfully!", Toast.LENGTH_SHORT).show();
+                    showToast("Medical record submitted successfully!");
                     finish(); // Close the activity
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FirestoreError", "Error submitting data: " + e.getMessage());
-                    Toast.makeText(AddMedicalRecord.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    showToast("Error submitting record. Please try again.");
                 });
     }
 
@@ -168,14 +202,18 @@ public class AddMedicalRecord extends AppCompatActivity {
                                 String userEmail = document.getString("email");
 
                                 // You can now use this data as needed, e.g., display it in the UI
-                                Toast.makeText(this, "User: " + userName + ", Email: " + userEmail, Toast.LENGTH_SHORT).show();
+                                showToast("User: " + userName + ", Email: " + userEmail);
                             } else {
                                 Log.d("FetchUserData", "No such document");
+                                showToast("No user data found.");
                             }
                         } else {
                             Log.d("FetchUserData", "Get failed with ", task.getException());
+                            showToast("Failed to fetch user data. Please try again.");
                         }
                     });
+        } else {
+            showToast("No user is logged in.");
         }
     }
 }
