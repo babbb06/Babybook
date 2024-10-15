@@ -72,7 +72,6 @@ public class AddMedicalRecord extends AppCompatActivity {
         childId = getIntent().getStringExtra("childId");
         LastName = getIntent().getStringExtra("LastName");
         FirstName = getIntent().getStringExtra("FirstName");
-        Toast.makeText(this, "Child ID: " + childId, Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

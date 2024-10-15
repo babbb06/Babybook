@@ -28,7 +28,7 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
         this.childId = childId;
         this.FirstName = FirstName;
         this.LastName = LastName;
-        this.dateToday = dateToday;
+
         this.context = context; // Set context
     }
 

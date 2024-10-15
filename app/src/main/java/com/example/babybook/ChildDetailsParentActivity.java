@@ -130,12 +130,12 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         findViewById(R.id.imageViewAddMMR).setOnClickListener(v -> showAddImageDialog("MMR", R.array.dose_options_mmr));
         findViewById(R.id.imageViewAddBoosters3).setOnClickListener(v -> showAddImageDialog("BOOSTERS 2", R.array.dose_options_boosters3));
 
-        gestureDetector = new GestureDetector(this, new ChildDetailsParentActivity.SwipeGestureDetector());
+       /* gestureDetector = new GestureDetector(this, new ChildDetailsParentActivity.SwipeGestureDetector());
 
         findViewById(R.id.rootlayout).setOnTouchListener((v, event) -> {
             gestureDetector.onTouchEvent(event);
             return true;
-        });
+        });*/
     }
 
     @Override
@@ -321,10 +321,10 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
                                 row.addView(createTextView(reaction));
 
                                 // Set click listener for the row
-                                row.setOnClickListener(v -> {
+                              /*row.setOnClickListener(v -> {
                                     // Handle row click
                                     showDetailsDialog(docId, dose, type, location, date, reaction);
-                                });
+                                });*/
 
                                 tableLayout.addView(row);
                             }
@@ -356,7 +356,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         editTextDate.setText(date);
         editTextReaction.setText(reaction);
 
-        builder.setView(dialogView)
+               builder.setView(dialogView)
                 .setTitle("Edit Vaccine Details")
                 .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
@@ -462,7 +462,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
     }
 
 // Swipe Gesture Detector
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+ /*   private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -481,7 +481,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
             }
             return false;
         }
-    }
+    }*/
 
 
     private void navigateToChildDetailsActivity2() {

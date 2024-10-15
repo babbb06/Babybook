@@ -132,12 +132,12 @@ public class ChildDetailsActivity extends AppCompatActivity {
         findViewById(R.id.imageViewAddMMR).setOnClickListener(v -> showAddImageDialog("MMR", R.array.dose_options_mmr));
         findViewById(R.id.imageViewAddBoosters3).setOnClickListener(v -> showAddImageDialog("BOOSTERS 2", R.array.dose_options_boosters3));
 
-        gestureDetector = new GestureDetector(this, new ChildDetailsActivity.SwipeGestureDetector());
+   /*     gestureDetector = new GestureDetector(this, new ChildDetailsActivity.SwipeGestureDetector());
 
         findViewById(R.id.rootlayout).setOnTouchListener((v, event) -> {
             gestureDetector.onTouchEvent(event);
             return true;
-        });
+        });*/
     }
 
     @Override
@@ -509,7 +509,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
     }
 
 // Swipe Gesture Detector
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+  /*  private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -528,7 +528,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
             }
             return false;
         }
-    }
+    }*/
 
 
     private void navigateToChildDetailsActivity2() {

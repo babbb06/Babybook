@@ -27,6 +27,8 @@ public class ViewMedicalRecord extends AppCompatActivity {
         childId = getIntent().getStringExtra("childId");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

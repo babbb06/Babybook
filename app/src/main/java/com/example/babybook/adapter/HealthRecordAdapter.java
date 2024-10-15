@@ -36,6 +36,7 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HealthRecord record = healthRecords.get(position);
+
         holder.textViewChildName.setText("Child Name: " + record.getFirstName() + " " + record.getLastName());
 
         // Handle card click
