@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.babybook.emoji.EmojiAndNumberInputFilter;
+import com.example.babybook.emoji.EmojiInputFilter;
+import com.example.babybook.emoji.EmojispaceInputFilter;
 import com.example.babybook.model.AppointmentRequest;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,6 +75,10 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
         tvAvailableDays = findViewById(R.id.tvAvailableDays);
         tvAvailableTime = findViewById(R.id.tvAvailableTime);
 
+        editTextFirstName.setFilters(new InputFilter[]{new EmojiAndNumberInputFilter()});
+        lastnameEt.setFilters(new InputFilter[]{new EmojiAndNumberInputFilter()});
+        editTextbirthplace.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
+        eTAddress.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
         // Set an OnClickListener to display TimePickerDialog
         etTime.setOnClickListener(view -> showTimePickerDialog());
 
