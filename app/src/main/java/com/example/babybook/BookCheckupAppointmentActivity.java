@@ -79,6 +79,7 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
         lastnameEt.setFilters(new InputFilter[]{new EmojiAndNumberInputFilter()});
         editTextbirthplace.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
         eTAddress.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
+
         // Set an OnClickListener to display TimePickerDialog
         etTime.setOnClickListener(view -> showTimePickerDialog());
 
