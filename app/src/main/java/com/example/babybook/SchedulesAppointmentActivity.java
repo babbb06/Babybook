@@ -22,10 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SchedulesAppointmentActivity extends AppCompatActivity {
 
@@ -112,7 +116,23 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
 
                                         for (AppointmentRequest appointment : appointmentList) {
                                             if ("Accepted".equals(appointment.getStatus())) {
-                                                ScheduleReminderUtil.scheduleReminder(this, appointment.getDate(), appointment.getTime(), fullName);
+                                                // Prepare date and time for reminder
+                                                String appointmentDate = appointment.getDate(); // Assuming this is in "yyyy-MM-dd" format
+                                                String appointmentTime = appointment.getTime(); // Assuming this is in "HH:mm" format
+
+                                                // Combine date and time for proper parsing
+                                                String dateTime = appointmentDate + " " + appointmentTime;
+
+                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                                                try {
+                                                    Date date = sdf.parse(dateTime);
+                                                    long reminderTimeInMillis = date.getTime() - 24 * 60 * 60 * 1000; // Subtract 1 day
+
+                                                    // Call the scheduleReminder method with correct parameters
+                                                    ScheduleReminderUtil.scheduleReminder(this, appointmentDate, appointmentTime, fullName);
+                                                } catch (ParseException e) {
+                                                    Log.e(TAG, "Error parsing date and time.", e);
+                                                }
                                             }
                                         }
 

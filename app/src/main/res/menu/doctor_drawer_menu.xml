@@ -24,10 +24,7 @@
                     android:id="@+id/doctor_nav_appointment"
                     android:icon="@drawable/schedule"
                     android:title="Appointment Requests" />
-                <item
-                    android:id="@+id/doctor_nav_set_appointment"
-                    android:icon="@drawable/schedsend"
-                    android:title="Set Appointment" />
+
             </menu>
         </item>
     </group>
