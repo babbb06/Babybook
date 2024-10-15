@@ -44,8 +44,7 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
         HealthChecklist checklist = healthChecklists.get(position);
         holder.name.setText(FirstName +  " " + LastName);
         holder.clinic_day.setText(dateToday);
-        String firstName = checklist.getFirstName(); // Adjust this if the names come from the checklist
-        String lastName = checklist.getLastName();   // Adjust as needed
+  
 
 
         holder.itemView.setOnClickListener(v -> {
@@ -53,8 +52,6 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
             intent.putExtra("childId", childId); // Pass the specific child's ID
             intent.putExtra("FirstName", FirstName);
             intent.putExtra("LastName", LastName);
-
-            Toast.makeText(context, lastName + " " + firstName, Toast.LENGTH_SHORT).show();
             context.startActivity(intent); // Start the activity using the context
         });
     }

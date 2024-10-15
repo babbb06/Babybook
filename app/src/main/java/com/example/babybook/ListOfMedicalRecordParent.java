@@ -54,8 +54,7 @@ public class ListOfMedicalRecordParent extends AppCompatActivity {
         healthChecklists = new ArrayList<>();
         fetchHealthRecords();
 
-        Toast.makeText(this, "Child ID is " + childId, Toast.LENGTH_SHORT).show();
-        // Set onClickListener for fabCreatePost
+
 
 
 

@@ -36,8 +36,6 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
 
 
 
-        Toast.makeText(this, "Child ID: " + childId, Toast.LENGTH_SHORT).show();
-
         // Initialize UI components
         textViewWeight = findViewById(R.id.textViewWeight);
         textViewDate = findViewById(R.id.textViewDate);
@@ -74,7 +72,6 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("medicalRecords")
                 .whereEqualTo("childId", childId)
-                .whereEqualTo("FirstName", FirstName)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
@@ -114,20 +111,7 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
                             checkBoxImmunization.setChecked(document.getBoolean("HasImmunization"));
                             checkBoxOtherProblems.setChecked(document.getBoolean("HasOtherProblems"));
 
-                            // Disable all checkboxes
-                            checkBoxSick.setEnabled(false);
-                            checkBoxCough.setEnabled(false);
-                            checkBoxDiarrhea.setEnabled(false);
-                            checkBoxFever.setEnabled(false);
-                            checkBoxMeasles.setEnabled(false);
-                            checkBoxEarPain.setEnabled(false);
-                            checkBoxPallor.setEnabled(false);
-                            checkBoxMalnourished.setEnabled(false);
-                            checkBoxFeeding.setEnabled(false);
-                            checkBoxBreastfeeding.setEnabled(false);
-                            checkBoxDiarrheaCough.setEnabled(false);
-                            checkBoxImmunization.setEnabled(false);
-                            checkBoxOtherProblems.setEnabled(false);
+
                         }
                     } else {
                         Toast.makeText(ViewMedicalRecordParent.this, "No record found", Toast.LENGTH_SHORT).show();

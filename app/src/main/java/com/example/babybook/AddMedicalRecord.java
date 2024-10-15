@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.babybook.emoji.DecimalDigitsInputFilter;
 import com.google.android.material.textfield.TextInputEditText;
@@ -72,6 +73,12 @@ public class AddMedicalRecord extends AppCompatActivity {
         LastName = getIntent().getStringExtra("LastName");
         FirstName = getIntent().getStringExtra("FirstName");
         Toast.makeText(this, "Child ID: " + childId, Toast.LENGTH_SHORT).show();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getSupportActionBar().setTitle("Medical Records Details");// DOCTOR SIDe
 
 
         editTextTemperature.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
