@@ -16,7 +16,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListOfMedicalRecordParent extends AppCompatActivity {
@@ -49,7 +51,7 @@ public class ListOfMedicalRecordParent extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.listOfMedicalRecordRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        dateToday = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
         // Fetch health records from Firestore and populate the list
         healthChecklists = new ArrayList<>();
         fetchHealthRecords();

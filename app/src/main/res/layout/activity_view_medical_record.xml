@@ -32,11 +32,22 @@
         android:padding="16dp">
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:hint="LOADING"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="22dp"/>
+
+
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
 
 
@@ -216,84 +227,111 @@
             android:layout_marginTop="16dp"
             android:text="Checklist:"
             android:textSize="18sp"
+
             android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkBoxSick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Is the child TOO SICK?" />
 
         <CheckBox
             android:id="@+id/checkBoxCough"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Does the child have COUGH or DIFFICULT BREATHING?" />
 
         <CheckBox
             android:id="@+id/checkBoxDiarrhea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Does the child have DIARRHOEA?" />
 
         <CheckBox
             android:id="@+id/checkBoxFever"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Does the child have FEVER?" />
 
         <CheckBox
             android:id="@+id/checkBoxMeasles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Does the child have MEASLES or had it in the last 3 months?" />
 
         <CheckBox
             android:id="@+id/checkBoxEarPain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Does the child have EAR PAIN/DISCHARGE?" />
 
         <CheckBox
             android:id="@+id/checkBoxPallor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Check all children for PALLOR." />
 
         <CheckBox
             android:id="@+id/checkBoxMalnourished"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Check if the child is MALNOURISHED." />
 
         <CheckBox
             android:id="@+id/checkBoxFeeding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Assess FEEDING if age &lt; 2 years/ANAEMIA/MALNUTRITION." />
 
         <CheckBox
             android:id="@+id/checkBoxBreastfeeding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Assess BREAST FEEDING if aged up to 6 months." />
 
         <CheckBox
             android:id="@+id/checkBoxDiarrheaCough"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Does the child have DIARRHOEA and/or COUGH for more than 2 WEEKS?" />
 
         <CheckBox
             android:id="@+id/checkBoxImmunization"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Does the child need IMMUNIZATION?" />
 
         <CheckBox
             android:id="@+id/checkBoxOtherProblems"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/black"
             android:text="Always ask a caregiver; is there any OTHER PROBLEMS?" />
 
     </LinearLayout>

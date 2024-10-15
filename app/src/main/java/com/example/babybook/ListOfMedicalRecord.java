@@ -20,7 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListOfMedicalRecord extends AppCompatActivity {
@@ -55,6 +57,7 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         // Initialize the healthChecklists list
         healthChecklists = new ArrayList<>();
         fetchHealthRecords();
+        dateToday = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
 
         // Set onClickListener for fabCreatePost
         fabCreatePost.setOnClickListener(v -> {
@@ -63,9 +66,11 @@ public class ListOfMedicalRecord extends AppCompatActivity {
             intent.putExtra("childId", childId);
             intent.putExtra("FirstName", FirstName);
             intent.putExtra("LastName", LastName);
-
+            intent.putExtra("dateToday", dateToday);
             startActivity(intent);
         });
+
+
     }
 
     // In your activity where you display the list of medical records
@@ -108,6 +113,7 @@ public class ListOfMedicalRecord extends AppCompatActivity {
                                 intent.putExtra("childId", childId);
                                 intent.putExtra("FirstName", FirstName);
                                 intent.putExtra("LastName", LastName);
+                                intent.putExtra("dateToday", dateToday);
                                 startActivity(intent);
                             });
                         }

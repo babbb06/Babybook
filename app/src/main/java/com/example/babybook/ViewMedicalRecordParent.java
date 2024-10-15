@@ -12,11 +12,14 @@ import com.example.babybook.model.HealthChecklist;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ViewMedicalRecordParent extends AppCompatActivity {
 
-    private TextView textViewWeight, textViewDate, textViewTemperature, textViewSummaryDiagnosis, textViewTreatmentPlan, textViewFollowUpPlan;
+    private TextView name,textViewWeight, textViewDate, textViewTemperature, textViewSummaryDiagnosis, textViewTreatmentPlan, textViewFollowUpPlan;
     private CheckBox checkBoxSick, checkBoxCough, checkBoxDiarrhea, checkBoxFever, checkBoxMeasles, checkBoxEarPain, checkBoxPallor, checkBoxMalnourished, checkBoxFeeding, checkBoxBreastfeeding, checkBoxDiarrheaCough, checkBoxImmunization, checkBoxOtherProblems;
-    private String childId,FirstName; // This will now be used to fetch the medical record
+    private String childId,FirstName,LastName; // This will now be used to fetch the medical record
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
         // Get the child ID from the intent
         childId = getIntent().getStringExtra("childId");
         FirstName = getIntent().getStringExtra("FirstName");
-
+        LastName = getIntent().getStringExtra("LastName");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,7 +46,7 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
         textViewSummaryDiagnosis = findViewById(R.id.textViewSummaryDiagnosis);
         textViewTreatmentPlan = findViewById(R.id.textViewTreatmentPlan);
         textViewFollowUpPlan = findViewById(R.id.textViewFollowUpPlan);
-
+        name = findViewById(R.id.name);
         checkBoxSick = findViewById(R.id.checkBoxSick);
         checkBoxCough = findViewById(R.id.checkBoxCough);
         checkBoxDiarrhea = findViewById(R.id.checkBoxDiarrhea);
@@ -61,7 +64,7 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
 
         fetchHealthRecordDetails();
 
-
+        name.setText("Name: " + FirstName +" "+ LastName);
 
 
     }
