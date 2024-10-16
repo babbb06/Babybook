@@ -322,7 +322,7 @@
                 app:layout_constraintWidth_percent="0.56">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/eTBarangay"
+                    android:id="@+id/eTAddress"
                     style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

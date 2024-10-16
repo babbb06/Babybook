@@ -82,22 +82,23 @@ public class HealthRecordActivity extends AppCompatActivity {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference healthRecordsCollection = db.collection("healthRecords");
 
-            healthRecordsCollection.whereEqualTo("doctorId", currentUserId)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                healthRecords.clear();
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    HealthRecord healthRecord = document.toObject(HealthRecord.class);
-                                    healthRecords.add(healthRecord);
-                                }
-                                adapter.notifyDataSetChanged();
-                            } else {
-                                Log.e("HealthRecordActivity", "Error loading records: ", task.getException());
-                                Toast.makeText(HealthRecordActivity.this, "Failed to load records: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            healthRecordsCollection
+                    .whereEqualTo("doctorId", currentUserId)
+                    .whereEqualTo("status", "Accepted")
+                    .addSnapshotListener((value, error) -> {
+                        if (error != null) {
+                            Log.e("HealthRecordActivity", "Error loading records: ", error);
+                            Toast.makeText(HealthRecordActivity.this, "Failed to load records: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (value != null) {
+                            healthRecords.clear();
+                            for (QueryDocumentSnapshot document : value) {
+                                HealthRecord healthRecord = document.toObject(HealthRecord.class);
+                                healthRecords.add(healthRecord);
                             }
+                            adapter.notifyDataSetChanged();
                         }
                     });
         } else {
@@ -105,6 +106,7 @@ public class HealthRecordActivity extends AppCompatActivity {
             Toast.makeText(this, "User is not authenticated", Toast.LENGTH_SHORT).show();
         }
     }
+
 
    /* private void showAddRecordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
