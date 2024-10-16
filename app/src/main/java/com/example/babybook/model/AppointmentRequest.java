@@ -9,6 +9,7 @@ public class AppointmentRequest {
     private String lastName;
     private String childFullName;
     private String birthDay;
+    private String sex;
     private String birthPlace;
     private String address;
     private String service;
@@ -23,12 +24,13 @@ public class AppointmentRequest {
         // Default constructor required for Firestore serialization
     }
 
-    public AppointmentRequest(String id, String firstName, String lastName,  String childFullName, String birthDay, String birthPlace, String address, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime) {
+    public AppointmentRequest(String id, String firstName, String lastName,  String childFullName, String birthDay, String sex, String birthPlace, String address, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.childFullName = childFullName;
         this.birthDay = birthDay;
+        this.sex = sex;
         this.birthPlace = birthPlace;
         this.address = address;
         this.service = service;
@@ -67,6 +69,14 @@ public class AppointmentRequest {
 
     public void setChildFullName(String childFullName) {
         this.childFullName = childFullName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public void setLastName(String lastName) {

@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -36,10 +37,11 @@ import java.util.Set;
 
 public class BookVaccineAppointmentActivity extends AppCompatActivity {
 
-    private TextInputEditText editTextFirstName, lastnameEt, editTextBirthday, editTextbirthplace, eTAddress, etTime;
+    private TextInputEditText editTextFirstName, lastnameEt, editTextBirthday, editTextbirthplace, etTime, etSex;
+    private TextInputEditText etStreet, etBrgy, etCity, etProvince;
     private CalendarView appointmentCalendar;
     private Button submitButton;
-    private String firstName, lastName, birthDay, birthPlace, address, selectedService = "Vaccination";
+    private String firstName, lastName, birthDay, birthPlace, address, selectedGender, selectedService = "Vaccination";
     private String selectedTime;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -48,6 +50,9 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
     private List<String> schedDays;
     private TextView tvAvailableDays, tvAvailableTime;
     private Dialog progressDialog;
+    private Spinner spinnerSex;
+    private Integer selectedSpinnerPosition;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,12 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
         lastnameEt = findViewById(R.id.lastnameEt);
         editTextBirthday = findViewById(R.id.editTextBirthday);
         editTextbirthplace = findViewById(R.id.editTextbirthplace);
-        eTAddress = findViewById(R.id.eTAddress);
+        etSex = findViewById(R.id.editTextsex);
+        spinnerSex = findViewById(R.id.sexspinner);
+        etStreet = findViewById(R.id.eTStreet);
+        etBrgy = findViewById(R.id.eTBarangay);
+        etCity = findViewById(R.id.eTCity);
+        etProvince = findViewById(R.id.eTProvince);
         appointmentCalendar = findViewById(R.id.appointment_calendar);
         submitButton = findViewById(R.id.submit_button);
         etTime = findViewById(R.id.etTime);
@@ -287,8 +297,17 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
         selectedService = "Vaccination"; // Set default
         selectedTime = etTime.getText().toString().trim();
         birthDay = editTextBirthday.getText().toString().trim();
+        selectedSpinnerPosition = spinnerSex.getSelectedItemPosition();
+
+        if (selectedSpinnerPosition == 1) {
+            selectedGender = "Male";
+        } else if (selectedSpinnerPosition == 2) {
+            selectedGender = "Female";
+        }
+
+
         birthPlace = editTextbirthplace.getText().toString().trim();
-        address = eTAddress.getText().toString().trim();
+        address = etStreet.getText().toString().trim() + ", " + etBrgy.getText().toString().trim() + ", " + etCity.getText().toString().trim() + ", " + etProvince.getText().toString().trim();
 
         // Check for empty fields
         boolean isValid = true;
@@ -313,7 +332,15 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
             isValid = false;
         }
         if (address.isEmpty()) {
-            eTAddress.setError("Address is required");
+            etStreet.setError("Street is required");
+            etBrgy.setError("Baranggay is required");
+            etCity.setError("City/Municipality is required");
+            etProvince.setError("Province is required");
+            isValid = false;
+        }
+
+        if (selectedSpinnerPosition == 0){
+            etSex.setError("Sex is required");
             isValid = false;
         }
         if (doctorId == null) {
@@ -335,6 +362,7 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
                 lastName,
                 firstName + " " + lastName,
                 birthDay,
+                selectedGender,
                 birthPlace,
                 address,
                 selectedService,

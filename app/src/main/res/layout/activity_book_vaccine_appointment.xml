@@ -45,6 +45,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="15dp"/>
 
+            <TextView
+                android:id="@+id/tvChildInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Child's Information"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbletchild"
+                android:layout_marginStart="15dp"/>
+
 
 
 
@@ -63,7 +76,7 @@
                 app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toStartOf="@+id/lastnameLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbletchild">
+                app:layout_constraintTop_toBottomOf="@+id/tvChildInfo">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -95,7 +108,7 @@
                 app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/firstLayout"
-                app:layout_constraintTop_toBottomOf="@+id/lbletchild">
+                app:layout_constraintTop_toBottomOf="@+id/tvChildInfo">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -251,6 +264,19 @@
             -->
 
 
+            <TextView
+                android:id="@+id/tvChildAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Address"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/birthLayout"
+                android:layout_marginStart="15dp"/>
+
             <!-- Street Name/Building/House No. -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/streetLayout"
@@ -265,7 +291,7 @@
                 app:boxStrokeErrorColor="@color/colorError"
                 app:layout_constraintEnd_toStartOf="@+id/barangayLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/birthLayout"
+                app:layout_constraintTop_toBottomOf="@+id/tvChildAddress"
                 app:layout_constraintWidth_percent="0.35">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -274,8 +300,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:hint="House No."
-                    android:inputType="number"
+                    android:hint="Street"
+                    android:inputType="textCapWords"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -292,7 +318,7 @@
                 app:boxStrokeErrorColor="@color/colorError"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/streetLayout"
-                app:layout_constraintTop_toBottomOf="@+id/birthLayout"
+                app:layout_constraintTop_toBottomOf="@+id/tvChildAddress"
                 app:layout_constraintWidth_percent="0.56">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -329,7 +355,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:hint="City"
+                    android:hint="City/Municipality"
                     android:inputType="textCapWords"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>

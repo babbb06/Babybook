@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -40,7 +41,8 @@ import java.util.Set;
 
 public class BookCheckupAppointmentActivity extends AppCompatActivity {
 
-    private TextInputEditText editTextFirstName, lastnameEt, editTextBirthday, editTextbirthplace, eTAddress, etTime;
+    private TextInputEditText editTextFirstName, lastnameEt, editTextBirthday, editTextbirthplace, etTime, etSex;
+    private TextInputEditText etStreet, etBrgy, etCity, etProvince;
     private CalendarView appointmentCalendar;
     private Button submitButton;
     private String firstName;
@@ -57,6 +59,8 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
     private List<String> schedDays;
     private TextView tvAvailableDays, tvAvailableTime;
     private Dialog progressDialog;
+    private Spinner spinnerSex;
+    private Integer selectedSpinnerPosition;
 
 
     @Override
@@ -73,7 +77,12 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
         lastnameEt = findViewById(R.id.lastnameEt);
         editTextBirthday = findViewById(R.id.editTextBirthday);
         editTextbirthplace = findViewById(R.id.editTextbirthplace);
-        eTAddress = findViewById(R.id.eTAddress);
+        etSex = findViewById(R.id.editTextsex);
+        spinnerSex = findViewById(R.id.sexspinner);
+        etStreet = findViewById(R.id.eTStreet);
+        etBrgy = findViewById(R.id.eTBarangay);
+        etCity = findViewById(R.id.eTCity);
+        etProvince = findViewById(R.id.eTProvince);
         appointmentCalendar = findViewById(R.id.appointment_calendar);
         submitButton = findViewById(R.id.submit_button);
         etTime = findViewById(R.id.etTime);
@@ -83,7 +92,6 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
         editTextFirstName.setFilters(new InputFilter[]{new EmojiAndNumberInputFilter()});
         lastnameEt.setFilters(new InputFilter[]{new EmojiAndNumberInputFilter()});
         editTextbirthplace.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
-        eTAddress.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
 
         // Set an OnClickListener to display TimePickerDialog
         etTime.setOnClickListener(view -> showTimePickerDialog());
@@ -301,8 +309,10 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
         lastName = lastnameEt.getText().toString().trim();
         selectedTime = etTime.getText().toString().trim();
         birthDay = editTextBirthday.getText().toString().trim();
+        selectedSpinnerPosition = spinnerSex.getSelectedItemPosition();
         birthPlace = editTextbirthplace.getText().toString().trim();
-        address = eTAddress.getText().toString().trim();
+        address = etStreet.getText().toString().trim() + ", " + etBrgy.getText().toString().trim() + ", " + etCity.getText().toString().trim() + ", " + etProvince.getText().toString().trim();
+
 
         // Check for empty fields
         boolean isValid = true;
@@ -326,10 +336,20 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
             editTextbirthplace.setError("Birth place is required");
             isValid = false;
         }
-        if (address.isEmpty()) {
-            eTAddress.setError("Address is required");
+
+        if (selectedSpinnerPosition == 0){
+            etSex.setError("Sex is required");
             isValid = false;
         }
+
+        if (address.isEmpty()) {
+            etStreet.setError("Street is required");
+            etBrgy.setError("Baranggay is required");
+            etCity.setError("City/Municipality is required");
+            etProvince.setError("Province is required");
+            isValid = false;
+        }
+
         if (doctorId == null) {
             // You might need to set an error here if doctorId is from a UI element
             // For example, if it's a Spinner, check if it has a selected item.
@@ -349,6 +369,7 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
                 lastName,
                 firstName + " " + lastName,
                 birthDay,
+                selectedSpinnerPosition.toString(),
                 birthPlace,
                 address,
                 selectedService,
