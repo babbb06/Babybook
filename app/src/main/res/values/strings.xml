@@ -30,6 +30,35 @@
         <item>Pediatric Rheumatology</item>
     </string-array>
 
+
+    <string-array name="birthplace_choices">
+        <item>Select Birth Place</item>
+        <item>Angeles City, Pampanga</item>
+        <item>Apalit, Pampanga</item>
+        <item>Arayat, Pampanga</item>
+        <item>Bacolor, Pampanga</item>
+        <item>Candaba, Pampanga</item>
+        <item>Floridablanca, Pampanga</item>
+        <item>Guagua, Pampanga</item>
+        <item>Lubao, Pampanga</item>
+        <item>Mabalacat City, Pampanga</item>
+        <item>Macabebe, Pampanga</item>
+        <item>Magalang, Pampanga</item>
+        <item>Masantol, Pampanga</item>
+        <item>Mexico, Pampanga</item>
+        <item>Minalin, Pampanga</item>
+        <item>Porac, Pampanga</item>
+        <item>San Fernando City, Pampanga</item>
+        <item>San Luis, Pampanga</item>
+        <item>San Simon, Pampanga</item>
+        <item>Santa Ana, Pampanga</item>
+        <item>Santa Rita, Pampanga</item>
+        <item>Santo Tomas, Pampanga</item>
+        <item>Sasmuan, Pampanga</item>
+    </string-array>
+
+
+
     <string-array name="dose_options_bcg">
         <item>Select Dose</item>
         <item>1</item>
