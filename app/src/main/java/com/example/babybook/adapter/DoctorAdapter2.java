@@ -18,9 +18,9 @@ import java.util.List;
 
 public class DoctorAdapter2 extends RecyclerView.Adapter<DoctorAdapter2.DoctorViewHolder> {
 
-    private List<Doctor> doctorList;
-    private OnDoctorClickListener onDoctorClickListener;
-    private FirebaseFirestore db;
+    private final List<Doctor> doctorList;
+    private final OnDoctorClickListener onDoctorClickListener;
+    private final FirebaseFirestore db;
 
     public DoctorAdapter2(List<Doctor> doctorList, OnDoctorClickListener onDoctorClickListener) {
         this.doctorList = doctorList;

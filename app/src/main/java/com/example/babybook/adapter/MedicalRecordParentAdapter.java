@@ -18,9 +18,14 @@ import java.util.List;
 
 public class MedicalRecordParentAdapter extends RecyclerView.Adapter<MedicalRecordParentAdapter.ViewHolder> {
 
-    private List<HealthChecklist> healthChecklists;
-    private String childId,FirstName,LastName,dateToday, name,clinic_day; // Store childId
-    private Context context; // Store the context
+    private final List<HealthChecklist> healthChecklists;
+    private final String childId;
+    private final String FirstName;
+    private final String LastName;
+    private final String dateToday;
+    private String name;
+    private String clinic_day; // Store childId
+    private final Context context; // Store the context
 
     // Updated constructor to accept Context
     public MedicalRecordParentAdapter(List<HealthChecklist> healthChecklists, String childId, String FirstName, String LastName, String dateToday, Context context) {

@@ -76,6 +76,21 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         imageViewMenuBoosters3 = findViewById(R.id.imageViewAddBoosters3);
 
 
+        // Find the CardView
+        CardView cardViewHome = findViewById(R.id.cardViewHome);
+
+        // Set OnClickListener for the CardView
+        cardViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to ParentDashboardActivity
+                Intent intent = new Intent(ChildDetailsParentActivity.this, ParentDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Optionally, finish the current activity
+            }
+        });
+
         setupMenu(imageViewMenuBCG);
         setupMenu(imageViewMenuHepatitisB);
         setupMenu(imageViewMenuDPT);

@@ -20,8 +20,8 @@ import java.util.List;
 
 public class HealthRecordParentAdapter extends RecyclerView.Adapter<HealthRecordParentAdapter.ViewHolder> {
 
-    private List<HealthRecord> healthRecords;
-    private Context context;
+    private final List<HealthRecord> healthRecords;
+    private final Context context;
 
     // Constructor with context and list
     public HealthRecordParentAdapter(Context context, List<HealthRecord> healthRecords) {

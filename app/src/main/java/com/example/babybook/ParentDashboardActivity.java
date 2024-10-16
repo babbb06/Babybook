@@ -80,9 +80,9 @@ public class ParentDashboardActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 switch (id) {
-                    case R.id.nav_home:
+                   /* case R.id.nav_home:
                         Toast.makeText(ParentDashboardActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
-                        break;
+                        break;*/
 
                     case R.id.nav_health:
                         // Navigate to HealthRecordActivity

@@ -97,8 +97,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
-                    case R.id.doctor_nav_home:
-                        break;
+                    /*case R.id.doctor_nav_home:
+                        break;*/
                     case R.id.doctor_nav_health:
                         startActivity(new Intent(DoctorDashboardActivity.this, HealthRecordActivity.class));
                         break;

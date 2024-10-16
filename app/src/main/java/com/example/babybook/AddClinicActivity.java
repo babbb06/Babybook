@@ -74,14 +74,14 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
 
     private LinearLayout vaccineList;
     private List<String> vaccines;
-    private Map<String, Integer> vaccineMap = new HashMap<>();
+    private final Map<String, Integer> vaccineMap = new HashMap<>();
 
     private TextInputEditText etStartTime, etEndTime, eTClinicAddress;
     private TextView tvNoPin, tvPinSuccess;
     private GoogleMap mMap;
     private LatLng initialLocation;
     private LatLng selectedLocation;
-    private Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
+    private final Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
     private Button btnSubmit, btnCancel;
     private FirebaseFirestore db;
     EditText etFirstName, etLastName, etEmail, etClinicName, etClinicNumber;

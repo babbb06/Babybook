@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class ClinicAdapter extends RecyclerView.Adapter<ClinicAdapter.ClinicViewHolder> {
 
-    private List<Clinic> clinicList;
+    private final List<Clinic> clinicList;
 
     public ClinicAdapter(List<Clinic> clinicList) {
         this.clinicList = clinicList;

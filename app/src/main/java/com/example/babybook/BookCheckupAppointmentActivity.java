@@ -43,7 +43,12 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
     private TextInputEditText editTextFirstName, lastnameEt, editTextBirthday, editTextbirthplace, eTAddress, etTime;
     private CalendarView appointmentCalendar;
     private Button submitButton;
-    private String firstName, lastName, birthDay, birthPlace, address, selectedService = "Check-Up";
+    private String firstName;
+    private String lastName;
+    private String birthDay;
+    private String birthPlace;
+    private String address;
+    private final String selectedService = "Check-Up";
     private String selectedTime;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;

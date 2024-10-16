@@ -3,10 +3,12 @@ package com.example.babybook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +52,21 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         getSupportActionBar().setTitle("Medical Record");
+
+
+        CardView cardViewHome = findViewById(R.id.cardViewHome);
+
+        // Set OnClickListener for the CardView
+        cardViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to ParentDashboardActivity
+                Intent intent = new Intent(ListOfMedicalRecord.this,DoctorDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Optionally, finish the current activity
+            }
+        });
 
         recyclerView = findViewById(R.id.listOfMedicalRecordRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

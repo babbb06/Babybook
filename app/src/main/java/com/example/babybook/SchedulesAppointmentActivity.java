@@ -99,7 +99,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
                                             AppointmentRequest appointmentRequest = document.toObject(AppointmentRequest.class);
                                             appointmentRequest.setId(document.getId());
 
-                                            Log.d(TAG, "Fetched Appointment: " + appointmentRequest.toString());
+                                            Log.d(TAG, "Fetched Appointment: " + appointmentRequest);
 
                                             appointmentList.add(appointmentRequest);
                                         }

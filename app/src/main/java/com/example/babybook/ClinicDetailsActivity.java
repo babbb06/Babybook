@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
@@ -36,7 +37,7 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
 
     private GoogleMap mMap;
     private LatLng initialLocation;
-    private Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
+    private final Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
     private ScrollView scrollView;
     private Double latitude, longitude;
     private String clinicPhoneNumber, clinicName;
@@ -79,6 +80,21 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
 
         // Define your button
         Button bookBtn = findViewById(R.id.Bookbtn);
+
+        // Find the CardView
+        CardView cardViewHome = findViewById(R.id.cardViewHome);
+
+        // Set OnClickListener for the CardView
+        cardViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to ParentDashboardActivity
+                Intent intent = new Intent(ClinicDetailsActivity.this, ParentDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Optionally, finish the current activity
+            }
+        });
 
 // Set an onClick listener
 
