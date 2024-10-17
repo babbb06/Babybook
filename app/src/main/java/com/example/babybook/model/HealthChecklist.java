@@ -8,7 +8,8 @@ public class HealthChecklist {
     private String date;
     private String weight;
     private String temperature;
-
+    private String sex;
+    private String address;
 
     private boolean isSick;
     private boolean hasCough;
@@ -32,6 +33,8 @@ public class HealthChecklist {
 
     private String LastName;
     private String FirstName;
+
+
     private String doctorId;
     private String uniqueId;
     private String datetoday;
@@ -56,6 +59,24 @@ public class HealthChecklist {
 
     public void setWeight(String weight) {
         this.weight = weight;
+    }
+
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 

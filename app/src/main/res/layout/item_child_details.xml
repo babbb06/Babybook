@@ -11,14 +11,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="30dp">
+
+
 
         <TextView
             android:id="@+id/textViewChildName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
             android:layout_toStartOf="@+id/imageViewMenu"
@@ -26,6 +29,35 @@
             android:text="Child: "
             android:textColor="@android:color/white"
             android:textSize="16sp" />
+        <TextView
+            android:id="@+id/textViewChildSex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewChildName"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/imageViewMenu"
+            android:fontFamily="@font/poppins"
+            android:text="Sex: "
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/textViewChildAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewChildSex"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="-4dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/imageViewMenu"
+            android:fontFamily="@font/poppins"
+            android:text="Adress: "
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
 
         <ImageView
             android:id="@+id/imageViewMenu"

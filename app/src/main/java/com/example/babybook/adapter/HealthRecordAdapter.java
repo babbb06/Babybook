@@ -42,7 +42,9 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HealthRecord record = healthRecords.get(position);
 
-        holder.textViewChildName.setText("Child Name: " + record.getFirstName() + " " + record.getLastName());
+        holder.textViewChildName.setText(record.getFirstName() + " " + record.getLastName());
+        holder.textViewChildAddress.setText(record.getAddress());
+        holder.textViewChildSex.setText(record.getSex());
 
         // Handle card click
         holder.itemView.setOnClickListener(v -> {
@@ -50,6 +52,8 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
             intent.putExtra("CHILD_ID", record.getId());
             intent.putExtra("FirstName", record.getFirstName()); // Pass the child ID
             intent.putExtra("LastName", record.getLastName());
+            intent.putExtra("Sex", record.getSex());
+            intent.putExtra("Address", record.getAddress());
 
             context.startActivity(intent);
         });
@@ -69,12 +73,14 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewChildName;
+        TextView textViewChildName,textViewChildSex,textViewChildAddress;
         ImageView imageViewMenu;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewChildName = itemView.findViewById(R.id.textViewChildName);
+            textViewChildSex = itemView.findViewById(R.id.textViewChildSex);
+            textViewChildAddress = itemView.findViewById(R.id.textViewChildAddress);
             imageViewMenu = itemView.findViewById(R.id.imageViewMenu);
         }
     }

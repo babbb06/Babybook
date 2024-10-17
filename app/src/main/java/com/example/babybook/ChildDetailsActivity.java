@@ -43,7 +43,7 @@ import java.util.Map;
 public class ChildDetailsActivity extends AppCompatActivity {
 
     private String currentParentId;
-    private String childId, LastName, FirstName; // Store the child ID
+    private String childId, LastName, FirstName,Sex, Address; // Store the child ID
     private GestureDetector gestureDetector;
     private ImageView imageViewMenuBCG;
     private ImageView imageViewMenuHepatitisB;
@@ -100,6 +100,10 @@ public class ChildDetailsActivity extends AppCompatActivity {
         childId = getIntent().getStringExtra("CHILD_ID");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
+        Sex = getIntent().getStringExtra("Sex");
+        Address= getIntent().getStringExtra("Address");
+
+
 
 
         // Find the CardView by its ID
@@ -113,6 +117,9 @@ public class ChildDetailsActivity extends AppCompatActivity {
             intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
             intent.putExtra("FirstName", FirstName); // Pass the child ID
             intent.putExtra("LastName", LastName);
+            intent.putExtra("Sex", Sex);
+            intent.putExtra("Address", Address);
+
             startActivity(intent);
         });
 

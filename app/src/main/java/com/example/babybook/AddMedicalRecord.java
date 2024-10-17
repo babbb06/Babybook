@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,7 @@ import java.util.UUID;
 
 public class AddMedicalRecord extends AppCompatActivity {
 
-    private String childId,LastName,FirstName; // Store the child ID
+    private String childId,LastName,FirstName,Sex,Address; // Store the child ID
     private FirebaseFirestore db;
 
 
@@ -49,6 +50,8 @@ public class AddMedicalRecord extends AppCompatActivity {
         EditText summaryDiagnosis = findViewById(R.id.summary_diagnosis);
         EditText treatmentPlan = findViewById(R.id.treatment_plan);
         EditText followUpPlan = findViewById(R.id.follow_up_plan);
+        EditText editTextsex = findViewById(R.id.sex);
+        EditText editTextaddress = findViewById(R.id.address);
 
         // Get references to CheckBoxes
         CheckBox checkSick = findViewById(R.id.check_sick);
@@ -72,6 +75,11 @@ public class AddMedicalRecord extends AppCompatActivity {
         childId = getIntent().getStringExtra("childId");
         LastName = getIntent().getStringExtra("LastName");
         FirstName = getIntent().getStringExtra("FirstName");
+        Sex = getIntent().getStringExtra("Sex");
+        Address= getIntent().getStringExtra("Address");
+
+        editTextsex.setText(Sex);
+        editTextaddress.setText(Address);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,7 +111,7 @@ public class AddMedicalRecord extends AppCompatActivity {
 
             // Validate inputs
             if (validateInputs(editTextDate, editTextWeight, editTextTemperature)) {
-                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature, summaryDiagnosis, treatmentPlan, followUpPlan,
+                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature,editTextsex,editTextaddress, summaryDiagnosis, treatmentPlan, followUpPlan,
                         checkSick, checkCough, checkDiarrhea, checkFever, checkMeasles, checkEarPain,
                         checkPallor, checkMalnourished, checkFeeding, checkBreastfeeding, checkDiarrheaCough,
                         checkImmunization, checkOtherProblems, user.getUid()); // Pass user ID as doctorId
@@ -131,7 +139,7 @@ public class AddMedicalRecord extends AppCompatActivity {
         Toast.makeText(AddMedicalRecord.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature,
+    private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature,EditText editTextsex,EditText editTextaddress,
                                      EditText summaryDiagnosis, EditText treatmentPlan, EditText followUpPlan,
                                      CheckBox checkSick, CheckBox checkCough, CheckBox checkDiarrhea,
                                      CheckBox checkFever, CheckBox checkMeasles, CheckBox checkEarPain,
@@ -154,7 +162,9 @@ public class AddMedicalRecord extends AppCompatActivity {
         medicalRecordData.put("childId", childId);
 
         medicalRecordData.put("LastName", LastName);
-        medicalRecordData.put("FirstName", FirstName);  // Add the child ID to the record
+        medicalRecordData.put("Sex", editTextsex.getText().toString());  // Add the child ID to the record
+        medicalRecordData.put("Address", editTextaddress.getText().toString());
+        medicalRecordData.put("FirstName", FirstName);
         medicalRecordData.put("doctorId", doctorId); // Add the doctor ID to the record
         medicalRecordData.put("uniqueId", uniqueId); // Add unique ID to the record
 

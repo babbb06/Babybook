@@ -29,7 +29,7 @@ public class ListOfMedicalRecordParent extends AppCompatActivity {
     private MedicalRecordParentAdapter adapter;
     private List<HealthChecklist> healthChecklists;
     private FloatingActionButton fabCreatePost;
-    private String childId,FirstName,LastName,dateToday; // Store the child ID
+    private String childId,FirstName,LastName,dateToday,Sex,Address; // Store the child ID
 
 
     @Override
@@ -58,7 +58,8 @@ public class ListOfMedicalRecordParent extends AppCompatActivity {
         childId = getIntent().getStringExtra("CHILD_ID");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
-
+        Sex= getIntent().getStringExtra("Sex");
+        Address= getIntent().getStringExtra("Address");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

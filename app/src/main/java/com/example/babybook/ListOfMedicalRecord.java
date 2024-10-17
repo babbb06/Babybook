@@ -33,7 +33,7 @@ public class ListOfMedicalRecord extends AppCompatActivity {
     private MedicalRecordAdapter adapter;
     private List<HealthChecklist> healthChecklists;
     private FloatingActionButton fabCreatePost;
-    private String childId, FirstName, LastName,dateToday;
+    private String childId, FirstName, LastName,dateToday,Sex,Address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,10 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         childId = getIntent().getStringExtra("CHILD_ID");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
+        Sex= getIntent().getStringExtra("Sex");
+        Address= getIntent().getStringExtra("Address");
+
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,6 +88,8 @@ public class ListOfMedicalRecord extends AppCompatActivity {
             intent.putExtra("FirstName", FirstName);
             intent.putExtra("LastName", LastName);
             intent.putExtra("dateToday", dateToday);
+            intent.putExtra("Sex", Sex);
+            intent.putExtra("Address", Address);
             startActivity(intent);
         });
 
@@ -131,6 +137,8 @@ public class ListOfMedicalRecord extends AppCompatActivity {
                                 intent.putExtra("FirstName", FirstName);
                                 intent.putExtra("LastName", LastName);
                                 intent.putExtra("dateToday", dateToday);
+                                intent.putExtra("Sex", Sex);
+                                intent.putExtra("Address", Address);
                                 startActivity(intent);
                             });
                         }
