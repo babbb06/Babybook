@@ -298,6 +298,8 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
         selectedTime = etTime.getText().toString().trim();
         birthDay = editTextBirthday.getText().toString().trim();
         selectedSpinnerPosition = spinnerSex.getSelectedItemPosition();
+        birthPlace = editTextbirthplace.getText().toString().trim();
+        address = etStreet.getText().toString().trim() + ", " + etBrgy.getText().toString().trim() + ", " + etCity.getText().toString().trim() + ", " + etProvince.getText().toString().trim();
 
         if (selectedSpinnerPosition == 1) {
             selectedGender = "Male";
@@ -306,8 +308,7 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
         }
 
 
-        birthPlace = editTextbirthplace.getText().toString().trim();
-        address = etStreet.getText().toString().trim() + ", " + etBrgy.getText().toString().trim() + ", " + etCity.getText().toString().trim() + ", " + etProvince.getText().toString().trim();
+
 
         // Check for empty fields
         boolean isValid = true;
