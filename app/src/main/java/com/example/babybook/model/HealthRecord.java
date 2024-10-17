@@ -6,6 +6,7 @@ public class HealthRecord {
     private String id;
     private String firstName;
     private String lastName;
+    private String sex;
     private String birthDay;
     private String birthPlace;
     private String address;
@@ -20,10 +21,11 @@ public class HealthRecord {
     public HealthRecord() {}
 
     // Constructor with all fields
-    public HealthRecord(String id, String firstName, String lastName, String birthDay, String birthPlace, String address, String addedBy, String date, String doctorId, String service, String time, String status, String userId) {
+    public HealthRecord(String id, String firstName, String lastName, String Sex, String birthDay, String birthPlace, String address, String addedBy, String date, String doctorId, String service, String time, String status, String userId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.sex = sex;
         this.birthDay = birthDay;
         this.birthPlace = birthPlace;
         this.address = address;
@@ -60,6 +62,18 @@ public class HealthRecord {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+
+
 
     public String getBirthDay() {
         return birthDay;

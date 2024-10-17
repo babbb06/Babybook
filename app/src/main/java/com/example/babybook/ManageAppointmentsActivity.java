@@ -72,6 +72,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                                     "Accepted",
                                     request.getFirstName(),
                                     request.getLastName(),
+                                    request.getSex(),
                                     request.getBirthDay(),
                                     request.getBirthPlace(),
                                     request.getAddress(),
@@ -110,13 +111,14 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         loadAppointments();
     }
 
-    private void updateAppointmentStatus(String id, String status, String firstName,String lastName,String birthDay,String birthPlace,String address, String service, String date, String time, String userId, String doctorId) {
+    private void updateAppointmentStatus(String id, String status, String firstName,String lastName,String sex,String birthDay,String birthPlace,String address, String service, String date, String time, String userId, String doctorId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Create a new HealthRecord object with all the details
         HealthRecord healthRecord = new HealthRecord();
         healthRecord.setFirstName(firstName);
         healthRecord.setLastName(lastName);
+        healthRecord.setSex(sex);
         healthRecord.setBirthDay(birthDay);
         healthRecord.setBirthPlace(birthPlace);
         healthRecord.setAddress(address);
