@@ -3,8 +3,10 @@ package com.example.babybook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
     private AppointmentRequestAdapter adapter;
     private List<AppointmentRequest> appointmentRequests;
     private String doctorId;
+    private TextView tvNoRequestAppointments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
         Button checkImage = findViewById(R.id.check_image);
         Button crossImage = findViewById(R.id.cross_image);
+
+        tvNoRequestAppointments = findViewById(R.id.tvNoRequests);
 
         checkImage.setOnClickListener(v -> {
             Intent intent = new Intent(ManageAppointmentsActivity.this, AcceptedRequestActivity.class);
@@ -178,6 +183,15 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                         // Sort the list by booking time (descending)
                         Collections.sort(appointmentRequests, (a1, a2) -> a2.getBookingTime().compareTo(a1.getBookingTime()));
                         adapter.notifyDataSetChanged();
+
+                        if (appointmentRequests.isEmpty()) {
+                            tvNoRequestAppointments.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            tvNoRequestAppointments.setVisibility(View.GONE);
+                        }
+
+
                     } else {
                         Log.w("ManageAppointments", "Error getting documents.", task.getException());
                     }

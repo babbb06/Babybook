@@ -2,6 +2,8 @@ package com.example.babybook;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +24,7 @@ public class AcceptedRequestActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AppointmentRequestAdapter adapter;
     private List<AppointmentRequest> appointmentRequests;
+    private TextView tvNoAcceptedRequests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class AcceptedRequestActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        tvNoAcceptedRequests = findViewById(R.id.tvNoAcceptedRequests);
 
         appointmentRequests = new ArrayList<>();
         adapter = new AppointmentRequestAdapter(appointmentRequests, null, false); // Pass false to hide buttons
@@ -61,6 +65,13 @@ public class AcceptedRequestActivity extends AppCompatActivity {
                             appointmentRequests.add(request);
                         }
                         adapter.notifyDataSetChanged();
+
+                        if (appointmentRequests.isEmpty()) {
+                            tvNoAcceptedRequests.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            tvNoAcceptedRequests.setVisibility(View.GONE);
+                        }
                     } else {
                         Log.w("AcceptedRequestActivity", "Error getting documents.", task.getException());
                     }

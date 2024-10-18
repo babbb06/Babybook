@@ -6,8 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +43,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private List<AppointmentRequest> appointmentList;
     private ArrayAdapter<AppointmentRequest> adapter;
+    private TextView tvNoRequestAppointments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle("Appointment");
         }
+
+        tvNoRequestAppointments = findViewById(R.id.tvNoRequestsParent);
 
         appointmentsListView = findViewById(R.id.appointments_list_view);
         mAuth = FirebaseAuth.getInstance();
@@ -112,6 +117,13 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
                                         });
 
                                         adapter.notifyDataSetChanged();
+
+                                        if (appointmentList.isEmpty()) {
+                                            tvNoRequestAppointments.setVisibility(View.VISIBLE);
+                                        }
+                                        else{
+                                            tvNoRequestAppointments.setVisibility(View.GONE);
+                                        }
                                         Log.d(TAG, "Appointments updated successfully");
 
                                         for (AppointmentRequest appointment : appointmentList) {
