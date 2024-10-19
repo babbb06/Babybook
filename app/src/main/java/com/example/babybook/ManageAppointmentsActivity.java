@@ -120,39 +120,78 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         loadAppointments();
     }
 
-    private void createHealthRecords(String id, String status, String firstName,String lastName,String sex,String birthDay,String birthPlace,String address, String service, String date, String time, String userId, String doctorId) {
+    private void createHealthRecords(String id, String status, String firstName, String lastName, String sex, String birthDay, String birthPlace, String address, String service, String date, String time, String userId, String doctorId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Create a new HealthRecord object with all the details
-        HealthRecord healthRecord = new HealthRecord();
-        healthRecord.setFirstName(firstName);
-        healthRecord.setLastName(lastName);
-        healthRecord.setSex(sex);
-        healthRecord.setBirthDay(birthDay);
-        healthRecord.setBirthPlace(birthPlace);
-        healthRecord.setAddress(address);
-        healthRecord.setAddedBy(userId); // Assuming userId is the one adding the record
-        healthRecord.setId(id);//childId
-        healthRecord.setDate(date);
-        healthRecord.setDoctorId(doctorId);
-        healthRecord.setService(service);
-        healthRecord.setTime(time);
-        healthRecord.setStatus(status);
-        healthRecord.setUserId(userId);
+        // Query to check if a health record already exists
+        db.collection("healthRecords")
+                .whereEqualTo("firstName", firstName)
+                .whereEqualTo("lastName", lastName)
+                .whereEqualTo("birthDay", birthDay)
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Check if any existing record matches the criteria
+                        if (task.getResult().isEmpty()) {
+                            // No matching record found, create a new HealthRecord
+                            HealthRecord healthRecord = new HealthRecord();
+                            healthRecord.setFirstName(firstName);
+                            healthRecord.setLastName(lastName);
+                            healthRecord.setSex(sex);
+                            healthRecord.setBirthDay(birthDay);
+                            healthRecord.setBirthPlace(birthPlace);
+                            healthRecord.setAddress(address);
+                            healthRecord.setAddedBy(userId);
+                            healthRecord.setId(id); // childId
+                            healthRecord.setDate(date);
+                            healthRecord.setDoctorId(doctorId);
+                            healthRecord.setService(service);
+                            healthRecord.setTime(time);
+                            healthRecord.setStatus(status);
+                            healthRecord.setUserId(userId);
 
-        // Save the HealthRecord object to Firestore
-        db.collection("healthRecords").document(id)
-                .set(healthRecord)
-                .addOnSuccessListener(aVoid -> {
-                    // Log success or show success message if needed
-                    Log.d("ManageAppointments", "Health record successfully saved for " + firstName);
+                            // Save the new HealthRecord object to Firestore
+                            db.collection("healthRecords").document(id)
+                                    .set(healthRecord)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d("ManageAppointments", "Health record successfully saved for " + firstName);
 
-                    // Reload appointments to reflect updated status
-                    loadAppointments();
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("ManageAppointments", "Error saving health record.", e);
-                    Toast.makeText(ManageAppointmentsActivity.this, "Failed to save health record", Toast.LENGTH_SHORT).show();
+                                        loadAppointments(); // Reload appointments to reflect updated status
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.w("ManageAppointments", "Error saving health record.", e);
+                                        Toast.makeText(ManageAppointmentsActivity.this, "Failed to save health record", Toast.LENGTH_SHORT).show();
+                                    });
+                        } else {
+                            // Merging data logic (if needed)
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                HealthRecord existingRecord = document.toObject(HealthRecord.class);
+                                // Here you can merge the existing data with new data if needed
+                                // For example, update service and time if they are different
+                                existingRecord.setDate(date);
+                                existingRecord.setDoctorId(doctorId);
+
+                                existingRecord.setStatus("Accepted");
+                                existingRecord.setService(service);// Update as needed
+                                existingRecord.setTime(time); // Update as needed
+
+                                // Save the updated record back to Firestore
+                                db.collection("healthRecords").document(document.getId())
+                                        .set(existingRecord)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Log.d("ManageAppointments", "Health record updated for " + firstName);
+                                            loadAppointments(); // Reload appointments to reflect updated status
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Log.w("ManageAppointments", "Error updating health record.", e);
+                                            Toast.makeText(ManageAppointmentsActivity.this, "Failed to update health record", Toast.LENGTH_SHORT).show();
+                                        });
+                            }
+                        }
+                    } else {
+                        Log.w("ManageAppointments", "Error checking existing health records.", task.getException());
+                    }
                 });
 
         // Also update the appointment status
@@ -166,7 +205,6 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                     Toast.makeText(ManageAppointmentsActivity.this, "Failed to update status", Toast.LENGTH_SHORT).show();
                 });
     }
-
 
 
 
