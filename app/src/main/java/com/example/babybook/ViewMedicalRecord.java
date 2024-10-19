@@ -104,17 +104,19 @@ public class ViewMedicalRecord extends AppCompatActivity {
 
     private void fetchHealthRecordDetails() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Check if medicalRecordId is available
 
-
-        // Fetch a specific medical record using childId and medicalRecordId
+        // Listen for real-time updates on a specific medical record using childId
         db.collection("healthRecords")
                 .document(childId) // Parent document ID
                 .collection("medicalRecords") // Subcollection name
                 .document(childId) // Specific medical record document ID
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
+                .addSnapshotListener((documentSnapshot, e) -> {
+                    if (e != null) {
+                        Toast.makeText(ViewMedicalRecord.this, "Failed to load record: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (documentSnapshot != null && documentSnapshot.exists()) {
                         HealthChecklist checklist = documentSnapshot.toObject(HealthChecklist.class);
 
                         // Logging to check if checklist data is being fetched correctly
@@ -142,18 +144,14 @@ public class ViewMedicalRecord extends AppCompatActivity {
                             checkBoxImmunization.setChecked(documentSnapshot.getBoolean("HasImmunization"));
                             checkBoxOtherProblems.setChecked(documentSnapshot.getBoolean("HasOtherProblems"));
                         } else {
-                            Toast.makeText(ViewMedicalRecord.this, "Checklist is null", Toast.LENGTH_SHORT).show();
+
                             layouthide.setVisibility(View.GONE);
                             layoutgone.setVisibility(View.VISIBLE);
                         }
                     } else {
                         layouthide.setVisibility(View.GONE);
                         layoutgone.setVisibility(View.VISIBLE);
-
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(ViewMedicalRecord.this, "Failed to load record: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 

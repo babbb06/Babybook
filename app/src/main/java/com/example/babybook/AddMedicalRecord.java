@@ -1,5 +1,6 @@
 package com.example.babybook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -186,7 +187,10 @@ public class AddMedicalRecord extends AppCompatActivity {
                 .set(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
                     showToast("Medical record submitted successfully!");
-                    finish(); // Close the activity
+                    // Navigate to the ViewMedicalRecord activity
+                    Intent intent = new Intent(AddMedicalRecord.this, ViewMedicalRecord.class);
+                    startActivity(intent);
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FirestoreError", "Error submitting data: " + e.getMessage());
