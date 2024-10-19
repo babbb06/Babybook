@@ -3,12 +3,15 @@ package com.example.babybook;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.babybook.adapter.ClinicAdapter;
 import com.example.babybook.adapter.PostAdapter;
 import com.example.babybook.model.Clinic;
+import com.example.babybook.model.Doctor;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,7 +43,7 @@ import java.util.Map;
 public class SearchClinicActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // Declare buttons
-    private Button bgc, hepatitis_b, dpt, booster_1, opv_ipv, booster_2, h_influenza_b, rotavirus, measles, mmr, booster_3;
+    private Button all, bgc, hepatitis_b, dpt, booster_1, opv_ipv, booster_2, h_influenza_b, rotavirus, measles, mmr, booster_3;
 
     private RecyclerView recyclerView;
     private ClinicAdapter clinicAdapter;
@@ -50,7 +54,9 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
     private final Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
     private ScrollView scrollView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private EditText etSpecialization;
+    private EditText etVaccine;
+    private Button btnSearch;
+    private TextView tvNoClinics;
 
 
     @Override
@@ -61,6 +67,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
 
         // Initialize buttons
+        all = findViewById(R.id.all);
         bgc = findViewById(R.id.bgc);
         hepatitis_b = findViewById(R.id.hepatitis_b);
         dpt = findViewById(R.id.dpt);
@@ -73,7 +80,9 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
         mmr = findViewById(R.id.mmr);
         booster_3 = findViewById(R.id.booster_3);
         scrollView = findViewById(R.id.scrollView);
-        etSpecialization = findViewById(R.id.editTextSpecialization);
+        etVaccine = findViewById(R.id.editTextVaccine);
+        btnSearch = findViewById(R.id.buttonSearch);
+        tvNoClinics = findViewById(R.id.tvNoClinic);
 
         // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -97,6 +106,8 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
         mmr.setOnClickListener(view -> handleButtonClick("MMR"));
         booster_3.setOnClickListener(view -> handleButtonClick("Booster 3"));
 
+        all.setOnClickListener(view -> loadClinics());
+
         //Showing clinic list
         recyclerView = findViewById(R.id.recyclerViewClinics);
         clinicList = new ArrayList<>();
@@ -116,6 +127,16 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
             scrollView.requestDisallowInterceptTouchEvent(true);
         });
 
+        // Filter by vaccine
+        btnSearch.setOnClickListener(v -> {
+            String query = etVaccine.getText().toString();
+            if (!TextUtils.isEmpty(query)) {
+                searchClinics(query);
+            } else {
+                Toast.makeText(SearchClinicActivity.this, "Please enter a vaccine to search.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Initialize the map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.ivMapView);
@@ -125,11 +146,98 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
     }
 
-    // Method to handle button clicks
+    // Method to handle button clicks (FILTER VACCINE BUTTONS)
     private void handleButtonClick(String buttonText) {
-        // Implement your button click logic here
-        // For example, you can show a toast message
-        // Toast.makeText(this, buttonText + " clicked", Toast.LENGTH_SHORT).show();
+        // Reset button colors to default
+        resetButtonColors();
+
+        // Change the clicked button's color to violet
+        Button clickedButton = findViewById(getButtonId(buttonText));
+        if (clickedButton != null) {
+            clickedButton.setBackgroundResource(R.drawable.rounded_violet_btn);
+            clickedButton.setTextColor(getResources().getColor(R.color.white));
+        }
+
+        // Update the EditText with the button text
+        etVaccine.setText(buttonText);
+
+        // Trigger the search button click
+        btnSearch.performClick();
+    }
+
+    // Method to reset button colors to default
+    private void resetButtonColors() {
+        // Set the background resource to the rounded border drawable
+        int defaultDrawable = R.drawable.rounded_border_black_btn; // Your drawable resource
+        int defaultTextColor = getResources().getColor(R.color.black); // Black color for text
+
+        // Reset each button's background and text color
+        all.setBackgroundResource(defaultDrawable);
+        all.setTextColor(defaultTextColor);
+
+        bgc.setBackgroundResource(defaultDrawable);
+        bgc.setTextColor(defaultTextColor);
+
+        hepatitis_b.setBackgroundResource(defaultDrawable);
+        hepatitis_b.setTextColor(defaultTextColor);
+
+        dpt.setBackgroundResource(defaultDrawable);
+        dpt.setTextColor(defaultTextColor);
+
+        booster_1.setBackgroundResource(defaultDrawable);
+        booster_1.setTextColor(defaultTextColor);
+
+        opv_ipv.setBackgroundResource(defaultDrawable);
+        opv_ipv.setTextColor(defaultTextColor);
+
+        booster_2.setBackgroundResource(defaultDrawable);
+        booster_2.setTextColor(defaultTextColor);
+
+        h_influenza_b.setBackgroundResource(defaultDrawable);
+        h_influenza_b.setTextColor(defaultTextColor);
+
+        rotavirus.setBackgroundResource(defaultDrawable);
+        rotavirus.setTextColor(defaultTextColor);
+
+        measles.setBackgroundResource(defaultDrawable);
+        measles.setTextColor(defaultTextColor);
+
+        mmr.setBackgroundResource(defaultDrawable);
+        mmr.setTextColor(defaultTextColor);
+
+        booster_3.setBackgroundResource(defaultDrawable);
+        booster_3.setTextColor(defaultTextColor);
+    }
+
+
+    // Helper method to get button ID based on text
+    private int getButtonId(String buttonText) {
+        switch (buttonText) {
+            case "BGC":
+                return R.id.bgc;
+            case "Hepatitis B":
+                return R.id.hepatitis_b;
+            case "DPT":
+                return R.id.dpt;
+            case "Booster 1":
+                return R.id.booster_1;
+            case "OPV IPV":
+                return R.id.opv_ipv;
+            case "Booster 2":
+                return R.id.booster_2;
+            case "H Influenza B":
+                return R.id.h_influenza_b;
+            case "Rotavirus":
+                return R.id.rotavirus;
+            case "Measles":
+                return R.id.measles;
+            case "MMR":
+                return R.id.mmr;
+            case "Booster 3":
+                return R.id.booster_3;
+            default:
+                return -1; // Invalid button
+        }
     }
 
     @Override
@@ -143,7 +251,11 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
     // Method to load clinic data
     private void loadClinics() {
+        tvNoClinics.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
+        resetButtonColors();
+        all.setBackgroundResource(R.drawable.rounded_violet_btn);
+        all.setTextColor(getResources().getColor(R.color.white));
         db.collection("clinics")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -151,8 +263,8 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
                         // Clear the existing list
                         clinicList.clear();
                         swipeRefreshLayout.setRefreshing(false);
-                        etSpecialization.setText("");
-                        etSpecialization.clearFocus();
+                        etVaccine.setText("");
+                        etVaccine.clearFocus();
 
 
                         // Loop through the documents
@@ -201,6 +313,71 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
                     }
                 });
     }
+
+    // Method to search clinics with vaccine based on the query
+    private void searchClinics(String query) {
+        swipeRefreshLayout.setRefreshing(true);
+        String lowerCaseQuery = query.trim().toLowerCase();
+
+        // Initially hide the no clinics TextView
+        tvNoClinics.setVisibility(View.GONE);
+
+        db.collection("clinics")
+                .get()
+                .addOnCompleteListener(task -> {
+                    swipeRefreshLayout.setRefreshing(false);
+                    if (task.isSuccessful()) {
+                        clinicList.clear();
+                        mMap.clear(); // Clear existing markers from the map
+
+                        boolean foundClinics = false; // Track if any clinics are found
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Integer> vaccines = (Map<String, Integer>) document.get("vaccines");
+                            if (vaccines != null) {
+                                // Check if any key in the vaccines map matches the lowerCaseQuery
+                                for (String vaccineName : vaccines.keySet()) {
+                                    if (vaccineName.toLowerCase().equals(lowerCaseQuery)) {
+                                        // Add the clinic to the list if it has the vaccine
+                                        Clinic clinic = document.toObject(Clinic.class);
+                                        clinicList.add(clinic);
+
+                                        // Add a marker for each clinic that matches the query
+                                        Double latitude = document.getDouble("latitude");
+                                        Double longitude = document.getDouble("longitude");
+                                        if (latitude != null && longitude != null) {
+                                            LatLng clinicLocation = new LatLng(latitude, longitude);
+                                            mMap.addMarker(new MarkerOptions()
+                                                    .position(clinicLocation)
+                                                    .title(clinic.getClinicName())
+                                                    .snippet(clinic.getClinicPhoneNumber()));
+                                        }
+                                        foundClinics = true; // Set to true if at least one clinic is found
+                                        break; // Exit loop after finding a match
+                                    }
+                                }
+                            }
+                        }
+
+                        // Notify adapter that the data has changed
+                        clinicAdapter.notifyDataSetChanged();
+
+                        // Show or hide the no clinics TextView based on search results
+                        if (!foundClinics) {
+                            tvNoClinics.setVisibility(View.VISIBLE);
+                            tvNoClinics.setText("No clinics with vaccine: " + query);
+                        } else {
+                            tvNoClinics.setVisibility(View.GONE); // Hide if clinics were found
+                        }
+                    } else {
+                        Toast.makeText(SearchClinicActivity.this, "Error getting clinics.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+
+
 
 
     /*---------------------------------MAP----------------------------------------------------*/

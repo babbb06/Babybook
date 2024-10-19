@@ -42,14 +42,14 @@
                     android:layout_height="match_parent">
 
                     <EditText
-                        android:id="@+id/editTextSpecialization"
+                        android:id="@+id/editTextVaccine"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/edittext_background"
                         android:fontFamily="@font/poppins"
-                        android:hint="Enter clinic name"
+                        android:hint="Enter vaccine name"
                         android:inputType="text"
                         android:maxLines="1"
                         android:singleLine="true"
@@ -62,8 +62,8 @@
                         android:id="@+id/buttonSearch"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignTop="@+id/editTextSpecialization"
-                        android:layout_alignEnd="@+id/editTextSpecialization"
+                        android:layout_alignTop="@+id/editTextVaccine"
+                        android:layout_alignEnd="@+id/editTextVaccine"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/search"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,6 +87,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_violet_btn"
+                        android:textColor="@color/white"
+                        android:padding="5dp"
+                        android:text="ALL" />
 
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -236,6 +246,18 @@
                 android:layout_below="@+id/mapslayout"
                 android:fontFamily="@font/poppins"
                 android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/tvNoClinic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="N"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="14dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginTop="100dp"
+                android:layout_below="@+id/mapslayout" />
         </RelativeLayout>
     </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,13 +36,14 @@ public class SearchDoctorActivity extends AppCompatActivity {
     private DoctorAdapter adapter;
     private List<Doctor> doctors;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvNoDoctor;
 
     private final String[] specializations = {
             "Pediatrician", "Hospitalist", "Child Abuse Pediatrician", "Neonatalists",
             "Emergency Pediatric Medicine", "Pediatric Critical Care Medicine",
             "Pediatric Cardiologist", "Pediatric Endocrinology", "Pediatric Gastroenterology",
             "Pediatric Neurology", "Pediatric Hematology/Oncology", "Pediatric Pulmonology",
-            "Pediatric Nephrology", "Pediatric Infectious Disease", "Pediatric Rheumatology"
+            "Pediatric Nephrology", "Pediatric Infectious Disease", "Pediatric Rheumatology", "Midwife"
     };
 
     @Override
@@ -62,6 +64,7 @@ public class SearchDoctorActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_button);
         filterButton = findViewById(R.id.filterbutton);  // Link the filter button
         recyclerView = findViewById(R.id.recycler_view);
+        tvNoDoctor = findViewById(R.id.tvNoDoctor);
 
         doctors = new ArrayList<>();
         adapter = new DoctorAdapter(doctors, doctor -> {
@@ -127,6 +130,15 @@ public class SearchDoctorActivity extends AppCompatActivity {
                                 doctors.add(doctor);
                             }
                         }
+
+                        // Check if any doctors were found
+                        if (doctors.isEmpty()) {
+                            tvNoDoctor.setVisibility(View.VISIBLE);
+                            tvNoDoctor.setText("No doctors found with specialization: \n" + query);
+                        } else {
+                            tvNoDoctor.setVisibility(View.GONE);
+                        }
+
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(SearchDoctorActivity.this, "Error getting doctors.", Toast.LENGTH_SHORT).show();
@@ -134,9 +146,11 @@ public class SearchDoctorActivity extends AppCompatActivity {
                 });
     }
 
+
     // Method to load all doctors when activity starts
     private void loadAllDoctors() {
         swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
+        tvNoDoctor.setVisibility(View.GONE);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("doctorUsers")
                 .get()
