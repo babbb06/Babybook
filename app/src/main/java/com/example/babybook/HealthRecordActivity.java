@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.HealthRecordAdapter;
 import com.example.babybook.model.HealthRecord;
@@ -40,6 +41,7 @@ public class HealthRecordActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference healthRecordsCollection;
     private FirebaseAuth mAuth; // Add FirebaseAuth instance
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,9 @@ public class HealthRecordActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         healthRecordsCollection = db.collection("healthRecords");
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+
+        swipeRefreshLayout.setOnRefreshListener(this::loadHealthRecords);
 
         loadHealthRecords();
 
@@ -76,7 +81,9 @@ public class HealthRecordActivity extends AppCompatActivity {
     }
 
     private void loadHealthRecords() {
+        swipeRefreshLayout.setRefreshing(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if (user != null) {
             String currentUserId = user.getUid();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -86,6 +93,8 @@ public class HealthRecordActivity extends AppCompatActivity {
                     .whereEqualTo("doctorId", currentUserId)
                     .whereEqualTo("status", "Accepted")
                     .addSnapshotListener((value, error) -> {
+                        swipeRefreshLayout.setRefreshing(false);
+
                         if (error != null) {
                             Log.e("HealthRecordActivity", "Error loading records: ", error);
                             Toast.makeText(HealthRecordActivity.this, "Failed to load records: " + error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -104,8 +113,10 @@ public class HealthRecordActivity extends AppCompatActivity {
         } else {
             Log.e("HealthRecordActivity", "User is not authenticated.");
             Toast.makeText(this, "User is not authenticated", Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
+
 
 
    /* private void showAddRecordDialog() {

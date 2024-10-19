@@ -28,6 +28,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.babybook.adapter.PostAdapter;
@@ -56,6 +57,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     private PostAdapter postAdapter;
     private List<Post> postList;
     private Dialog progressDialog;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +150,9 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
         FloatingActionButton fabCreatePost = findViewById(R.id.fabCreatePost);
         fabCreatePost.setOnClickListener(v -> showChoosePostDialog(this));
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::loadPosts);
 
         loadPosts();
     }
@@ -355,10 +361,12 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
 
     private void loadPosts() {
+        swipeRefreshLayout.setRefreshing(true);
         db.collection("posts")
                 .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (task.isSuccessful()) {
                         postList.clear();
                         for (DocumentSnapshot document : task.getResult()) {

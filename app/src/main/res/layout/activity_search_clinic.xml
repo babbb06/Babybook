@@ -1,241 +1,241 @@
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
     <ScrollView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:scrollbars="none"
-        tools:context=".SearchDoctorChatActivity">
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:scrollbars="none">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/header"
-            android:theme="@style/ToFontBold"
-            app:subtitleTextColor="@android:color/white"
-            app:titleMarginTop="13dp"
-            app:titleTextColor="@color/white" />
+            android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/searchrela"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/toolbar"
-            android:layout_margin="20dp"
-            android:elevation="15dp"
-            app:cardCornerRadius="360dp"
-            app:cardElevation="15dp">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/header"
+                android:theme="@style/ToFontBold"
+                app:subtitleTextColor="@android:color/white"
+                app:titleMarginTop="13dp"
+                app:titleTextColor="@color/white" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="370dp"
-                android:layout_height="match_parent">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/searchrela"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/toolbar"
+                android:layout_margin="20dp"
+                android:elevation="15dp"
+                app:cardCornerRadius="360dp"
+                app:cardElevation="15dp">
 
-                <EditText
-                    android:id="@+id/editTextSpecialization"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/edittext_background"
-                    android:fontFamily="@font/poppins"
-                    android:hint="Enter clinic name"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/buttonSearch"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="370dp"
+                    android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/buttonSearch"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignTop="@+id/editTextSpecialization"
-                    android:layout_alignEnd="@+id/editTextSpecialization"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/search"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/editTextSpecialization"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/edittext_background"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Enter clinic name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/buttonSearch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                    <Button
+                        android:id="@+id/buttonSearch"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignTop="@+id/editTextSpecialization"
+                        android:layout_alignEnd="@+id/editTextSpecialization"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/search"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Horizontal Scroll View for Buttons -->
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/searchrela"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="-10dp">
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:id="@+id/scroll"
+            <!-- Horizontal Scroll View for Buttons -->
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/searchrela"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="-10dp">
+
+                <LinearLayout
+                    android:id="@+id/scroll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/bgc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:padding="5dp"
+                        android:text="BGC" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/hepatitis_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="   Hepatitis B   " />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/dpt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="DPT" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/booster_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="   Booster 1   " />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/opv_ipv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="OPV IPV" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/booster_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="   Booster 2   " />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/h_influenza_b"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="    H Influenza B    " />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/rotavirus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="   Rotavirus   " />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/measles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="Measles" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/mmr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="MMR" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/booster_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/rounded_border_black_btn"
+                        android:text="   Booster 3   " />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mapslayout"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@+id/horizontalScrollView"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:elevation="2dp"
+                app:cardCornerRadius="10dp">
+
+                <com.example.babybook.MapTouchableWrapper
+                    android:id="@+id/map_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <fragment
+                        android:id="@+id/ivMapView"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.example.babybook.MapTouchableWrapper>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnbg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bgc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:padding="5dp"
-                    android:text="BGC" />
-
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:elevation="2dp"
+                app:cardBackgroundColor="#E4FFFFFF"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/hepatitis_b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="   Hepatitis B   " />
+                    android:id="@+id/btnToggleMap"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/maximize_icon"
+                    android:backgroundTint="#5A5656"
+                    android:onClick="onToggleMapButtonClick"
+                    android:text=""
+                    android:textColor="@color/clear"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/dpt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="DPT" />
+            </androidx.cardview.widget.CardView>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/booster_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="   Booster 1   " />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/opv_ipv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="OPV IPV" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/booster_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="   Booster 2   " />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/h_influenza_b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="    H Influenza B    " />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/rotavirus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="   Rotavirus   " />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/measles"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="Measles" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/mmr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="MMR" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/booster_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/rounded_border_black_btn"
-                    android:text="   Booster 3   " />
-            </LinearLayout>
-        </HorizontalScrollView>
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/mapslayout"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@+id/horizontalScrollView"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:elevation="2dp"
-            app:cardCornerRadius="10dp">
-
-            <com.example.babybook.MapTouchableWrapper
-                android:id="@+id/map_wrapper"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewClinics"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <fragment
-                    android:id="@+id/ivMapView"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </com.example.babybook.MapTouchableWrapper>
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btnbg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="15dp"
-            android:elevation="2dp"
-            app:cardBackgroundColor="#E4FFFFFF"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnToggleMap"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/maximize_icon"
-                android:backgroundTint="#5A5656"
-                android:onClick="onToggleMapButtonClick"
-                android:text=""
-                android:textColor="@color/clear"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.cardview.widget.CardView>
-        =
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewClinics"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/mapslayout"
-            android:fontFamily="@font/poppins"
-            android:padding="16dp" />
-    </RelativeLayout>
+                android:layout_height="match_parent"
+                android:layout_below="@+id/mapslayout"
+                android:fontFamily="@font/poppins"
+                android:padding="16dp" />
+        </RelativeLayout>
     </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

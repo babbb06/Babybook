@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.AppointmentAdapter;
 import com.example.babybook.model.AppointmentRequest;
@@ -44,6 +45,8 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
     private List<AppointmentRequest> appointmentList;
     private ArrayAdapter<AppointmentRequest> adapter;
     private TextView tvNoRequestAppointments;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
         }
 
         tvNoRequestAppointments = findViewById(R.id.tvNoRequestsParent);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
         appointmentsListView = findViewById(R.id.appointments_list_view);
         mAuth = FirebaseAuth.getInstance();
@@ -72,12 +76,15 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
         adapter = new AppointmentAdapter(this, appointmentList);
         appointmentsListView.setAdapter(adapter);
 
+        swipeRefreshLayout.setOnRefreshListener(this::fetchAppointments);
         checkNotificationPermission();
     }
 
     private void fetchAppointments() {
+        swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
         if (mAuth.getCurrentUser() == null) {
             Log.e(TAG, "User not signed in. Notifications will not be scheduled.");
+            swipeRefreshLayout.setRefreshing(false); // Stop refreshing
             return; // Exit early if the user is not signed in
         }
 
@@ -91,6 +98,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
 
                         if (fullName == null) {
                             Log.e(TAG, "Parent full name is missing.");
+                            swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                             return;
                         }
 
@@ -152,15 +160,18 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
                                         Log.e(TAG, "Error getting documents.", task.getException());
                                         Toast.makeText(SchedulesAppointmentActivity.this, "Error getting appointments.", Toast.LENGTH_SHORT).show();
                                     }
+                                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                                 });
                     } else {
                         Log.e(TAG, "Parent document not found.");
                         Toast.makeText(SchedulesAppointmentActivity.this, "Error fetching parent data.", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error fetching parent data.", e);
                     Toast.makeText(SchedulesAppointmentActivity.this, "Error fetching parent data.", Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                 });
     }
 

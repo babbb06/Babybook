@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.ClinicAdapter;
 import com.example.babybook.adapter.PostAdapter;
@@ -47,6 +49,8 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
     private LatLng initialLocation;
     private final Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
     private ScrollView scrollView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private EditText etSpecialization;
 
 
     @Override
@@ -69,6 +73,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
         mmr = findViewById(R.id.mmr);
         booster_3 = findViewById(R.id.booster_3);
         scrollView = findViewById(R.id.scrollView);
+        etSpecialization = findViewById(R.id.editTextSpecialization);
 
         // Set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -98,6 +103,9 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
         clinicAdapter = new ClinicAdapter(clinicList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(clinicAdapter);
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::loadClinics);
 
         loadClinics();
 
@@ -135,12 +143,17 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
     // Method to load clinic data
     private void loadClinics() {
+        swipeRefreshLayout.setRefreshing(true);
         db.collection("clinics")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Clear the existing list
                         clinicList.clear();
+                        swipeRefreshLayout.setRefreshing(false);
+                        etSpecialization.setText("");
+                        etSpecialization.clearFocus();
+
 
                         // Loop through the documents
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -175,7 +188,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
                                 mMap.addMarker(new MarkerOptions()
                                         .position(clinicLocation)
                                         .title(clinicName)
-                                        .snippet(clinicPhoneNumber)); // Optional: add a snippet with phone number
+                                        .snippet(clinicPhoneNumber));
                             }
                         }
 
@@ -184,6 +197,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
                     } else {
                         // Handle error
                         Log.w("Firestore", "Error getting documents.", task.getException());
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
     }

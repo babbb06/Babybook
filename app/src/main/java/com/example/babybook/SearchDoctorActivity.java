@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.DoctorAdapter;
 import com.example.babybook.model.Doctor;
@@ -33,6 +34,8 @@ public class SearchDoctorActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DoctorAdapter adapter;
     private List<Doctor> doctors;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private final String[] specializations = {
             "Pediatrician", "Hospitalist", "Child Abuse Pediatrician", "Neonatalists",
             "Emergency Pediatric Medicine", "Pediatric Critical Care Medicine",
@@ -74,6 +77,8 @@ public class SearchDoctorActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::loadAllDoctors);
         // Load all doctors when the activity starts
         loadAllDoctors();
 
@@ -131,12 +136,16 @@ public class SearchDoctorActivity extends AppCompatActivity {
 
     // Method to load all doctors when activity starts
     private void loadAllDoctors() {
+        swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("doctorUsers")
                 .get()
                 .addOnCompleteListener(task -> {
+                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing animation at the start of the callback
                     if (task.isSuccessful()) {
                         doctors.clear();
+                        searchEditText.setText("");
+                        searchEditText.clearFocus();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Doctor doctor = document.toObject(Doctor.class);
                             if (doctor != null) {

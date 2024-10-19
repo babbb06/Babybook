@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.AppointmentRequestAdapter;
 import com.example.babybook.model.AppointmentRequest;
@@ -32,6 +33,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
     private List<AppointmentRequest> appointmentRequests;
     private String doctorId;
     private TextView tvNoRequestAppointments;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
         Button checkImage = findViewById(R.id.check_image);
         Button crossImage = findViewById(R.id.cross_image);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
         tvNoRequestAppointments = findViewById(R.id.tvNoRequests);
 
@@ -113,6 +116,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
 
         doctorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        swipeRefreshLayout.setOnRefreshListener(this::loadAppointments);
         loadAppointments();
     }
 
@@ -167,12 +171,14 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
 
     private void loadAppointments() {
+        swipeRefreshLayout.setRefreshing(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("appointments")
                 .whereEqualTo("doctorId", doctorId)
                 .whereEqualTo("status", "Pending") // Only get appointments with "Pending" status
                 .get()
                 .addOnCompleteListener(task -> {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (task.isSuccessful()) {
                         appointmentRequests.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
