@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:orientation="vertical"
        >
 
@@ -29,19 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:id="@+id/layouthide"
         android:padding="16dp">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/name"
-            android:hint="LOADING"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="22dp"/>
-
-
 
 
         <LinearLayout
@@ -52,21 +42,26 @@
 
 
             <TextView
-                android:id="@+id/textViewonlyweight"
+                android:id="@+id/textViewonlyname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weight: " />
-        <TextView
-            android:id="@+id/textViewWeight"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="86 " />
+                android:textSize="19dp"
+              android:textStyle="bold"
+                android:text="Name: " />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="19dp"
+
+                android:text="Loading " />
 
 
             <TextView
                 android:id="@+id/textViewonlyDate"
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:text="Date: " />
 
@@ -80,25 +75,84 @@
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textViewsex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Sex: " />
+
+
+            <TextView
+                android:id="@+id/textViewSex"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Male" />
+
+            <TextView
+                android:id="@+id/textViewonlyBday"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Of Birth: " />
+
+
+            <TextView
+                android:id="@+id/textViewBirthday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00/00/0000" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/textViewonlyweight"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:text="Weight: " />
         <TextView
-            android:id="@+id/textViewonlytemp"
-            android:layout_width="wrap_content"
+            android:id="@+id/textViewWeight"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Temperature: " />
+            android:layout_weight="1"
+            android:text="86 " />
 
 
-        <TextView
-            android:id="@+id/textViewTemperature"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="36.5 " />
+            <TextView
+                android:id="@+id/textViewonlytemp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Temperature: " />
 
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textViewTemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00.0" />
+        </LinearLayout>
+
 
 
 
@@ -107,7 +161,8 @@
             android:id="@+id/cardviewsummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            app:cardCornerRadius="10dp"
+            android:layout_marginTop="15dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -116,6 +171,7 @@
                 <TextView
                     android:id="@+id/textViewonly1"
                     android:layout_width="wrap_content"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
@@ -126,6 +182,7 @@
                 <TextView
                     android:id="@+id/textViewSummaryDiagnosis"
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginBottom="10dp"
@@ -145,35 +202,37 @@
             android:id="@+id/cardviewtreatment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
             android:layout_marginTop="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textViewonly2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Treatment Plan: "
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textViewonly2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Treatment Plan: "
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textViewTreatmentPlan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginBottom="10dp"
-                android:text="asddad ad asd asd as "
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewonly2" />
+                <TextView
+                    android:id="@+id/textViewTreatmentPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="asddad ad asd asd as "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewonly2" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.cardview.widget.CardView>
@@ -186,6 +245,7 @@
             android:id="@+id/cardviewfollow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
             android:layout_marginTop="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -196,8 +256,9 @@
                     android:id="@+id/textViewonly3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
                     android:text="Follow Up Plan: "
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -208,7 +269,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginBottom="10dp"
-                    android:text="asddasdasd asdasd asd asd asd asd as "
+                    android:text="Loading"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewonly3" />
@@ -335,5 +396,42 @@
             android:text="Always ask a caregiver; is there any OTHER PROBLEMS?" />
 
     </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layoutgone"
+            android:visibility="gone"
+            android:layout_height="662dp">
+
+
+            <TextView
+                android:id="@+id/newtv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Medical Records"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabCreatePost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"
+                android:backgroundTint="@color/violet"
+                app:backgroundTintMode="add"
+                app:elevation="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:shapeAppearance="@style/Widget.Material3.CircularProgressIndicator.ExtraSmall"
+                app:srcCompat="@drawable/add2"
+                app:tint="@android:color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
+
 </androidx.core.widget.NestedScrollView>

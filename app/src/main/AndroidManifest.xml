@@ -29,15 +29,11 @@
         <activity
             android:name=".About"
             android:exported="false" />
-        <activity
-            android:name=".ListOfMedicalRecordParent"
-            android:exported="false" />
+
         <activity
             android:name=".ViewMedicalRecordParent"
             android:exported="false" />
-        <activity
-            android:name=".ListOfMedicalRecord"
-            android:exported="false" />
+
         <activity
             android:name=".ViewMedicalRecord"
             android:exported="false" />

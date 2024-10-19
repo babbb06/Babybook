@@ -54,7 +54,7 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
             intent.putExtra("LastName", record.getLastName());
             intent.putExtra("Sex", record.getSex());
             intent.putExtra("Address", record.getAddress());
-
+            intent.putExtra("Birthday", record.getBirthDay());
             context.startActivity(intent);
         });
 

@@ -29,7 +29,7 @@ import java.util.UUID;
 
 public class AddMedicalRecord extends AppCompatActivity {
 
-    private String childId,LastName,FirstName,Sex,Address; // Store the child ID
+    private String childId,LastName,FirstName,Sex,Address,Birthday; // Store the child ID
     private FirebaseFirestore db;
 
 
@@ -77,9 +77,7 @@ public class AddMedicalRecord extends AppCompatActivity {
         FirstName = getIntent().getStringExtra("FirstName");
         Sex = getIntent().getStringExtra("Sex");
         Address= getIntent().getStringExtra("Address");
-
-        editTextsex.setText(Sex);
-        editTextaddress.setText(Address);
+        Birthday= getIntent().getStringExtra("Birthday");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,10 +109,10 @@ public class AddMedicalRecord extends AppCompatActivity {
 
             // Validate inputs
             if (validateInputs(editTextDate, editTextWeight, editTextTemperature)) {
-                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature,editTextsex,editTextaddress, summaryDiagnosis, treatmentPlan, followUpPlan,
+                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature,editTextsex, summaryDiagnosis, treatmentPlan, followUpPlan,
                         checkSick, checkCough, checkDiarrhea, checkFever, checkMeasles, checkEarPain,
                         checkPallor, checkMalnourished, checkFeeding, checkBreastfeeding, checkDiarrheaCough,
-                        checkImmunization, checkOtherProblems, user.getUid()); // Pass user ID as doctorId
+                        checkImmunization, checkOtherProblems, user.getUid(),childId); // Pass user ID as doctorId
             }
         });
     }
@@ -139,18 +137,16 @@ public class AddMedicalRecord extends AppCompatActivity {
         Toast.makeText(AddMedicalRecord.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature,EditText editTextsex,EditText editTextaddress,
+    private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature, EditText editTextsex,
                                      EditText summaryDiagnosis, EditText treatmentPlan, EditText followUpPlan,
                                      CheckBox checkSick, CheckBox checkCough, CheckBox checkDiarrhea,
                                      CheckBox checkFever, CheckBox checkMeasles, CheckBox checkEarPain,
                                      CheckBox checkPallor, CheckBox checkMalnourished, CheckBox checkFeeding,
                                      CheckBox checkBreastfeeding, CheckBox checkDiarrheaCough,
-                                     CheckBox checkImmunization, CheckBox checkOtherProblems, String doctorId ) {
+                                     CheckBox checkImmunization, CheckBox checkOtherProblems, String doctorId, String childId) {
 
         // Create a unique ID for the medical record
-        String uniqueId = UUID.randomUUID().toString();
-
-
+        String medicalRecordId = UUID.randomUUID().toString();
 
         // Create a HashMap to store the data
         Map<String, Object> medicalRecordData = new HashMap<>();
@@ -159,14 +155,10 @@ public class AddMedicalRecord extends AppCompatActivity {
         medicalRecordData.put("Date", editTextDate.getText().toString());
         medicalRecordData.put("Weight", editTextWeight.getText().toString());
         medicalRecordData.put("Temperature", editTextTemperature.getText().toString());
+        medicalRecordData.put("Sex", Sex);
         medicalRecordData.put("childId", childId);
-
-        medicalRecordData.put("LastName", LastName);
-        medicalRecordData.put("Sex", editTextsex.getText().toString());  // Add the child ID to the record
-        medicalRecordData.put("Address", editTextaddress.getText().toString());
-        medicalRecordData.put("FirstName", FirstName);
-        medicalRecordData.put("doctorId", doctorId); // Add the doctor ID to the record
-        medicalRecordData.put("uniqueId", uniqueId); // Add unique ID to the record
+        medicalRecordData.put("doctorId", doctorId);
+        medicalRecordData.put("medicalRecordId", medicalRecordId);
 
         // Store CheckBox states
         medicalRecordData.put("IsSick", checkSick.isChecked());
@@ -186,11 +178,12 @@ public class AddMedicalRecord extends AppCompatActivity {
         medicalRecordData.put("Summary", summaryDiagnosis.getText().toString());
         medicalRecordData.put("Treatment", treatmentPlan.getText().toString());
         medicalRecordData.put("Follow", followUpPlan.getText().toString());
-        medicalRecordData.put("MedicalrecordId", uniqueId); // Assign unique ID here
 
-        // Save data to Firestore
-        db.collection("medicalRecords")
-                .add(medicalRecordData)
+        // Reference to the parent document (e.g., child document)
+        db.collection("healthRecords").document(childId) // Use the appropriate parent collection and document ID
+                .collection("medicalRecords") // Subcollection name
+                .document(childId) // Set a specific document ID for the medical record
+                .set(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
                     showToast("Medical record submitted successfully!");
                     finish(); // Close the activity
@@ -200,6 +193,7 @@ public class AddMedicalRecord extends AppCompatActivity {
                     showToast("Error submitting record. Please try again.");
                 });
     }
+
 
     private void fetchUserData() {
         FirebaseAuth auth = FirebaseAuth.getInstance();

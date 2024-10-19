@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -43,7 +44,7 @@ import java.util.Map;
 public class ChildDetailsActivity extends AppCompatActivity {
 
     private String currentParentId;
-    private String childId, LastName, FirstName,Sex, Address; // Store the child ID
+    private String childId, LastName, FirstName,Sex, Address,Birthday; // Store the child ID
     private GestureDetector gestureDetector;
     private ImageView imageViewMenuBCG;
     private ImageView imageViewMenuHepatitisB;
@@ -56,6 +57,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
     private ImageView imageViewMenuMeasles;
     private ImageView imageViewMenuMMR;
     private ImageView imageViewMenuBoosters3;
+
 
 
     @Override
@@ -102,7 +104,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
         LastName = getIntent().getStringExtra("LastName");
         Sex = getIntent().getStringExtra("Sex");
         Address= getIntent().getStringExtra("Address");
-
+        Birthday = getIntent().getStringExtra("Birthday");
 
 
 
@@ -111,14 +113,15 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
         // Set an OnClickListener to navigate to ViewMedicalRecord.java
         medicalRecordCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(ChildDetailsActivity.this, com.example.babybook.ListOfMedicalRecord.class);
+            Intent intent = new Intent(ChildDetailsActivity.this, com.example.babybook.ViewMedicalRecord.class);
 
             // Optionally, pass some data using intent if needed
-            intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
+            intent.putExtra("childId", childId); // Pass the child ID if needed
             intent.putExtra("FirstName", FirstName); // Pass the child ID
             intent.putExtra("LastName", LastName);
             intent.putExtra("Sex", Sex);
             intent.putExtra("Address", Address);
+            intent.putExtra("Birthday", Birthday);
 
             startActivity(intent);
         });

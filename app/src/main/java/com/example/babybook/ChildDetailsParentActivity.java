@@ -42,7 +42,7 @@ import java.util.Map;
 public class ChildDetailsParentActivity extends AppCompatActivity {
 
     private String currentParentId;
-    private String childId,FirstName,LastName,Sex,Address; // Store the child ID
+    private String childId,FirstName,LastName,Sex,Address,Birthday; // Store the child ID
     private GestureDetector gestureDetector;
     private ImageView imageViewMenuBCG;
     private ImageView imageViewMenuHepatitisB;
@@ -117,14 +117,14 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         LastName = getIntent().getStringExtra("LastName");
         Sex = getIntent().getStringExtra("Sex");
         Address= getIntent().getStringExtra("Address");
-
+        Birthday = getIntent().getStringExtra("Birthday");
 
         // Find the CardView by its ID
         CardView medicalRecordCardView = findViewById(R.id.medicalrecordcv);
 
         // Set an OnClickListener to navigate to ViewMedicalRecord.java
         medicalRecordCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(ChildDetailsParentActivity.this, com.example.babybook.ListOfMedicalRecordParent.class);
+            Intent intent = new Intent(ChildDetailsParentActivity.this, com.example.babybook.ViewMedicalRecordParent.class);
 
             // Optionally, pass some data using intent if needed
             intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
@@ -132,6 +132,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
             intent.putExtra("LastName", LastName);
             intent.putExtra("Sex", Sex);
             intent.putExtra("Address", Address);
+            intent.putExtra("Birthday", Birthday);
             startActivity(intent);
         });
 

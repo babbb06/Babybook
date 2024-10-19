@@ -1,12 +1,15 @@
 package com.example.babybook;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.babybook.model.HealthChecklist;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -17,9 +20,11 @@ import java.util.Date;
 
 public class ViewMedicalRecordParent extends AppCompatActivity {
 
-    private TextView name,textViewWeight, textViewDate, textViewTemperature, textViewSummaryDiagnosis, textViewTreatmentPlan, textViewFollowUpPlan;
+    private TextView name,textViewWeight,textViewBirthday, textViewSex,textViewDate, textViewTemperature, textViewSummaryDiagnosis, textViewTreatmentPlan, textViewFollowUpPlan;
     private CheckBox checkBoxSick, checkBoxCough, checkBoxDiarrhea, checkBoxFever, checkBoxMeasles, checkBoxEarPain, checkBoxPallor, checkBoxMalnourished, checkBoxFeeding, checkBoxBreastfeeding, checkBoxDiarrheaCough, checkBoxImmunization, checkBoxOtherProblems;
-    private String childId,FirstName,LastName; // This will now be used to fetch the medical record
+    private String childId,FirstName,LastName,dateToday,Sex,Birthday;
+    private LinearLayout layouthide;
+    private ConstraintLayout layoutgone;// This will now be used to fetch the medical record
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,9 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
         childId = getIntent().getStringExtra("childId");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
+        dateToday = getIntent().getStringExtra("dateToday");
+        Sex = getIntent().getStringExtra("Sex");
+        Birthday = getIntent().getStringExtra("Birthday");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,6 +50,8 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
         // Initialize UI components
         textViewWeight = findViewById(R.id.textViewWeight);
         textViewDate = findViewById(R.id.textViewDate);
+        textViewSex = findViewById(R.id.textViewSex);
+        textViewBirthday = findViewById(R.id.textViewBirthday);
         textViewTemperature = findViewById(R.id.textViewTemperature);
         textViewSummaryDiagnosis = findViewById(R.id.textViewSummaryDiagnosis);
         textViewTreatmentPlan = findViewById(R.id.textViewTreatmentPlan);
@@ -60,64 +70,69 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
         checkBoxDiarrheaCough = findViewById(R.id.checkBoxDiarrheaCough);
         checkBoxImmunization = findViewById(R.id.checkBoxImmunization);
         checkBoxOtherProblems = findViewById(R.id.checkBoxOtherProblems);
-
+        layoutgone = findViewById(R.id.layoutgone);
+        layouthide= findViewById(R.id.layouthide);
 
         fetchHealthRecordDetails();
 
-        name.setText("Name: " + FirstName +" "+ LastName);
+        name.setText(FirstName +" "+ LastName);
+        textViewBirthday.setText(Birthday);
 
 
     }
 
 
 
+
     private void fetchHealthRecordDetails() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("medicalRecords")
-                .whereEqualTo("childId", childId)
+        // Check if medicalRecordId is available
+
+
+        // Fetch a specific medical record using childId and medicalRecordId
+        db.collection("healthRecords")
+                .document(childId) // Parent document ID
+                .collection("medicalRecords") // Subcollection name
+                .document(childId) // Specific medical record document ID
                 .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (!querySnapshot.isEmpty()) {
-                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                            HealthChecklist checklist = document.toObject(HealthChecklist.class);
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        HealthChecklist checklist = documentSnapshot.toObject(HealthChecklist.class);
 
-                            // Logging to check if checklist data is being fetched correctly
-                            if (checklist != null) {
-                                Toast.makeText(ViewMedicalRecordParent.this, "Checklist retrieved successfully", Toast.LENGTH_SHORT).show();
-
-
-                            } else {
-                                Toast.makeText(ViewMedicalRecordParent.this, "Checklist is null", Toast.LENGTH_SHORT).show();
-                            }
-
-                            // Set other UI elements as needed
-                            textViewWeight.setText(document.getString("Weight"));
-                            textViewDate.setText(document.getString("Date"));
-                            textViewTemperature.setText(document.getString("Temperature"));
-                            textViewSummaryDiagnosis.setText(document.getString("Summary"));
-                            textViewTreatmentPlan.setText(document.getString("Treatment"));
-                            textViewFollowUpPlan.setText(document.getString("Follow"));
-
+                        // Logging to check if checklist data is being fetched correctly
+                        if (checklist != null) {
+                            // Set UI elements with the fetched data
+                            textViewWeight.setText(documentSnapshot.getString("Weight"));
+                            textViewDate.setText(documentSnapshot.getString("Date"));
+                            textViewTemperature.setText(documentSnapshot.getString("Temperature"));
+                            textViewSummaryDiagnosis.setText(documentSnapshot.getString("Summary"));
+                            textViewTreatmentPlan.setText(documentSnapshot.getString("Treatment"));
+                            textViewFollowUpPlan.setText(documentSnapshot.getString("Follow"));
 
                             // Set checkbox values based on boolean data
-                            checkBoxSick.setChecked(document.getBoolean("IsSick"));
-                            checkBoxCough.setChecked(document.getBoolean("HasCough"));
-                            checkBoxDiarrhea.setChecked(document.getBoolean("HasDiarrhea"));
-                            checkBoxFever.setChecked(document.getBoolean("HasFever"));
-                            checkBoxMeasles.setChecked(document.getBoolean("HasMeasles"));
-                            checkBoxEarPain.setChecked(document.getBoolean("HasEarPain"));
-                            checkBoxPallor.setChecked(document.getBoolean("IsPallor"));
-                            checkBoxMalnourished.setChecked(document.getBoolean("IsMalnourished"));
-                            checkBoxFeeding.setChecked(document.getBoolean("IsFeeding"));
-                            checkBoxBreastfeeding.setChecked(document.getBoolean("IsBreastfeeding"));
-                            checkBoxDiarrheaCough.setChecked(document.getBoolean("HasDiarrheaCough"));
-                            checkBoxImmunization.setChecked(document.getBoolean("HasImmunization"));
-                            checkBoxOtherProblems.setChecked(document.getBoolean("HasOtherProblems"));
-
-
+                            checkBoxSick.setChecked(documentSnapshot.getBoolean("IsSick"));
+                            checkBoxCough.setChecked(documentSnapshot.getBoolean("HasCough"));
+                            checkBoxDiarrhea.setChecked(documentSnapshot.getBoolean("HasDiarrhea"));
+                            checkBoxFever.setChecked(documentSnapshot.getBoolean("HasFever"));
+                            checkBoxMeasles.setChecked(documentSnapshot.getBoolean("HasMeasles"));
+                            checkBoxEarPain.setChecked(documentSnapshot.getBoolean("HasEarPain"));
+                            checkBoxPallor.setChecked(documentSnapshot.getBoolean("IsPallor"));
+                            checkBoxMalnourished.setChecked(documentSnapshot.getBoolean("IsMalnourished"));
+                            checkBoxFeeding.setChecked(documentSnapshot.getBoolean("IsFeeding"));
+                            checkBoxBreastfeeding.setChecked(documentSnapshot.getBoolean("IsBreastfeeding"));
+                            checkBoxDiarrheaCough.setChecked(documentSnapshot.getBoolean("HasDiarrheaCough"));
+                            checkBoxImmunization.setChecked(documentSnapshot.getBoolean("HasImmunization"));
+                            checkBoxOtherProblems.setChecked(documentSnapshot.getBoolean("HasOtherProblems"));
+                        } else {
+                            Toast.makeText(ViewMedicalRecordParent.this, "Checklist is null", Toast.LENGTH_SHORT).show();
+                            layouthide.setVisibility(View.GONE);
+                            layoutgone.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        Toast.makeText(ViewMedicalRecordParent.this, "No record found", Toast.LENGTH_SHORT).show();
+                        layouthide.setVisibility(View.GONE);
+
+                        layoutgone.setVisibility(View.VISIBLE);
+
                     }
                 })
                 .addOnFailureListener(e -> {

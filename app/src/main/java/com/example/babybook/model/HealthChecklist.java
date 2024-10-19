@@ -9,7 +9,6 @@ public class HealthChecklist {
     private String weight;
     private String temperature;
     private String sex;
-    private String address;
 
     private boolean isSick;
     private boolean hasCough;
@@ -36,7 +35,7 @@ public class HealthChecklist {
 
 
     private String doctorId;
-    private String uniqueId;
+    private String medicalRecordId;
     private String datetoday;
 
     private String parentId;       // ID of the parent
@@ -71,14 +70,6 @@ public class HealthChecklist {
     }
 
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
 
 
     public String getDoctorId() {
@@ -92,12 +83,12 @@ public class HealthChecklist {
 
 
 
-    public String getUniqueId() {
-        return uniqueId;
+    public String getMedicalRecordId() {
+        return medicalRecordId;
     }
 
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
+    public void setMedicalRecordId(String medicalRecordId) {
+        this.medicalRecordId = medicalRecordId;
     }
 
 
