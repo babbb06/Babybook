@@ -122,6 +122,24 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
                     // Handle failure
                     Toast.makeText(context, "Failed to update status: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+
+
+        db.collection("appointments").document(record.getId())
+                .update("status", "donevaccine")
+                .addOnSuccessListener(aVoid -> {
+                    // If successful, update the record in the list
+                    int position = healthRecords.indexOf(record);
+                    if (position != -1) {
+                        healthRecords.get(position).setStatus("donevaccine");
+                        notifyItemChanged(position);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure
+                    Toast.makeText(context, "Failed to update status: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+
     }
 
 

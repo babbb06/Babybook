@@ -65,4 +65,11 @@ public class AppointmentAdapter extends ArrayAdapter<AppointmentRequest> {
 
         return convertView;
     }
+
+
+
+
+
+
+
 }
