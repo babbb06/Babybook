@@ -86,14 +86,12 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
 
     private void fetchHealthRecordDetails() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Check if medicalRecordId is available
 
-
-        // Fetch a specific medical record using childId and medicalRecordId
+        // Fetch medical records for the specified childId
         db.collection("healthRecords")
-                .document(childId) // Parent document ID
+                .document(childId) // Document ID for health record
                 .collection("medicalRecords") // Subcollection name
-                .document(childId) // Specific medical record document ID
+                .document(childId) // Replace with the actual medical record document ID
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -110,19 +108,23 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
                             textViewFollowUpPlan.setText(documentSnapshot.getString("Follow"));
 
                             // Set checkbox values based on boolean data
-                            checkBoxSick.setChecked(documentSnapshot.getBoolean("IsSick"));
-                            checkBoxCough.setChecked(documentSnapshot.getBoolean("HasCough"));
-                            checkBoxDiarrhea.setChecked(documentSnapshot.getBoolean("HasDiarrhea"));
-                            checkBoxFever.setChecked(documentSnapshot.getBoolean("HasFever"));
-                            checkBoxMeasles.setChecked(documentSnapshot.getBoolean("HasMeasles"));
-                            checkBoxEarPain.setChecked(documentSnapshot.getBoolean("HasEarPain"));
-                            checkBoxPallor.setChecked(documentSnapshot.getBoolean("IsPallor"));
-                            checkBoxMalnourished.setChecked(documentSnapshot.getBoolean("IsMalnourished"));
-                            checkBoxFeeding.setChecked(documentSnapshot.getBoolean("IsFeeding"));
-                            checkBoxBreastfeeding.setChecked(documentSnapshot.getBoolean("IsBreastfeeding"));
-                            checkBoxDiarrheaCough.setChecked(documentSnapshot.getBoolean("HasDiarrheaCough"));
-                            checkBoxImmunization.setChecked(documentSnapshot.getBoolean("HasImmunization"));
-                            checkBoxOtherProblems.setChecked(documentSnapshot.getBoolean("HasOtherProblems"));
+                            checkBoxSick.setChecked(documentSnapshot.getBoolean("IsSick") != null && documentSnapshot.getBoolean("IsSick"));
+                            checkBoxCough.setChecked(documentSnapshot.getBoolean("HasCough") != null && documentSnapshot.getBoolean("HasCough"));
+                            checkBoxDiarrhea.setChecked(documentSnapshot.getBoolean("HasDiarrhea") != null && documentSnapshot.getBoolean("HasDiarrhea"));
+                            checkBoxFever.setChecked(documentSnapshot.getBoolean("HasFever") != null && documentSnapshot.getBoolean("HasFever"));
+                            checkBoxMeasles.setChecked(documentSnapshot.getBoolean("HasMeasles") != null && documentSnapshot.getBoolean("HasMeasles"));
+                            checkBoxEarPain.setChecked(documentSnapshot.getBoolean("HasEarPain") != null && documentSnapshot.getBoolean("HasEarPain"));
+                            checkBoxPallor.setChecked(documentSnapshot.getBoolean("IsPallor") != null && documentSnapshot.getBoolean("IsPallor"));
+                            checkBoxMalnourished.setChecked(documentSnapshot.getBoolean("IsMalnourished") != null && documentSnapshot.getBoolean("IsMalnourished"));
+                            checkBoxFeeding.setChecked(documentSnapshot.getBoolean("IsFeeding") != null && documentSnapshot.getBoolean("IsFeeding"));
+                            checkBoxBreastfeeding.setChecked(documentSnapshot.getBoolean("IsBreastfeeding") != null && documentSnapshot.getBoolean("IsBreastfeeding"));
+                            checkBoxDiarrheaCough.setChecked(documentSnapshot.getBoolean("HasDiarrheaCough") != null && documentSnapshot.getBoolean("HasDiarrheaCough"));
+                            checkBoxImmunization.setChecked(documentSnapshot.getBoolean("HasImmunization") != null && documentSnapshot.getBoolean("HasImmunization"));
+                            checkBoxOtherProblems.setChecked(documentSnapshot.getBoolean("HasOtherProblems") != null && documentSnapshot.getBoolean("HasOtherProblems"));
+
+                            layouthide.setVisibility(View.VISIBLE);
+                            layoutgone.setVisibility(View.GONE);
+                            Toast.makeText(ViewMedicalRecordParent.this, "correct", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(ViewMedicalRecordParent.this, "Checklist is null", Toast.LENGTH_SHORT).show();
                             layouthide.setVisibility(View.GONE);
@@ -130,15 +132,16 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
                         }
                     } else {
                         layouthide.setVisibility(View.GONE);
-
                         layoutgone.setVisibility(View.VISIBLE);
-
+                        Toast.makeText(ViewMedicalRecordParent.this, "Checklist is null", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(ViewMedicalRecordParent.this, "Failed to load record: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
+
 
 
 

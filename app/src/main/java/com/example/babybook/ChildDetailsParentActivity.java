@@ -127,7 +127,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
             Intent intent = new Intent(ChildDetailsParentActivity.this, com.example.babybook.ViewMedicalRecordParent.class);
 
             // Optionally, pass some data using intent if needed
-            intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
+            intent.putExtra("childId", childId); // Pass the child ID if needed
             intent.putExtra("FirstName", FirstName); // Pass the child ID
             intent.putExtra("LastName", LastName);
             intent.putExtra("Sex", Sex);
