@@ -124,16 +124,14 @@ public class ViewMedicalRecordParent extends AppCompatActivity {
 
                             layouthide.setVisibility(View.VISIBLE);
                             layoutgone.setVisibility(View.GONE);
-                            Toast.makeText(ViewMedicalRecordParent.this, "correct", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(ViewMedicalRecordParent.this, "Checklist is null", Toast.LENGTH_SHORT).show();
                             layouthide.setVisibility(View.GONE);
                             layoutgone.setVisibility(View.VISIBLE);
                         }
                     } else {
                         layouthide.setVisibility(View.GONE);
                         layoutgone.setVisibility(View.VISIBLE);
-                        Toast.makeText(ViewMedicalRecordParent.this, "Checklist is null", Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addOnFailureListener(e -> {

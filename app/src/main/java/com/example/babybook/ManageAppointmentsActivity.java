@@ -75,7 +75,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                         .setTitle("Confirm Acceptance")
                         .setMessage("Are you sure you want to accept the appointment for " + request.getFirstName() + "?")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            updateAppointmentStatus(
+                            createHealthRecords(
                                     request.getId(),
                                     "Accepted",
                                     request.getFirstName(),
@@ -120,7 +120,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         loadAppointments();
     }
 
-    private void updateAppointmentStatus(String id, String status, String firstName,String lastName,String sex,String birthDay,String birthPlace,String address, String service, String date, String time, String userId, String doctorId) {
+    private void createHealthRecords(String id, String status, String firstName,String lastName,String sex,String birthDay,String birthPlace,String address, String service, String date, String time, String userId, String doctorId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Create a new HealthRecord object with all the details
@@ -132,7 +132,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         healthRecord.setBirthPlace(birthPlace);
         healthRecord.setAddress(address);
         healthRecord.setAddedBy(userId); // Assuming userId is the one adding the record
-        healthRecord.setId(id);
+        healthRecord.setId(id);//childId
         healthRecord.setDate(date);
         healthRecord.setDoctorId(doctorId);
         healthRecord.setService(service);
