@@ -128,7 +128,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                 .whereEqualTo("firstName", firstName)
                 .whereEqualTo("lastName", lastName)
                 .whereEqualTo("birthDay", birthDay)
-                .whereEqualTo("userId", userId)
+                .whereEqualTo("userId", userId)//PARENT ID
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
