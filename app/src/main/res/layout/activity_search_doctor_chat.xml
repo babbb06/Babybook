@@ -72,6 +72,6 @@
         android:fontFamily="@font/poppins"
         android:layout_height="match_parent"
         android:layout_below="@id/searchrela"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="8dp"
         android:padding="16dp" />
 </RelativeLayout>
