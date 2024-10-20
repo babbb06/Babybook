@@ -171,7 +171,7 @@ public class ParentDashboardActivity extends AppCompatActivity {
                     String fullName = document.getString("fullName");
                     String userProfileImageUrl = document.getString("profileImageUrl");
 
-                    updateNavHeader("Greetings, " + fullName + "!", userProfileImageUrl);
+                    updateNavHeader(fullName, userProfileImageUrl);
                 } else {
                     // If not in doctorUsers, check parentUsers
                     db.collection("parentUsers").document(userId).get().addOnCompleteListener(parentTask -> {
