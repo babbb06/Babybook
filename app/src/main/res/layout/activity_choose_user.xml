@@ -39,14 +39,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cvtent"
-            android:layout_width="120dp"
-            android:layout_height="120dp">
+            android:layout_width="140dp"
+            android:layout_height="140dp">
 
 
             <ImageView
                 android:id="@+id/icon_parent"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:clickable="true"
                 android:contentDescription="Parent Icon"
                 android:focusable="true"
@@ -88,13 +88,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/doctor"
-            android:layout_width="120dp"
-            android:layout_height="120dp">
+            android:layout_width="140dp"
+            android:layout_height="140dp">
 
             <ImageView
                 android:id="@+id/icon_doctor"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
                 android:clickable="true"
                 android:contentDescription="Doctor Icon"
                 android:focusable="true"
@@ -108,8 +108,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-30dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Doctor"
-                android:textSize="20dp"
+                android:text="Healthcare\nProfessional"
+                android:textSize="12dp"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="@id/icon_doctor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@id/icon_doctor"
