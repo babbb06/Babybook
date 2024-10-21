@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -29,6 +31,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,7 +56,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
     private GoogleMap mMap;
     private LatLng initialLocation;
     private final Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText etVaccine;
     private Button btnSearch;
@@ -122,10 +126,12 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
         // Set up the custom MapTouchableWrapper
         MapTouchableWrapper mapWrapper = findViewById(R.id.map_wrapper);
-        mapWrapper.setOnTouchListener(() -> {
+        mapWrapper.setOnTouchListener(event -> {
             // Disable parent scroll when interacting with the map
             scrollView.requestDisallowInterceptTouchEvent(true);
+            //swipeRefreshLayout.setEnabled(false); // Disable swipe refresh
         });
+
 
         // Filter by vaccine
         btnSearch.setOnClickListener(v -> {
@@ -296,11 +302,14 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
                             // Add a marker for each clinic on the map
                             if (latitude != null && longitude != null) {
+                                BitmapDescriptor customMarker = BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_clinic);
+
                                 LatLng clinicLocation = new LatLng(latitude, longitude);
                                 mMap.addMarker(new MarkerOptions()
-                                        .position(clinicLocation)
-                                        .title(clinicName)
-                                        .snippet(clinicPhoneNumber));
+                                                .position(clinicLocation)
+                                                .title(clinic.getClinicName())
+                                                .snippet(clinic.getClinicPhoneNumber()))
+                                                .setIcon(customMarker);
                             }
                         }
 
@@ -358,11 +367,14 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
                                         clinicList.add(clinic);
                                         if (latitude != null && longitude != null) {
+                                            BitmapDescriptor customMarker = BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_clinic);
+
                                             LatLng clinicLocation = new LatLng(latitude, longitude);
                                             mMap.addMarker(new MarkerOptions()
-                                                    .position(clinicLocation)
-                                                    .title(clinic.getClinicName())
-                                                    .snippet(clinic.getClinicPhoneNumber()));
+                                                            .position(clinicLocation)
+                                                            .title(clinic.getClinicName())
+                                                            .snippet(clinic.getClinicPhoneNumber()))
+                                                            .setIcon(customMarker);
                                         }
                                         foundClinics = true;
                                         break;

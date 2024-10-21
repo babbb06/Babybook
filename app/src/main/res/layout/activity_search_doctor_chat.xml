@@ -54,7 +54,7 @@
                     android:layout_marginStart="20dp"
                     android:background="@drawable/edittext_background"
                     android:fontFamily="@font/poppins"
-                    android:hint="Enter clinic name"
+                    android:hint="Enter Specialization"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"

@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 public class MapTouchableWrapper extends FrameLayout {
 
     public interface OnTouchListener {
-        void onTouch();
+        void onTouch(MotionEvent event);
     }
 
     private OnTouchListener onTouchListener;
@@ -31,8 +31,9 @@ public class MapTouchableWrapper extends FrameLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        // Notify listener of the touch event
         if (onTouchListener != null) {
-            onTouchListener.onTouch();
+            onTouchListener.onTouch(ev);
         }
         return super.dispatchTouchEvent(ev);
     }
