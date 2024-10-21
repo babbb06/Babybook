@@ -39,14 +39,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cvtent"
-            android:layout_width="140dp"
-            android:layout_height="140dp">
+            android:layout_width="120dp"
+            android:layout_height="120dp">
 
 
             <ImageView
                 android:id="@+id/icon_parent"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:clickable="true"
                 android:contentDescription="Parent Icon"
                 android:focusable="true"
@@ -57,10 +57,10 @@
                 android:id="@+id/parent_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-30dp"
+                android:layout_marginTop="-20dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Parent"
-                android:textSize="20dp"
+                android:text="Parent/Guardian "
+                android:textSize="11dp"
                 app:layout_constraintEnd_toEndOf="@id/icon_parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@id/icon_parent"
@@ -88,13 +88,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/doctor"
-            android:layout_width="140dp"
-            android:layout_height="140dp">
+            android:layout_width="120dp"
+            android:layout_height="120dp">
 
             <ImageView
                 android:id="@+id/icon_doctor"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:clickable="true"
                 android:contentDescription="Doctor Icon"
                 android:focusable="true"
@@ -106,11 +106,10 @@
                 android:id="@+id/doctor_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-30dp"
+                android:layout_marginTop="-20dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Healthcare\nProfessional"
-                android:textSize="12dp"
-                android:gravity="center"
+                android:text="Healthcare Professional"
+                android:textSize="10dp"
                 app:layout_constraintEnd_toEndOf="@id/icon_doctor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@id/icon_doctor"

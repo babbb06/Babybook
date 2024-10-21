@@ -27,6 +27,7 @@ public class SearchParentChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ParentAdapter adapter;
     private List<Parent> parents;
+    private List<Parent> allParents; // To store all doctors
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class SearchParentChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewParents);
 
         parents = new ArrayList<>();
+        allParents = new ArrayList<>(); // Initialize the list for all doctors
         adapter = new ParentAdapter(parents, parent -> {
             Intent intent = new Intent(SearchParentChatActivity.this, ChatActivity.class);
             intent.putExtra("receiverId", parent.getParentID());
@@ -55,38 +57,61 @@ public class SearchParentChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        // Load all doctors when the activity is created
+        loadAllDoctors();
+
+        // Set up search button click listener
         searchButton.setOnClickListener(v -> {
             String query = searchEditText.getText().toString();
             if (!TextUtils.isEmpty(query)) {
-                searchParents(query);
+                filterDoctors(query);
             } else {
-                Toast.makeText(SearchParentChatActivity.this, "Please enter a parent name to search.", Toast.LENGTH_SHORT).show();
+                // If the search field is empty, show all doctors
+                parents.clear();
+                parents.addAll(allParents);
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
-    private void searchParents(String query) {
-        String lowerCaseQuery = query.trim().toLowerCase();
-
+    private void loadAllDoctors() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("parentUsers")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        parents.clear();
+                        allParents.clear(); // Clear the list before adding data
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Parent parent = document.toObject(Parent.class);
-                            if (parent != null && parent.getFullName() != null &&
-                                    parent.getFullName().toLowerCase().contains(lowerCaseQuery)) {
+                            if (parent != null) {
                                 parent.setParentID(document.getId());
-                                parents.add(parent);
+                                allParents.add(parent);
                             }
                         }
+                        // Initially display all doctors
+                        parents.clear();
+                        parents.addAll(allParents);
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(SearchParentChatActivity.this, "Error getting parents.", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void filterDoctors(String query) {
+        String lowerCaseQuery = query.trim().toLowerCase();
+
+        parents.clear();
+        for (Parent parent : allParents) {
+            if (parent.getFullName() != null && parent.getFullName().toLowerCase().contains(lowerCaseQuery)) {
+                parents.add(parent);
+            }
+        }
+        adapter.notifyDataSetChanged();
+
+        if (parents.isEmpty()) {
+            Toast.makeText(SearchParentChatActivity.this, "No doctors found.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

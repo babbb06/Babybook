@@ -73,6 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/searchrela"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="8dp"
         android:padding="16dp" />
 </RelativeLayout>

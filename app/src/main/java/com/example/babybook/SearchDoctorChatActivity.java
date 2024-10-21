@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,11 +30,21 @@ import java.util.List;
 public class SearchDoctorChatActivity extends AppCompatActivity {
 
     private EditText searchEditText;
+    private TextView tvNoDoctor;
+    private ImageView filterButton;
     private Button searchButton;
     private RecyclerView recyclerView;
     private DoctorAdapter2 adapter;
     private List<Doctor> doctors;
+    private List<Doctor> allDoctors; // To store all doctors
 
+    private final String[] specializations = {
+            "Pediatrician", "Hospitalist", "Child Abuse Pediatrician", "Neonatalists",
+            "Emergency Pediatric Medicine", "Pediatric Critical Care Medicine",
+            "Pediatric Cardiologist", "Pediatric Endocrinology", "Pediatric Gastroenterology",
+            "Pediatric Neurology", "Pediatric Hematology/Oncology", "Pediatric Pulmonology",
+            "Pediatric Nephrology", "Pediatric Infectious Disease", "Pediatric Rheumatology", "Midwife"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +63,10 @@ public class SearchDoctorChatActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.buttonSearch);
         recyclerView = findViewById(R.id.recyclerViewDoctors);
 
+        tvNoDoctor= findViewById(R.id.tvNoDoctor);
+                filterButton= findViewById(R.id.filterbutton);
         doctors = new ArrayList<>();
+        allDoctors = new ArrayList<>(); // Initialize the list for all doctors
         adapter = new DoctorAdapter2(doctors, doctor -> {
             // Handle message icon click
             Intent intent = new Intent(SearchDoctorChatActivity.this, ChatActivity.class);
@@ -62,16 +79,76 @@ public class SearchDoctorChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        // Load all doctors initially
+        loadAllDoctors();
+
         searchButton.setOnClickListener(v -> {
             String query = searchEditText.getText().toString();
             if (!TextUtils.isEmpty(query)) {
-                searchDoctors(query);
+                filterDoctors(query);
             } else {
                 Toast.makeText(SearchDoctorChatActivity.this, "Please enter doctor's name to search.", Toast.LENGTH_SHORT).show();
+                // If the search field is empty, show all doctors again
+                doctors.clear();
+                doctors.addAll(allDoctors);
+                adapter.notifyDataSetChanged();
             }
         });
+
+        // Set up the filter button
+        filterButton.setOnClickListener(v -> showFilterMenu(v));
     }
 
+    private void loadAllDoctors() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("doctorUsers")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        doctors.clear();
+                        allDoctors.clear(); // Clear the list before adding new data
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Doctor doctor = document.toObject(Doctor.class);
+                            if (doctor != null) {
+                                doctor.setId(document.getId());
+                                doctors.add(doctor);
+                                allDoctors.add(doctor); // Add to allDoctors list
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(SearchDoctorChatActivity.this, "Error getting doctors.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void filterDoctors(String query) {
+        String lowerCaseQuery = query.trim().toLowerCase();
+
+        doctors.clear();
+        for (Doctor doctor : allDoctors) {
+            if (doctor.getFullName() != null && doctor.getFullName().toLowerCase().startsWith(lowerCaseQuery)) {
+                doctors.add(doctor);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    // Show filter menu for selecting a specialization
+    private void showFilterMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(SearchDoctorChatActivity.this, view);
+        for (String specialization : specializations) {
+            popupMenu.getMenu().add(specialization);
+        }
+        popupMenu.setOnMenuItemClickListener(item -> {
+            searchEditText.setText(item.getTitle());  // Set the selected specialization in the search bar
+            searchDoctors(item.getTitle().toString());  // Trigger the search
+            return true;
+        });
+        popupMenu.show();
+    }
+
+    // Method to search doctors based on the query
     private void searchDoctors(String query) {
         String lowerCaseQuery = query.trim().toLowerCase();
 
@@ -83,18 +160,28 @@ public class SearchDoctorChatActivity extends AppCompatActivity {
                         doctors.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Doctor doctor = document.toObject(Doctor.class);
-                            if (doctor != null && doctor.getFullName() != null &&
-                                    doctor.getFullName().toLowerCase().startsWith(lowerCaseQuery)) {
+                            if (doctor != null && doctor.getSpecialization() != null &&
+                                    doctor.getSpecialization().toLowerCase().contains(lowerCaseQuery)) {
                                 doctor.setId(document.getId());
                                 doctors.add(doctor);
                             }
                         }
+
+                        // Check if any doctors were found
+                        if (doctors.isEmpty()) {
+                            tvNoDoctor.setVisibility(View.VISIBLE);
+                            tvNoDoctor.setText("No doctors found with specialization: \n" + query);
+                        } else {
+                            tvNoDoctor.setVisibility(View.GONE);
+                        }
+
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(SearchDoctorChatActivity.this, "Error getting doctors.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
