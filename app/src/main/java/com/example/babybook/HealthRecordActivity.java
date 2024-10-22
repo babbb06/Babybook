@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class HealthRecordActivity extends AppCompatActivity {
     private CollectionReference healthRecordsCollection;
     private FirebaseAuth mAuth; // Add FirebaseAuth instance
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvNoHealthRec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class HealthRecordActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         healthRecordsCollection = db.collection("healthRecords");
+        tvNoHealthRec = findViewById(R.id.tvNoHealthRecDoc);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
         swipeRefreshLayout.setOnRefreshListener(this::loadHealthRecords);
@@ -81,6 +84,7 @@ public class HealthRecordActivity extends AppCompatActivity {
     }
 
     private void loadHealthRecords() {
+        tvNoHealthRec.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -107,6 +111,13 @@ public class HealthRecordActivity extends AppCompatActivity {
                                 HealthRecord healthRecord = document.toObject(HealthRecord.class);
                                 healthRecords.add(healthRecord);
                             }
+
+                            if (healthRecords.isEmpty()) {
+                                tvNoHealthRec.setVisibility(View.VISIBLE);
+                            } else {
+                                tvNoHealthRec.setVisibility(View.GONE);
+                            }
+
                             adapter.notifyDataSetChanged();
                         }
                     });
@@ -116,6 +127,7 @@ public class HealthRecordActivity extends AppCompatActivity {
             swipeRefreshLayout.setRefreshing(false);
         }
     }
+
 
 
 

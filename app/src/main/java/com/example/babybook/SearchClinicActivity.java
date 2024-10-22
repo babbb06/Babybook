@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -29,6 +31,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,7 +56,7 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
     private GoogleMap mMap;
     private LatLng initialLocation;
     private final Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText etVaccine;
     private Button btnSearch;
@@ -122,10 +126,12 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
         // Set up the custom MapTouchableWrapper
         MapTouchableWrapper mapWrapper = findViewById(R.id.map_wrapper);
-        mapWrapper.setOnTouchListener(() -> {
+        mapWrapper.setOnTouchListener(event -> {
             // Disable parent scroll when interacting with the map
             scrollView.requestDisallowInterceptTouchEvent(true);
+            //swipeRefreshLayout.setEnabled(false); // Disable swipe refresh
         });
+
 
         // Filter by vaccine
         btnSearch.setOnClickListener(v -> {
@@ -296,11 +302,14 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
 
                             // Add a marker for each clinic on the map
                             if (latitude != null && longitude != null) {
+                                BitmapDescriptor customMarker = BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_clinic);
+
                                 LatLng clinicLocation = new LatLng(latitude, longitude);
                                 mMap.addMarker(new MarkerOptions()
-                                        .position(clinicLocation)
-                                        .title(clinicName)
-                                        .snippet(clinicPhoneNumber));
+                                                .position(clinicLocation)
+                                                .title(clinic.getClinicName())
+                                                .snippet(clinic.getClinicPhoneNumber()))
+                                                .setIcon(customMarker);
                             }
                         }
 
@@ -318,8 +327,6 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
     private void searchClinics(String query) {
         swipeRefreshLayout.setRefreshing(true);
         String lowerCaseQuery = query.trim().toLowerCase();
-
-        // Initially hide the no clinics TextView
         tvNoClinics.setVisibility(View.GONE);
 
         db.collection("clinics")
@@ -328,52 +335,68 @@ public class SearchClinicActivity extends AppCompatActivity implements OnMapRead
                     swipeRefreshLayout.setRefreshing(false);
                     if (task.isSuccessful()) {
                         clinicList.clear();
-                        mMap.clear(); // Clear existing markers from the map
-
-                        boolean foundClinics = false; // Track if any clinics are found
+                        mMap.clear();
+                        boolean foundClinics = false;
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Map<String, Integer> vaccines = (Map<String, Integer>) document.get("vaccines");
                             if (vaccines != null) {
-                                // Check if any key in the vaccines map matches the lowerCaseQuery
                                 for (String vaccineName : vaccines.keySet()) {
                                     if (vaccineName.toLowerCase().equals(lowerCaseQuery)) {
-                                        // Add the clinic to the list if it has the vaccine
-                                        Clinic clinic = document.toObject(Clinic.class);
-                                        clinicList.add(clinic);
-
-                                        // Add a marker for each clinic that matches the query
+                                        // Create a Clinic object with all necessary details
+                                        String clinicId = document.getId();
+                                        String clinicName = document.getString("clinicName");
+                                        String clinicPhoneNumber = document.getString("clinicPhoneNumber");
+                                        String clinicProfileUrl = document.getString("clinicProfileUrl");
+                                        List<String> schedDays = (List<String>) document.get("schedDays");
+                                        String schedStartTime = document.getString("schedStartTime");
+                                        String schedEndTime = document.getString("schedEndTime");
+                                        String clinicAddress = document.getString("clinicAddress");
+                                        String doctorId = document.getString("doctorId");
+                                        String doctorName = document.getString("doctorName");
                                         Double latitude = document.getDouble("latitude");
                                         Double longitude = document.getDouble("longitude");
+                                        long timestamp = document.getLong("timestamp");
+                                        String profileImageUrl = document.getString("profileImageUrl");
+                                        String specialization = document.getString("specialization");
+
+                                        // Create a Clinic object
+                                        Clinic clinic = new Clinic(clinicId, clinicName, clinicPhoneNumber, clinicProfileUrl,
+                                                schedDays, schedStartTime, schedEndTime, doctorId, doctorName,
+                                                latitude, longitude, clinicAddress, timestamp, profileImageUrl, specialization, vaccines);
+
+                                        clinicList.add(clinic);
                                         if (latitude != null && longitude != null) {
+                                            BitmapDescriptor customMarker = BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_clinic);
+
                                             LatLng clinicLocation = new LatLng(latitude, longitude);
                                             mMap.addMarker(new MarkerOptions()
-                                                    .position(clinicLocation)
-                                                    .title(clinic.getClinicName())
-                                                    .snippet(clinic.getClinicPhoneNumber()));
+                                                            .position(clinicLocation)
+                                                            .title(clinic.getClinicName())
+                                                            .snippet(clinic.getClinicPhoneNumber()))
+                                                            .setIcon(customMarker);
                                         }
-                                        foundClinics = true; // Set to true if at least one clinic is found
-                                        break; // Exit loop after finding a match
+                                        foundClinics = true;
+                                        break;
                                     }
                                 }
                             }
                         }
 
-                        // Notify adapter that the data has changed
                         clinicAdapter.notifyDataSetChanged();
 
-                        // Show or hide the no clinics TextView based on search results
                         if (!foundClinics) {
                             tvNoClinics.setVisibility(View.VISIBLE);
                             tvNoClinics.setText("No clinics with vaccine: " + query);
                         } else {
-                            tvNoClinics.setVisibility(View.GONE); // Hide if clinics were found
+                            tvNoClinics.setVisibility(View.GONE);
                         }
                     } else {
                         Toast.makeText(SearchClinicActivity.this, "Error getting clinics.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
 
 

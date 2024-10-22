@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -175,10 +178,13 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
 
         // Set up the custom MapTouchableWrapper
         MapTouchableWrapper mapWrapper = findViewById(R.id.map_wrapper);
-        mapWrapper.setOnTouchListener(() -> {
+        mapWrapper.setOnTouchListener(event -> {
             // Disable parent scroll when interacting with the map
             scrollView.requestDisallowInterceptTouchEvent(true);
+            //swipeRefreshLayout.setEnabled(false); // Disable swipe refresh
         });
+
+
 
         // Initialize the map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -288,10 +294,16 @@ public class ClinicDetailsActivity extends AppCompatActivity implements OnMapRea
 
         // Add a marker for the clinic on the map
         if (latitude != null && longitude != null && (latitude != 0 && longitude != 0)) {
+            BitmapDescriptor customMarker = BitmapDescriptorFactory.fromResource(R.drawable.custom_marker_clinic);
+
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(clinicLocation)
-                    .title(clinicName) // Assuming clinicName is accessible here
-                    .snippet(clinicPhoneNumber)); // Optional: add a snippet with phone number
+                    .title(clinicName)
+                    .snippet(clinicPhoneNumber)
+                    .icon(customMarker)); // Correctly set the icon here
+
+
+
 
             // Immediately show the info window for the marker
             marker.showInfoWindow();

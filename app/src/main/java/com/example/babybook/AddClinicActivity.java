@@ -126,9 +126,10 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
 
         // Set up the custom MapTouchableWrapper
         MapTouchableWrapper mapWrapper = findViewById(R.id.map_wrapper);
-        mapWrapper.setOnTouchListener(() -> {
+        mapWrapper.setOnTouchListener(event -> {
             // Disable parent scroll when interacting with the map
             scrollView.requestDisallowInterceptTouchEvent(true);
+            //swipeRefreshLayout.setEnabled(false); // Disable swipe refresh
         });
 
         // Initialize the map fragment

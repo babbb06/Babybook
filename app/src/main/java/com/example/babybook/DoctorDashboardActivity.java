@@ -167,7 +167,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                     String specialization = document.getString("specialization");
 
                     // Pass both the fullName and image URL to updateNavHeader
-                    updateNavHeader("Greetings, " + fullName + "!", userProfileImageUrl, specialization);
+                    updateNavHeader(fullName, userProfileImageUrl, specialization);
                 } else {
                     Toast.makeText(DoctorDashboardActivity.this, "Doctor not found", Toast.LENGTH_SHORT).show();
                 }

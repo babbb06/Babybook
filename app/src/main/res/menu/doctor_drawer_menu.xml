@@ -15,7 +15,7 @@
                     android:title="Health Records" />
                 <item
                     android:id="@+id/doctor_nav_clinic"
-                    android:icon="@drawable/clinic_drawable"
+                    android:icon="@drawable/add_clinic"
                     android:title="Clinic" />
                 <item
                     android:id="@+id/doctor_nav_appointment"
@@ -42,7 +42,7 @@
             <menu>
                 <item
                     android:id="@+id/doctor_nav_about"
-                    android:icon="@drawable/share"
+                    android:icon="@drawable/about"
                     android:title="About" />
                 <item
                     android:id="@+id/doctor_nav_terms"
