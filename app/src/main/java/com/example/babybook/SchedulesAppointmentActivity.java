@@ -6,8 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.AppointmentAdapter;
 import com.example.babybook.model.AppointmentRequest;
@@ -22,10 +25,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SchedulesAppointmentActivity extends AppCompatActivity {
 
@@ -37,6 +44,9 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private List<AppointmentRequest> appointmentList;
     private ArrayAdapter<AppointmentRequest> adapter;
+    private TextView tvNoRequestAppointments;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,9 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Appointment");
         }
 
+        tvNoRequestAppointments = findViewById(R.id.tvNoRequestsParent);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+
         appointmentsListView = findViewById(R.id.appointments_list_view);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -63,12 +76,15 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
         adapter = new AppointmentAdapter(this, appointmentList);
         appointmentsListView.setAdapter(adapter);
 
+        swipeRefreshLayout.setOnRefreshListener(this::fetchAppointments);
         checkNotificationPermission();
     }
 
     private void fetchAppointments() {
+        swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
         if (mAuth.getCurrentUser() == null) {
             Log.e(TAG, "User not signed in. Notifications will not be scheduled.");
+            swipeRefreshLayout.setRefreshing(false); // Stop refreshing
             return; // Exit early if the user is not signed in
         }
 
@@ -82,6 +98,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
 
                         if (fullName == null) {
                             Log.e(TAG, "Parent full name is missing.");
+                            swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                             return;
                         }
 
@@ -95,7 +112,7 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
                                             AppointmentRequest appointmentRequest = document.toObject(AppointmentRequest.class);
                                             appointmentRequest.setId(document.getId());
 
-                                            Log.d(TAG, "Fetched Appointment: " + appointmentRequest.toString());
+                                            Log.d(TAG, "Fetched Appointment: " + appointmentRequest);
 
                                             appointmentList.add(appointmentRequest);
                                         }
@@ -108,11 +125,34 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
                                         });
 
                                         adapter.notifyDataSetChanged();
+
+                                        if (appointmentList.isEmpty()) {
+                                            tvNoRequestAppointments.setVisibility(View.VISIBLE);
+                                        }
+                                        else{
+                                            tvNoRequestAppointments.setVisibility(View.GONE);
+                                        }
                                         Log.d(TAG, "Appointments updated successfully");
 
                                         for (AppointmentRequest appointment : appointmentList) {
                                             if ("Accepted".equals(appointment.getStatus())) {
-                                                ScheduleReminderUtil.scheduleReminder(this, appointment.getDate(), appointment.getTime(), fullName);
+                                                // Prepare date and time for reminder
+                                                String appointmentDate = appointment.getDate(); // Assuming this is in "yyyy-MM-dd" format
+                                                String appointmentTime = appointment.getTime(); // Assuming this is in "HH:mm" format
+
+                                                // Combine date and time for proper parsing
+                                                String dateTime = appointmentDate + " " + appointmentTime;
+
+                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                                                try {
+                                                    Date date = sdf.parse(dateTime);
+                                                    long reminderTimeInMillis = date.getTime() - 24 * 60 * 60 * 1000; // Subtract 1 day
+
+                                                    // Call the scheduleReminder method with correct parameters
+                                                    ScheduleReminderUtil.scheduleReminder(this, appointmentDate, appointmentTime, fullName);
+                                                } catch (ParseException e) {
+                                                    Log.e(TAG, "Error parsing date and time.", e);
+                                                }
                                             }
                                         }
 
@@ -120,15 +160,18 @@ public class SchedulesAppointmentActivity extends AppCompatActivity {
                                         Log.e(TAG, "Error getting documents.", task.getException());
                                         Toast.makeText(SchedulesAppointmentActivity.this, "Error getting appointments.", Toast.LENGTH_SHORT).show();
                                     }
+                                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                                 });
                     } else {
                         Log.e(TAG, "Parent document not found.");
                         Toast.makeText(SchedulesAppointmentActivity.this, "Error fetching parent data.", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                     }
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error fetching parent data.", e);
                     Toast.makeText(SchedulesAppointmentActivity.this, "Error fetching parent data.", Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing
                 });
     }
 

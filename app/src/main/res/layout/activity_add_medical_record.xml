@@ -15,7 +15,7 @@
 
         <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/listToolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:background="@drawable/header"
             android:layout_height="?attr/actionBarSize"
@@ -33,6 +33,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/sex"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/address"/>
+
 
         <TextView
             android:id="@+id/title"

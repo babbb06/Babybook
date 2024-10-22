@@ -20,8 +20,8 @@ import java.util.List;
 
 public class HealthRecordParentAdapter extends RecyclerView.Adapter<HealthRecordParentAdapter.ViewHolder> {
 
-    private List<HealthRecord> healthRecords;
-    private Context context;
+    private final List<HealthRecord> healthRecords;
+    private final Context context;
 
     // Constructor with context and list
     public HealthRecordParentAdapter(Context context, List<HealthRecord> healthRecords) {
@@ -39,14 +39,18 @@ public class HealthRecordParentAdapter extends RecyclerView.Adapter<HealthRecord
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HealthRecord record = healthRecords.get(position);
-        holder.textViewChildName.setText("Child Name: " + record.getFirstName() + " " + record.getLastName());
-
+        holder.textViewChildName.setText(record.getFirstName() + " " + record.getLastName());
+        holder.textViewChildAddress.setText(record.getAddress());
+        holder.textViewChildSex.setText(record.getSex());
         // Handle card click
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChildDetailsParentActivity.class);
             intent.putExtra("CHILD_ID", record.getId()); // Pass the child ID
             intent.putExtra("FirstName", record.getFirstName()); // Pass the child ID
             intent.putExtra("LastName", record.getLastName());
+            intent.putExtra("LastName", record.getLastName());
+            intent.putExtra("Sex", record.getSex());
+            intent.putExtra("Birthday", record.getBirthDay());
             context.startActivity(intent);
         });
 
@@ -62,12 +66,15 @@ public class HealthRecordParentAdapter extends RecyclerView.Adapter<HealthRecord
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewChildName;
+        TextView textViewChildName,textViewChildSex,textViewChildAddress;
         ImageView imageViewMenu;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewChildName = itemView.findViewById(R.id.textViewChildName);
+            textViewChildSex = itemView.findViewById(R.id.textViewChildSex);
+            textViewChildAddress = itemView.findViewById(R.id.textViewChildAddress);
             imageViewMenu = itemView.findViewById(R.id.imageViewMenu);
         }
     }

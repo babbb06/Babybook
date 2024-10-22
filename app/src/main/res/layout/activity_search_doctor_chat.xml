@@ -17,61 +17,99 @@
 
 
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_margin="20dp"
-        android:elevation="15dp"
-        android:id="@+id/searchrela"
+        android:id="@+id/searchlayout1"
         android:layout_below="@id/toolbar"
-        app:cardElevation="15dp"
-        app:cardCornerRadius="360dp"
-        android:layout_height="50dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="370dp"
-            android:layout_height="match_parent">
+        android:paddingBottom="10dp"
+        android:layout_height="wrap_content">
 
 
-            <EditText
-                android:id="@+id/editTextSpecialization"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:background="@drawable/edittext_background"
-                android:fontFamily="@font/poppins"
-                android:hint="Enter clinic name"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:inputType="text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSearch"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.cardview.widget.CardView
 
-            <Button
-                android:id="@+id/buttonSearch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/editTextSpecialization"
-                android:layout_alignEnd="@+id/editTextSpecialization"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/searchrela"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="15dp"
+            app:cardCornerRadius="360dp"
+            app:cardElevation="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/filterbutton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="370dp"
+                android:layout_height="match_parent">
 
 
+                <EditText
+                    android:id="@+id/editTextSpecialization"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/edittext_background"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Enter Specialization"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonSearch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonSearch"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@+id/editTextSpecialization"
+                    android:layout_alignEnd="@+id/editTextSpecialization"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/search"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <ImageView
+            android:id="@+id/filterbutton"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="@color/clear"
+            android:src="@drawable/filter_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/searchrela"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/searchrela" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvNoDoctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:layout_marginTop="400dp"
+        android:text="Nsasa"
+        android:textSize="14dp"
+        android:visibility="gone" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDoctors"
         android:layout_width="match_parent"
-        android:fontFamily="@font/poppins"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchrela"
-        android:layout_marginTop="25dp"
+        android:layout_below="@+id/searchlayout1"
+        android:fontFamily="@font/poppins"
         android:padding="16dp" />
 </RelativeLayout>

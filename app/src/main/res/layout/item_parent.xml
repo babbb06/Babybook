@@ -3,6 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="15dp"
+    android:layout_marginTop="10dp"
     android:background="#E1DFDF">
 
     <RelativeLayout
@@ -19,29 +20,30 @@
         android:layout_height="60dp"
         android:src="@drawable/profile_placeholder" />
 
-    <TextView
-        android:id="@+id/parent_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="-20dp"
-        android:layout_toEndOf="@+id/imageView4"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="Juana Dela Cruz"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/parent_name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="-20dp"
+            android:layout_toStartOf="@+id/message_icon"
+            android:layout_toEndOf="@+id/imageView4"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Juana Dela Cruz"
+            android:textSize="17sp" />
 
-    <TextView
-        android:id="@+id/parent_email_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/parent_name_text_view"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="-20dp"
-
-        android:layout_toEndOf="@+id/imageView4"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="Juana@gmail.com"
-        android:textSize="15sp" />
+        <TextView
+            android:id="@+id/parent_email_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/parent_name_text_view"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="-20dp"
+            android:layout_toStartOf="@+id/message_icon"
+            android:layout_toEndOf="@+id/imageView4"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Juana@gmail.com"
+            android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/message_icon"

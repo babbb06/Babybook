@@ -18,6 +18,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.babybook.adapter.PostAdapter;
@@ -42,6 +43,7 @@ public class ParentDashboardActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +82,9 @@ public class ParentDashboardActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 switch (id) {
-                    case R.id.nav_home:
+                   /* case R.id.nav_home:
                         Toast.makeText(ParentDashboardActivity.this, "Home clicked", Toast.LENGTH_SHORT).show();
-                        break;
+                        break;*/
 
                     case R.id.nav_health:
                         // Navigate to HealthRecordActivity
@@ -143,6 +145,11 @@ public class ParentDashboardActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(postAdapter);
 
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::loadPosts);
+
+
+
         // Load posts
         loadPosts();
 
@@ -164,7 +171,7 @@ public class ParentDashboardActivity extends AppCompatActivity {
                     String fullName = document.getString("fullName");
                     String userProfileImageUrl = document.getString("profileImageUrl");
 
-                    updateNavHeader("Greetings, " + fullName + "!", userProfileImageUrl);
+                    updateNavHeader(fullName, userProfileImageUrl);
                 } else {
                     // If not in doctorUsers, check parentUsers
                     db.collection("parentUsers").document(userId).get().addOnCompleteListener(parentTask -> {
@@ -190,6 +197,7 @@ public class ParentDashboardActivity extends AppCompatActivity {
     }
 
     private void loadPosts() {
+        swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
         db.collection("posts")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
@@ -205,10 +213,13 @@ public class ParentDashboardActivity extends AppCompatActivity {
                         }
                         postAdapter.notifyDataSetChanged();
                     } else {
+                        swipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(ParentDashboardActivity.this, "Error loading posts", Toast.LENGTH_SHORT).show();
                     }
+                    swipeRefreshLayout.setRefreshing(false);
                 });
     }
+
 
     private void updateNavHeader(String fullName, String userProfileImageUrl) {
         View headerView = navigationView.getHeaderView(0);

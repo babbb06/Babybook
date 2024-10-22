@@ -11,6 +11,13 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 public class ReminderWorker extends Worker {
 
     private static final String CHANNEL_ID = "ReminderChannel";
@@ -43,9 +50,6 @@ public class ReminderWorker extends Worker {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
         notificationManager.notify(0, builder.build());
 
-        // Reschedule the worker
-        ScheduleReminderUtil.scheduleReminder(getApplicationContext(), appointmentDate, appointmentTime, parentFullName);
-
         return Result.success();
     }
 
@@ -59,6 +63,47 @@ public class ReminderWorker extends Worker {
 
             NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public static void scheduleReminder(Context context, String appointmentDate, String appointmentTime, String parentFullName) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        try {
+            // Parse the appointment date and time
+            Date appointmentDateTime = dateFormat.parse(appointmentDate + " " + appointmentTime);
+            if (appointmentDateTime != null) {
+                // Calculate the time for the notification (one day before)
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(appointmentDateTime);
+                calendar.add(Calendar.DAY_OF_YEAR, -1); // One day before
+
+                long currentTime = System.currentTimeMillis();
+                long notificationTime = calendar.getTimeInMillis();
+
+                if (notificationTime > currentTime) {
+                    // Calculate the delay
+                    long delay = notificationTime - currentTime;
+
+                    // Schedule the worker with the calculated delay
+                    androidx.work.OneTimeWorkRequest reminderRequest =
+                            new androidx.work.OneTimeWorkRequest.Builder(ReminderWorker.class)
+                                    .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                                    .addTag("AppointmentReminder")
+                                    .setInputData(
+                                            new androidx.work.Data.Builder()
+                                                    .putString("appointmentDate", appointmentDate)
+                                                    .putString("appointmentTime", appointmentTime)
+                                                    .putString("parentFullName", parentFullName)
+                                                    .build()
+                                    )
+                                    .build();
+
+                    androidx.work.WorkManager.getInstance(context)
+                            .enqueue(reminderRequest);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 }

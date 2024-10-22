@@ -5,26 +5,26 @@
     <group android:checkableBehavior="single">
         <item android:title="Menu"> <!-- Section Header -->
             <menu>
-                <item
+                <!--   <item
                     android:id="@+id/nav_home"
                     android:icon="@drawable/home"
-                    android:title="Home" />
+                    android:title="Home" />-->
                 <item
                     android:id="@+id/nav_health"
                     android:icon="@drawable/health"
                     android:title="Health Record" />
                 <item
                     android:id="@+id/nav_clinic"
+                    android:icon="@drawable/vaccine"
+                    android:title="Vaccine" />
+                <item
+                    android:id="@+id/nav_doctor"
                     android:icon="@drawable/clinic_drawable"
-                    android:title="Clinic" />
+                    android:title="Check-Ups" />
                 <item
                     android:id="@+id/nav_chat"
                     android:icon="@drawable/chat_icon"
                     android:title="Chat" />
-                <item
-                    android:id="@+id/nav_doctor"
-                    android:icon="@drawable/schedule"
-                    android:title="Doctor" />
                 <item
                     android:id="@+id/nav_schedules"
                     android:icon="@drawable/schedsend"
@@ -50,7 +50,7 @@
             <menu>
                 <item
                     android:id="@+id/nav_about"
-                    android:icon="@drawable/share"
+                    android:icon="@drawable/about"
                     android:title="About" />
                 <item
                     android:id="@+id/nav_terms"

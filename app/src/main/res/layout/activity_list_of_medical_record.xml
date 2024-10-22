@@ -6,7 +6,6 @@
         android:id="@+id/doctor_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".medicalrecord.ListOfMedicalRecord"
         android:background="@drawable/sidebarbg">
 
         <!-- Main content -->
@@ -28,10 +27,33 @@
                 app:titleMarginTop="13dp"
                 app:titleTextColor="@color/white"
                 app:subtitleTextColor="@android:color/white"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewHome"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:elevation="1dp"
+                app:cardCornerRadius="60dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                app:layout_constraintEnd_toEndOf="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="@+id/toolbar">
+
+                <ImageView
+                    android:id="@+id/ivhome"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/baby_book_logo_nobg" />
+
+            </androidx.cardview.widget.CardView>
+
 
             <!-- Newsfeed RecyclerView -->
 
             <!-- Floating Action Button to create new post -->
+
             <androidx.recyclerview.widget.RecyclerView
 
                 android:id="@+id/listOfMedicalRecordRecyclerView"
@@ -41,7 +63,7 @@
                 android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:layout_constraintVertical_bias="0.0" />

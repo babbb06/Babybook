@@ -3,14 +3,17 @@ package com.example.babybook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.AppointmentRequestAdapter;
 import com.example.babybook.model.AppointmentRequest;
@@ -29,6 +32,8 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
     private AppointmentRequestAdapter adapter;
     private List<AppointmentRequest> appointmentRequests;
     private String doctorId;
+    private TextView tvNoRequestAppointments;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,9 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
         Button checkImage = findViewById(R.id.check_image);
         Button crossImage = findViewById(R.id.cross_image);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+
+        tvNoRequestAppointments = findViewById(R.id.tvNoRequests);
 
         checkImage.setOnClickListener(v -> {
             Intent intent = new Intent(ManageAppointmentsActivity.this, AcceptedRequestActivity.class);
@@ -67,11 +75,12 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                         .setTitle("Confirm Acceptance")
                         .setMessage("Are you sure you want to accept the appointment for " + request.getFirstName() + "?")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            updateAppointmentStatus(
+                            createHealthRecords(
                                     request.getId(),
                                     "Accepted",
                                     request.getFirstName(),
                                     request.getLastName(),
+                                    request.getSex(),
                                     request.getBirthDay(),
                                     request.getBirthPlace(),
                                     request.getAddress(),
@@ -107,41 +116,82 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
 
         doctorId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        swipeRefreshLayout.setOnRefreshListener(this::loadAppointments);
         loadAppointments();
     }
 
-    private void updateAppointmentStatus(String id, String status, String firstName,String lastName,String birthDay,String birthPlace,String address, String service, String date, String time, String userId, String doctorId) {
+    private void createHealthRecords(String id, String status, String firstName, String lastName, String sex, String birthDay, String birthPlace, String address, String service, String date, String time, String userId, String doctorId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Create a new HealthRecord object with all the details
-        HealthRecord healthRecord = new HealthRecord();
-        healthRecord.setFirstName(firstName);
-        healthRecord.setLastName(lastName);
-        healthRecord.setBirthDay(birthDay);
-        healthRecord.setBirthPlace(birthPlace);
-        healthRecord.setAddress(address);
-        healthRecord.setAddedBy(userId); // Assuming userId is the one adding the record
-        healthRecord.setId(id);
-        healthRecord.setDate(date);
-        healthRecord.setDoctorId(doctorId);
-        healthRecord.setService(service);
-        healthRecord.setTime(time);
-        healthRecord.setStatus(status);
-        healthRecord.setUserId(userId);
+        // Query to check if a health record already exists
+        db.collection("healthRecords")
+                .whereEqualTo("firstName", firstName)
+                .whereEqualTo("lastName", lastName)
+                .whereEqualTo("birthDay", birthDay)
+                .whereEqualTo("userId", userId)//PARENT ID
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Check if any existing record matches the criteria
+                        if (task.getResult().isEmpty()) {
+                            // No matching record found, create a new HealthRecord
+                            HealthRecord healthRecord = new HealthRecord();
+                            healthRecord.setFirstName(firstName);
+                            healthRecord.setLastName(lastName);
+                            healthRecord.setSex(sex);
+                            healthRecord.setBirthDay(birthDay);
+                            healthRecord.setBirthPlace(birthPlace);
+                            healthRecord.setAddress(address);
+                            healthRecord.setAddedBy(userId);
+                            healthRecord.setId(id); // childId
+                            healthRecord.setDate(date);
+                            healthRecord.setDoctorId(doctorId);
+                            healthRecord.setService(service);
+                            healthRecord.setTime(time);
+                            healthRecord.setStatus(status);
+                            healthRecord.setUserId(userId);
 
-        // Save the HealthRecord object to Firestore
-        db.collection("healthRecords").document(id)
-                .set(healthRecord)
-                .addOnSuccessListener(aVoid -> {
-                    // Log success or show success message if needed
-                    Log.d("ManageAppointments", "Health record successfully saved for " + firstName);
+                            // Save the new HealthRecord object to Firestore
+                            db.collection("healthRecords").document(id)
+                                    .set(healthRecord)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d("ManageAppointments", "Health record successfully saved for " + firstName);
 
-                    // Reload appointments to reflect updated status
-                    loadAppointments();
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("ManageAppointments", "Error saving health record.", e);
-                    Toast.makeText(ManageAppointmentsActivity.this, "Failed to save health record", Toast.LENGTH_SHORT).show();
+                                        loadAppointments(); // Reload appointments to reflect updated status
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.w("ManageAppointments", "Error saving health record.", e);
+                                        Toast.makeText(ManageAppointmentsActivity.this, "Failed to save health record", Toast.LENGTH_SHORT).show();
+                                    });
+                        } else {
+                            // Merging data logic (if needed)
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                HealthRecord existingRecord = document.toObject(HealthRecord.class);
+                                // Here you can merge the existing data with new data if needed
+                                // For example, update service and time if they are different
+                                existingRecord.setDate(date);
+                                existingRecord.setDoctorId(doctorId);
+
+                                existingRecord.setStatus("Accepted");
+                                existingRecord.setService(service);// Update as needed
+                                existingRecord.setTime(time); // Update as needed
+
+                                // Save the updated record back to Firestore
+                                db.collection("healthRecords").document(document.getId())
+                                        .set(existingRecord)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Log.d("ManageAppointments", "Health record updated for " + firstName);
+                                            loadAppointments(); // Reload appointments to reflect updated status
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Log.w("ManageAppointments", "Error updating health record.", e);
+                                            Toast.makeText(ManageAppointmentsActivity.this, "Failed to update health record", Toast.LENGTH_SHORT).show();
+                                        });
+                            }
+                        }
+                    } else {
+                        Log.w("ManageAppointments", "Error checking existing health records.", task.getException());
+                    }
                 });
 
         // Also update the appointment status
@@ -158,14 +208,15 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
 
 
-
     private void loadAppointments() {
+        swipeRefreshLayout.setRefreshing(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("appointments")
                 .whereEqualTo("doctorId", doctorId)
                 .whereEqualTo("status", "Pending") // Only get appointments with "Pending" status
                 .get()
                 .addOnCompleteListener(task -> {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (task.isSuccessful()) {
                         appointmentRequests.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -176,6 +227,15 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                         // Sort the list by booking time (descending)
                         Collections.sort(appointmentRequests, (a1, a2) -> a2.getBookingTime().compareTo(a1.getBookingTime()));
                         adapter.notifyDataSetChanged();
+
+                        if (appointmentRequests.isEmpty()) {
+                            tvNoRequestAppointments.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            tvNoRequestAppointments.setVisibility(View.GONE);
+                        }
+
+
                     } else {
                         Log.w("ManageAppointments", "Error getting documents.", task.getException());
                     }

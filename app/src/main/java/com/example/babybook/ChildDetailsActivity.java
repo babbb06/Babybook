@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -24,6 +25,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import com.google.firebase.Timestamp;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -31,6 +33,7 @@ import androidx.cardview.widget.CardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -41,7 +44,7 @@ import java.util.Map;
 public class ChildDetailsActivity extends AppCompatActivity {
 
     private String currentParentId;
-    private String childId,LastName,FirstName; // Store the child ID
+    private String childId, LastName, FirstName,Sex, Address,Birthday; // Store the child ID
     private GestureDetector gestureDetector;
     private ImageView imageViewMenuBCG;
     private ImageView imageViewMenuHepatitisB;
@@ -54,7 +57,6 @@ public class ChildDetailsActivity extends AppCompatActivity {
     private ImageView imageViewMenuMeasles;
     private ImageView imageViewMenuMMR;
     private ImageView imageViewMenuBoosters3;
-
 
 
 
@@ -90,7 +92,6 @@ public class ChildDetailsActivity extends AppCompatActivity {
         setupMenu(imageViewMenuBoosters3);
 
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -101,6 +102,10 @@ public class ChildDetailsActivity extends AppCompatActivity {
         childId = getIntent().getStringExtra("CHILD_ID");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
+        Sex = getIntent().getStringExtra("Sex");
+        Address= getIntent().getStringExtra("Address");
+        Birthday = getIntent().getStringExtra("Birthday");
+
 
 
         // Find the CardView by its ID
@@ -108,12 +113,16 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
         // Set an OnClickListener to navigate to ViewMedicalRecord.java
         medicalRecordCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(ChildDetailsActivity.this, com.example.babybook.ListOfMedicalRecord.class);
+            Intent intent = new Intent(ChildDetailsActivity.this, com.example.babybook.ViewMedicalRecord.class);
 
             // Optionally, pass some data using intent if needed
-            intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
+            intent.putExtra("childId", childId); // Pass the child ID if needed
             intent.putExtra("FirstName", FirstName); // Pass the child ID
             intent.putExtra("LastName", LastName);
+            intent.putExtra("Sex", Sex);
+            intent.putExtra("Address", Address);
+            intent.putExtra("Birthday", Birthday);
+
             startActivity(intent);
         });
 
@@ -131,13 +140,26 @@ public class ChildDetailsActivity extends AppCompatActivity {
         findViewById(R.id.imageViewAddMeasles).setOnClickListener(v -> showAddImageDialog("MEASLES", R.array.dose_options_measles));
         findViewById(R.id.imageViewAddMMR).setOnClickListener(v -> showAddImageDialog("MMR", R.array.dose_options_mmr));
         findViewById(R.id.imageViewAddBoosters3).setOnClickListener(v -> showAddImageDialog("BOOSTERS 2", R.array.dose_options_boosters3));
+        // Find the CardView
+        CardView cardViewHome = findViewById(R.id.cardViewHome);
 
-        gestureDetector = new GestureDetector(this, new ChildDetailsActivity.SwipeGestureDetector());
+        // Set OnClickListener for the CardView
+        cardViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to ParentDashboardActivity
+                Intent intent = new Intent(ChildDetailsActivity.this, DoctorDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Optionally, finish the current activity
+            }
+        });
+   /*     gestureDetector = new GestureDetector(this, new ChildDetailsActivity.SwipeGestureDetector());
 
         findViewById(R.id.rootlayout).setOnTouchListener((v, event) -> {
             gestureDetector.onTouchEvent(event);
             return true;
-        });
+        });*/
     }
 
     @Override
@@ -186,7 +208,6 @@ public class ChildDetailsActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void showAddImageDialog(String vaccineName, int doseOptionsArrayId) {
@@ -251,7 +272,6 @@ public class ChildDetailsActivity extends AppCompatActivity {
         EditText editTextDate = dialogView.findViewById(R.id.editTextDate);
         EditText editTextReaction = dialogView.findViewById(R.id.editTextReaction);
         Button buttonUpload = dialogView.findViewById(R.id.buttonUpload);
-
 
 
         // Set the current date in editTextDate
@@ -509,7 +529,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
     }
 
 // Swipe Gesture Detector
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+  /*  private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -528,7 +548,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
             }
             return false;
         }
-    }
+    }*/
 
 
     private void navigateToChildDetailsActivity2() {

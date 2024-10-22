@@ -42,7 +42,7 @@ import java.util.Map;
 public class ChildDetailsParentActivity extends AppCompatActivity {
 
     private String currentParentId;
-    private String childId,FirstName,LastName; // Store the child ID
+    private String childId,FirstName,LastName,Sex,Address,Birthday; // Store the child ID
     private GestureDetector gestureDetector;
     private ImageView imageViewMenuBCG;
     private ImageView imageViewMenuHepatitisB;
@@ -76,6 +76,21 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         imageViewMenuBoosters3 = findViewById(R.id.imageViewAddBoosters3);
 
 
+        // Find the CardView
+        CardView cardViewHome = findViewById(R.id.cardViewHome);
+
+        // Set OnClickListener for the CardView
+        cardViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to navigate to ParentDashboardActivity
+                Intent intent = new Intent(ChildDetailsParentActivity.this, ParentDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Optionally, finish the current activity
+            }
+        });
+
         setupMenu(imageViewMenuBCG);
         setupMenu(imageViewMenuHepatitisB);
         setupMenu(imageViewMenuDPT);
@@ -100,18 +115,24 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         childId = getIntent().getStringExtra("CHILD_ID");
         FirstName = getIntent().getStringExtra("FirstName");
         LastName = getIntent().getStringExtra("LastName");
+        Sex = getIntent().getStringExtra("Sex");
+        Address= getIntent().getStringExtra("Address");
+        Birthday = getIntent().getStringExtra("Birthday");
 
         // Find the CardView by its ID
         CardView medicalRecordCardView = findViewById(R.id.medicalrecordcv);
 
         // Set an OnClickListener to navigate to ViewMedicalRecord.java
         medicalRecordCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(ChildDetailsParentActivity.this, com.example.babybook.ListOfMedicalRecordParent.class);
+            Intent intent = new Intent(ChildDetailsParentActivity.this, com.example.babybook.ViewMedicalRecordParent.class);
 
             // Optionally, pass some data using intent if needed
-            intent.putExtra("CHILD_ID", childId); // Pass the child ID if needed
+            intent.putExtra("childId", childId); // Pass the child ID if needed
             intent.putExtra("FirstName", FirstName); // Pass the child ID
             intent.putExtra("LastName", LastName);
+            intent.putExtra("Sex", Sex);
+            intent.putExtra("Address", Address);
+            intent.putExtra("Birthday", Birthday);
             startActivity(intent);
         });
 
@@ -130,12 +151,12 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         findViewById(R.id.imageViewAddMMR).setOnClickListener(v -> showAddImageDialog("MMR", R.array.dose_options_mmr));
         findViewById(R.id.imageViewAddBoosters3).setOnClickListener(v -> showAddImageDialog("BOOSTERS 2", R.array.dose_options_boosters3));
 
-        gestureDetector = new GestureDetector(this, new ChildDetailsParentActivity.SwipeGestureDetector());
+       /* gestureDetector = new GestureDetector(this, new ChildDetailsParentActivity.SwipeGestureDetector());
 
         findViewById(R.id.rootlayout).setOnTouchListener((v, event) -> {
             gestureDetector.onTouchEvent(event);
             return true;
-        });
+        });*/
     }
 
     @Override
@@ -321,10 +342,10 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
                                 row.addView(createTextView(reaction));
 
                                 // Set click listener for the row
-                                row.setOnClickListener(v -> {
+                              /*row.setOnClickListener(v -> {
                                     // Handle row click
                                     showDetailsDialog(docId, dose, type, location, date, reaction);
-                                });
+                                });*/
 
                                 tableLayout.addView(row);
                             }
@@ -356,7 +377,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
         editTextDate.setText(date);
         editTextReaction.setText(reaction);
 
-        builder.setView(dialogView)
+               builder.setView(dialogView)
                 .setTitle("Edit Vaccine Details")
                 .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
@@ -462,7 +483,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
     }
 
 // Swipe Gesture Detector
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+ /*   private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -481,7 +502,7 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
             }
             return false;
         }
-    }
+    }*/
 
 
     private void navigateToChildDetailsActivity2() {

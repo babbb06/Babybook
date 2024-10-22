@@ -45,6 +45,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="15dp"/>
 
+            <TextView
+                android:id="@+id/tvChildInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Child's Information"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbletchild"
+                android:layout_marginStart="15dp"/>
+
 
 
 
@@ -63,7 +76,7 @@
                 app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toStartOf="@+id/lastnameLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbletchild">
+                app:layout_constraintTop_toBottomOf="@+id/tvChildInfo">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -95,7 +108,7 @@
                 app:hintTextColor="@color/violet"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/firstLayout"
-                app:layout_constraintTop_toBottomOf="@+id/lbletchild">
+                app:layout_constraintTop_toBottomOf="@+id/tvChildInfo">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -114,31 +127,31 @@
             <!-- Birthday Picker -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/birthdayLayout"
-                android:paddingStart="15dp"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="4dp"
+                android:onClick="showBirthdayDatePicker"
+                android:paddingStart="15dp"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
                 app:errorTextColor="@color/clear"
                 app:hintTextColor="@color/violet"
-                android:onClick="showBirthdayDatePicker"
-                android:layout_marginEnd="3dp"
-                app:layout_constraintEnd_toStartOf="@+id/birthLayout"
+                app:layout_constraintEnd_toStartOf="@+id/sexLayout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lastnameLayout"
-                app:layout_constraintWidth_percent="0.4">
+                app:layout_constraintWidth_percent="0.55">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextBirthday"
                     style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:fontFamily="@font/poppins"
                     android:hint="Birthday"
-                    android:focusable="false"
                     android:inputType="none"
                     android:onClick="showBirthdayDatePicker"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -149,20 +162,67 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/birthLayout"
+                android:id="@+id/sexLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
-                android:paddingEnd="15dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="6dp"
+                android:paddingEnd="15dp"
                 android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
                 app:errorTextColor="@color/clear"
-                app:layout_constraintHorizontal_bias="0.32"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.32"
                 app:layout_constraintStart_toEndOf="@+id/birthdayLayout"
-                app:layout_constraintTop_toBottomOf="@+id/lastnameLayout">
+                app:layout_constraintTop_toTopOf="@+id/birthdayLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextsex"
+                    android:enabled="false"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:inputType="textPostalAddress"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/sexspinner"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:autofillHints="Select Sex"
+                android:entries="@array/sex_choices"
+                android:spinnerMode="dropdown"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:layout_constraintEnd_toEndOf="@+id/sexLayout"
+                app:layout_constraintStart_toStartOf="@+id/sexLayout"
+                app:layout_constraintTop_toBottomOf="@+id/lastnameLayout"
+                app:layout_constraintTop_toTopOf="@+id/birthdayLayout" />
+
+            <!--   birth place-->
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/birthLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingEnd="15dp"
+                android:paddingHorizontal="15dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/birthdayLayout"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextbirthplace"
@@ -175,35 +235,158 @@
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!--
 
+
+            android:enabled="false"
+            android:maxLength="3"
+                    android:minHeight="48dp"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/black"
+                    app:backgroundTintMode="multiply"
+
+            <Spinner
+                android:id="@+id/birthplacespinner"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="10dp"
+                android:autofillHints="Select Birth Place"
+                android:entries="@array/birthplace_choices"
+                android:spinnerMode="dropdown"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:errorTextColor="@color/clear"
+                app:layout_constraintEnd_toEndOf="@+id/birthLayout"
+                app:layout_constraintStart_toStartOf="@+id/birthLayout"
+                app:layout_constraintTop_toBottomOf="@+id/lastnameLayout"
+                app:layout_constraintTop_toTopOf="@+id/birthdayLayout" />
+            -->
+
+
+            <TextView
+                android:id="@+id/tvChildAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Address"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/birthLayout"
+                android:layout_marginStart="15dp"/>
+
+            <!-- Street Name/Building/House No. -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/addressLayout"
+                android:id="@+id/streetLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="-5.3dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:layout_constraintEnd_toStartOf="@+id/barangayLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvChildAddress"
+                app:layout_constraintWidth_percent="0.35">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eTStreet"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Street"
+                    android:inputType="textCapWords"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Barangay -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/barangayLayout"
                 style="@style/LoginTextInputOuterFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:paddingHorizontal="15dp"
+                android:layout_marginEnd="4.5dp"
+                android:textColorHint="@color/black"
                 app:boxStrokeColor="@color/violet"
                 app:boxStrokeErrorColor="@color/colorError"
-                app:errorTextColor="@color/clear"
-                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.32"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/birthLayout">
+                app:layout_constraintStart_toEndOf="@+id/streetLayout"
+                app:layout_constraintTop_toBottomOf="@+id/tvChildAddress"
+                app:layout_constraintWidth_percent="0.56">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/eTAddress"
+                    android:id="@+id/eTBarangay"
                     style="@style/LoginTextInputInnerFieldStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Child Address"
                     android:fontFamily="@font/poppins"
+                    android:hint="Barangay"
                     android:inputType="textCapWords"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <!-- City -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cityLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                app:layout_constraintEnd_toStartOf="@+id/provinceLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barangayLayout"
+                app:layout_constraintWidth_percent="0.45">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eTCity"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:hint="City/Municipality"
+                    android:inputType="textCapWords"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Province -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/provinceLayout"
+                style="@style/LoginTextInputOuterFieldStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="6dp"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/violet"
+                app:boxStrokeErrorColor="@color/colorError"
+                android:layout_marginStart="-5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cityLayout"
+                app:layout_constraintTop_toBottomOf="@+id/barangayLayout"
+                app:layout_constraintWidth_percent="0.47">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eTProvince"
+                    style="@style/LoginTextInputInnerFieldStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Province"
+                    android:inputType="textCapWords"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <!-- Date Selection -->
@@ -212,12 +395,12 @@
                 android:id="@+id/select_date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:text="Select Schedule Date"
                 android:textColor="#000000"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressLayout"
-                android:layout_marginStart="15dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/provinceLayout" />
 
             <TextView
                 android:id="@+id/tvAvailableDays"

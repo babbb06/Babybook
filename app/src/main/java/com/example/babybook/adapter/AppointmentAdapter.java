@@ -19,8 +19,8 @@ import java.util.List;
 
 public class AppointmentAdapter extends ArrayAdapter<AppointmentRequest> {
 
-    private Context context;
-    private List<AppointmentRequest> appointmentList;
+    private final Context context;
+    private final List<AppointmentRequest> appointmentList;
 
     public AppointmentAdapter(@NonNull Context context, List<AppointmentRequest> list) {
         super(context, 0, list);

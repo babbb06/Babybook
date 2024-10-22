@@ -18,7 +18,7 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
-    private List<Post> postList;
+    private final List<Post> postList;
 
     public PostAdapter(List<Post> postList) {
         this.postList = postList;
@@ -34,11 +34,30 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
+
+        // Check if the headline is empty
+        if (post.getHeadline().isEmpty()) {
+            holder.postHeadline.setVisibility(View.GONE);
+            holder.postDate.setVisibility(View.GONE);
+            holder.postTime.setVisibility(View.GONE);
+            holder.postLocation.setVisibility(View.GONE);
+
+
+            holder.content.setVisibility(View.VISIBLE); //  content is visible
+        } else {
+            holder.postHeadline.setVisibility(View.VISIBLE);
+            holder.postDate.setVisibility(View.VISIBLE);
+            holder.postTime.setVisibility(View.VISIBLE);
+            holder.postLocation.setVisibility(View.VISIBLE);
+
+            holder.postHeadline.setText(post.getHeadline());
+            holder.postDate.setText("When:  " + post.getDate());
+            holder.postTime.setText(post.getTime());
+            holder.postLocation.setText("Venue:  " + post.getLocation());
+        }
+
+
         holder.doctorName.setText(post.getDoctorName());
-        holder.postHeadline.setText(post.getHeadline());
-        holder.postDate.setText("When:  " + post.getDate());
-        holder.postTime.setText(post.getTime());
-        holder.postLocation.setText("Venue:  " + post.getLocation());
         holder.content.setText(post.getContent());
 
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM/dd/yyyy   HH:mm");

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.HealthRecordAdapter;
 import com.example.babybook.model.HealthRecord;
@@ -40,6 +42,8 @@ public class HealthRecordActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference healthRecordsCollection;
     private FirebaseAuth mAuth; // Add FirebaseAuth instance
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvNoHealthRec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,10 @@ public class HealthRecordActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         healthRecordsCollection = db.collection("healthRecords");
+        tvNoHealthRec = findViewById(R.id.tvNoHealthRecDoc);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+
+        swipeRefreshLayout.setOnRefreshListener(this::loadHealthRecords);
 
         loadHealthRecords();
 
@@ -76,35 +84,52 @@ public class HealthRecordActivity extends AppCompatActivity {
     }
 
     private void loadHealthRecords() {
+        tvNoHealthRec.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(true);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if (user != null) {
             String currentUserId = user.getUid();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference healthRecordsCollection = db.collection("healthRecords");
 
-            healthRecordsCollection.whereEqualTo("doctorId", currentUserId)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                healthRecords.clear();
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    HealthRecord healthRecord = document.toObject(HealthRecord.class);
-                                    healthRecords.add(healthRecord);
-                                }
-                                adapter.notifyDataSetChanged();
-                            } else {
-                                Log.e("HealthRecordActivity", "Error loading records: ", task.getException());
-                                Toast.makeText(HealthRecordActivity.this, "Failed to load records: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            healthRecordsCollection
+                    .whereEqualTo("doctorId", currentUserId)
+                    .whereEqualTo("status", "Accepted")
+                    .addSnapshotListener((value, error) -> {
+                        swipeRefreshLayout.setRefreshing(false);
+
+                        if (error != null) {
+                            Log.e("HealthRecordActivity", "Error loading records: ", error);
+                            Toast.makeText(HealthRecordActivity.this, "Failed to load records: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (value != null) {
+                            healthRecords.clear();
+                            for (QueryDocumentSnapshot document : value) {
+                                HealthRecord healthRecord = document.toObject(HealthRecord.class);
+                                healthRecords.add(healthRecord);
                             }
+
+                            if (healthRecords.isEmpty()) {
+                                tvNoHealthRec.setVisibility(View.VISIBLE);
+                            } else {
+                                tvNoHealthRec.setVisibility(View.GONE);
+                            }
+
+                            adapter.notifyDataSetChanged();
                         }
                     });
         } else {
             Log.e("HealthRecordActivity", "User is not authenticated.");
             Toast.makeText(this, "User is not authenticated", Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
+
+
+
 
    /* private void showAddRecordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

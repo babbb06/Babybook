@@ -28,12 +28,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.babybook.adapter.PostAdapter;
 import com.example.babybook.model.Post;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -55,6 +57,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
     private PostAdapter postAdapter;
     private List<Post> postList;
     private Dialog progressDialog;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +101,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
-                    case R.id.doctor_nav_home:
-                        break;
+                    /*case R.id.doctor_nav_home:
+                        break;*/
                     case R.id.doctor_nav_health:
                         startActivity(new Intent(DoctorDashboardActivity.this, HealthRecordActivity.class));
                         break;
@@ -145,7 +149,10 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         recyclerView.setAdapter(postAdapter);
 
         FloatingActionButton fabCreatePost = findViewById(R.id.fabCreatePost);
-        fabCreatePost.setOnClickListener(v -> showCreatePostDialog());
+        fabCreatePost.setOnClickListener(v -> showChoosePostDialog(this));
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::loadPosts);
 
         loadPosts();
     }
@@ -160,7 +167,7 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                     String specialization = document.getString("specialization");
 
                     // Pass both the fullName and image URL to updateNavHeader
-                    updateNavHeader("Greetings, " + fullName + "!", userProfileImageUrl, specialization);
+                    updateNavHeader(fullName, userProfileImageUrl, specialization);
                 } else {
                     Toast.makeText(DoctorDashboardActivity.this, "Doctor not found", Toast.LENGTH_SHORT).show();
                 }
@@ -185,28 +192,84 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                 .into(doctorImg);
     }
 
+    private void showChoosePostDialog(Context context) {
+        // Create a dialog
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_choose_post);
 
-    private void showCreatePostDialog() {
+        // Find the TextViews and set click listeners
+        TextView textViewFullPost = dialog.findViewById(R.id.textViewFullPost);
+        TextView textViewShortPost = dialog.findViewById(R.id.textViewShortPost);
+
+
+
+        textViewFullPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCreatePostDialog(true);
+                dialog.dismiss(); // Dismiss the dialog
+            }
+        });
+
+        textViewShortPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCreatePostDialog(false);
+                dialog.dismiss(); // Dismiss the dialog
+            }
+        });
+
+
+        // Show the dialog
+        dialog.show();
+    }
+
+
+    private void showCreatePostDialog(Boolean full) {
         // Inflate the custom dialog layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_create_post, null);
 
-        // Get the EditText from the custom layout
+        // Get the EditTexts from the custom layout
         EditText etHeadline = dialogView.findViewById(R.id.etHeadline);
         EditText etDate = dialogView.findViewById(R.id.etDate);
         EditText etTime = dialogView.findViewById(R.id.etTime);
         EditText etLocation = dialogView.findViewById(R.id.etLocation);
         EditText input = dialogView.findViewById(R.id.input_post);
 
-        etDate.setOnClickListener(v -> showDatePickerDialog(etDate)); // Pass etDate to the method
-        etTime.setOnClickListener(v -> showTimePickerDialog(etTime)); // Pass etTime to the method
+        // Get Layouts
+        TextInputLayout headlineLayout = dialogView.findViewById(R.id.headlineLayout);
+        TextInputLayout dateLayout = dialogView.findViewById(R.id.dateLayout);
+        TextInputLayout timeLayout = dialogView.findViewById(R.id.timeLayout);
+        TextInputLayout locationLayout = dialogView.findViewById(R.id.locationLayout);
 
+        etDate.setOnClickListener(v -> showDatePickerDialog(etDate));
+        etTime.setOnClickListener(v -> showTimePickerDialog(etTime));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Create New Post");
+        if (full) {
+            builder.setTitle("Create New Medical Mission Post");
+        }else{
+            builder.setTitle("Create New Medical Information Post");
+        }
 
         // Set the custom view in the dialog
         builder.setView(dialogView);
+
+        if (full) {
+            // Show all EditTexts and their layouts
+            headlineLayout.setVisibility(View.VISIBLE);
+            dateLayout.setVisibility(View.VISIBLE);
+            timeLayout.setVisibility(View.VISIBLE);
+            locationLayout.setVisibility(View.VISIBLE);
+        } else {
+            // Hide all EditTexts and their layouts except for the content EditText
+            headlineLayout.setVisibility(View.GONE);
+            dateLayout.setVisibility(View.GONE);
+            timeLayout.setVisibility(View.GONE);
+            locationLayout.setVisibility(View.GONE);
+        }
 
         builder.setPositiveButton("Post", (dialog, which) -> {
             String headline = etHeadline.getText().toString();
@@ -214,10 +277,21 @@ public class DoctorDashboardActivity extends AppCompatActivity {
             String time = etTime.getText().toString();
             String location = etLocation.getText().toString();
             String content = input.getText().toString();
-            if (headline.isEmpty() || date.isEmpty() || time.isEmpty() || location.isEmpty() || content.isEmpty()) {
-                showMessageDialog("Please fill all fields and try again.", null);
+
+            // Allow empty fields for non-full posts
+            if (full) {
+                if (headline.isEmpty() || date.isEmpty() || time.isEmpty() || location.isEmpty() || content.isEmpty()) {
+                    showMessageDialog("Please fill all fields and try again.", null);
+                } else {
+                    createPost(headline, date, time, location, content);
+                }
             } else {
-                createPost(headline, date, time, location, content);
+                // If not full, only content is mandatory
+                if (content.isEmpty()) {
+                    showMessageDialog("Please fill the content field and try again.", null);
+                } else {
+                    createPost("", "", "", "", content); // Pass empty strings for the other fields
+                }
             }
         });
 
@@ -234,6 +308,8 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
+
 
 
     private void createPost(String headline, String date, String time, String location, String content) {
@@ -285,10 +361,12 @@ public class DoctorDashboardActivity extends AppCompatActivity {
 
 
     private void loadPosts() {
+        swipeRefreshLayout.setRefreshing(true);
         db.collection("posts")
                 .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (task.isSuccessful()) {
                         postList.clear();
                         for (DocumentSnapshot document : task.getResult()) {

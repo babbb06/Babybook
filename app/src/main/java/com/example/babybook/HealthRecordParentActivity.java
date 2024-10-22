@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.HealthRecordAdapter;
 import com.example.babybook.adapter.HealthRecordParentAdapter;
@@ -40,6 +42,9 @@ public class HealthRecordParentActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference healthRecordsCollection;
     private FirebaseAuth mAuth; // Add FirebaseAuth instance
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvNoHealthRec;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,10 @@ public class HealthRecordParentActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         healthRecordsCollection = db.collection("healthRecords");
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::loadHealthRecords);
+        tvNoHealthRec = findViewById(R.id.tvNoHealthRecParent);
+
 
         loadHealthRecords();
 
@@ -75,6 +84,8 @@ public class HealthRecordParentActivity extends AppCompatActivity {
     }
 
     private void loadHealthRecords() {
+        tvNoHealthRec.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String currentUserId = user.getUid();
@@ -93,15 +104,25 @@ public class HealthRecordParentActivity extends AppCompatActivity {
                                     healthRecords.add(healthRecord);
                                 }
                                 adapter.notifyDataSetChanged();
+
+                                // Check if there are any health records
+                                if (healthRecords.isEmpty()) {
+                                    tvNoHealthRec.setVisibility(View.VISIBLE); // Show the message
+                                } else {
+                                    tvNoHealthRec.setVisibility(View.GONE); // Hide the message
+                                }
                             } else {
                                 Log.e("HealthRecordActivity", "Error loading records: ", task.getException());
                                 Toast.makeText(HealthRecordParentActivity.this, "Failed to load records: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                swipeRefreshLayout.setRefreshing(false);
                             }
+                            swipeRefreshLayout.setRefreshing(false); // Stop refreshing animation
                         }
                     });
         } else {
             Log.e("HealthRecordActivity", "User is not authenticated.");
             Toast.makeText(this, "User is not authenticated", Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false); // Stop refreshing animation
         }
     }
 

@@ -74,14 +74,14 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
 
     private LinearLayout vaccineList;
     private List<String> vaccines;
-    private Map<String, Integer> vaccineMap = new HashMap<>();
+    private final Map<String, Integer> vaccineMap = new HashMap<>();
 
     private TextInputEditText etStartTime, etEndTime, eTClinicAddress;
     private TextView tvNoPin, tvPinSuccess;
     private GoogleMap mMap;
     private LatLng initialLocation;
     private LatLng selectedLocation;
-    private Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
+    private final Integer LOCATION_PERMISSION_REQUEST_CODE = 123;
     private Button btnSubmit, btnCancel;
     private FirebaseFirestore db;
     EditText etFirstName, etLastName, etEmail, etClinicName, etClinicNumber;
@@ -126,9 +126,10 @@ public class AddClinicActivity extends AppCompatActivity implements OnMapReadyCa
 
         // Set up the custom MapTouchableWrapper
         MapTouchableWrapper mapWrapper = findViewById(R.id.map_wrapper);
-        mapWrapper.setOnTouchListener(() -> {
+        mapWrapper.setOnTouchListener(event -> {
             // Disable parent scroll when interacting with the map
             scrollView.requestDisallowInterceptTouchEvent(true);
+            //swipeRefreshLayout.setEnabled(false); // Disable swipe refresh
         });
 
         // Initialize the map fragment

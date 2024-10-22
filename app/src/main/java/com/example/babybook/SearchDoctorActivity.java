@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.babybook.adapter.DoctorAdapter;
 import com.example.babybook.model.Doctor;
@@ -33,6 +35,9 @@ public class SearchDoctorActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DoctorAdapter adapter;
     private List<Doctor> doctors;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvNoDoctor;
+
     private final String[] specializations = {
             "Pediatrician", "Hospitalist", "Child Abuse Pediatrician", "Neonatalists",
             "Emergency Pediatric Medicine", "Pediatric Critical Care Medicine",
@@ -59,6 +64,7 @@ public class SearchDoctorActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_button);
         filterButton = findViewById(R.id.filterbutton);  // Link the filter button
         recyclerView = findViewById(R.id.recycler_view);
+        tvNoDoctor = findViewById(R.id.tvNoDoctor);
 
         doctors = new ArrayList<>();
         adapter = new DoctorAdapter(doctors, doctor -> {
@@ -74,6 +80,8 @@ public class SearchDoctorActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this::loadAllDoctors);
         // Load all doctors when the activity starts
         loadAllDoctors();
 
@@ -122,6 +130,15 @@ public class SearchDoctorActivity extends AppCompatActivity {
                                 doctors.add(doctor);
                             }
                         }
+
+                        // Check if any doctors were found
+                        if (doctors.isEmpty()) {
+                            tvNoDoctor.setVisibility(View.VISIBLE);
+                            tvNoDoctor.setText("No doctors found with specialization: \n" + query);
+                        } else {
+                            tvNoDoctor.setVisibility(View.GONE);
+                        }
+
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(SearchDoctorActivity.this, "Error getting doctors.", Toast.LENGTH_SHORT).show();
@@ -129,19 +146,27 @@ public class SearchDoctorActivity extends AppCompatActivity {
                 });
     }
 
-    // Method to load all doctors when activity starts
+
     private void loadAllDoctors() {
+        swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
+        tvNoDoctor.setVisibility(View.GONE);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("doctorUsers")
                 .get()
                 .addOnCompleteListener(task -> {
+                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing animation at the start of the callback
                     if (task.isSuccessful()) {
                         doctors.clear();
+                        searchEditText.setText("");
+                        searchEditText.clearFocus();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Doctor doctor = document.toObject(Doctor.class);
                             if (doctor != null) {
-                                doctor.setId(document.getId());
-                                doctors.add(doctor);
+                                // Check if specialization is not "Midwife"
+                                if (!"Midwife".equalsIgnoreCase(doctor.getSpecialization())) {
+                                    doctor.setId(document.getId());
+                                    doctors.add(doctor);
+                                }
                             }
                         }
                         adapter.notifyDataSetChanged();
@@ -150,6 +175,7 @@ public class SearchDoctorActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

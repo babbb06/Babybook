@@ -67,14 +67,14 @@ public class ChildDetailsActivity2 extends AppCompatActivity {
         findViewById(R.id.imageViewAddNewbornHearing).setOnClickListener(v -> showAddImageDialog("NEWBORN HEARING", R.array.dose_options_mmr));
 
 
-        // Initialize GestureDetector
+     /*   // Initialize GestureDetector
         gestureDetector = new GestureDetector(this, new SwipeGestureDetector());
 
         // Set onTouchListener to the root view
         findViewById(R.id.rootlayout).setOnTouchListener((v, event) -> {
             gestureDetector.onTouchEvent(event);
             return true;
-        });
+        });*/
     }
 
     @Override
@@ -361,7 +361,7 @@ public class ChildDetailsActivity2 extends AppCompatActivity {
         return textView;
     }
 
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+  /*  private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -380,7 +380,7 @@ public class ChildDetailsActivity2 extends AppCompatActivity {
             }
             return false;
         }
-    }
+    }*/
 
 
     private void navigateToChildDetailsActivity() {
