@@ -239,21 +239,51 @@ public class SearchDoctorChatActivity extends AppCompatActivity {
         }
     }
 
+   // Show filter menu for selecting a specialization
     private void showFilterMenu(View view) {
-        // This method should show a filter menu for selecting a specialization
-        PopupMenu popupMenu = new PopupMenu(this, view);
+        PopupMenu popupMenu = new PopupMenu(SearchDoctorChatActivity.this, view);
         for (String specialization : specializations) {
             popupMenu.getMenu().add(specialization);
         }
-
         popupMenu.setOnMenuItemClickListener(item -> {
-            // Handle specialization selection
-            String selectedSpecialization = item.getTitle().toString();
-            filterBySpecialization(selectedSpecialization);
+            searchEditText.setText(item.getTitle());  // Set the selected specialization in the search bar
+            searchDoctors(item.getTitle().toString());  // Trigger the search
             return true;
         });
-
         popupMenu.show();
+    }
+    // Method to search doctors based on the query
+    private void searchDoctors(String query) {
+        String lowerCaseQuery = query.trim().toLowerCase();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("doctorUsers")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        doctors.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Doctor doctor = document.toObject(Doctor.class);
+                            if (doctor != null && doctor.getSpecialization() != null &&
+                                    doctor.getSpecialization().toLowerCase().contains(lowerCaseQuery)) {
+                                doctor.setId(document.getId());
+                                doctors.add(doctor);
+                            }
+                        }
+
+                        // Check if any doctors were found
+                        if (doctors.isEmpty()) {
+                            tvNoDoctor.setVisibility(View.VISIBLE);
+                            tvNoDoctor.setText("No doctors found with specialization: \n" + query);
+                        } else {
+                            tvNoDoctor.setVisibility(View.GONE);
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(SearchDoctorChatActivity.this, "Error getting doctors.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void filterBySpecialization(String specialization) {

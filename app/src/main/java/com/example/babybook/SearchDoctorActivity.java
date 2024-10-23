@@ -43,7 +43,7 @@ public class SearchDoctorActivity extends AppCompatActivity {
             "Emergency Pediatric Medicine", "Pediatric Critical Care Medicine",
             "Pediatric Cardiologist", "Pediatric Endocrinology", "Pediatric Gastroenterology",
             "Pediatric Neurology", "Pediatric Hematology/Oncology", "Pediatric Pulmonology",
-            "Pediatric Nephrology", "Pediatric Infectious Disease", "Pediatric Rheumatology"
+            "Pediatric Nephrology", "Pediatric Infectious Disease", "Pediatric Rheumatology", "Midwife"
     };
 
     @Override
@@ -147,6 +147,7 @@ public class SearchDoctorActivity extends AppCompatActivity {
     }
 
 
+    // Method to load all doctors when activity starts
     private void loadAllDoctors() {
         swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
         tvNoDoctor.setVisibility(View.GONE);
@@ -162,11 +163,8 @@ public class SearchDoctorActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Doctor doctor = document.toObject(Doctor.class);
                             if (doctor != null) {
-                                // Check if specialization is not "Midwife"
-                                if (!"Midwife".equalsIgnoreCase(doctor.getSpecialization())) {
-                                    doctor.setId(document.getId());
-                                    doctors.add(doctor);
-                                }
+                                doctor.setId(document.getId());
+                                doctors.add(doctor);
                             }
                         }
                         adapter.notifyDataSetChanged();
@@ -175,7 +173,6 @@ public class SearchDoctorActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
