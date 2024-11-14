@@ -8,37 +8,31 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.babybook.model.HealthChecklist;
 import com.example.babybook.emoji.DecimalDigitsInputFilter;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class AddMedicalRecord extends AppCompatActivity {
 
-    private String childId,LastName,FirstName,Sex,Address,Birthday; // Store the child ID
+    private String childId, LastName, FirstName, Sex, Address, Birthday;
     private FirebaseFirestore db;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_medical_record);  // Replace with your XML layout file name
+        setContentView(R.layout.activity_add_medical_record); // Replace with your XML layout file name
         FirebaseApp.initializeApp(this);
 
         // Initialize Firestore
@@ -77,21 +71,16 @@ public class AddMedicalRecord extends AppCompatActivity {
         LastName = getIntent().getStringExtra("LastName");
         FirstName = getIntent().getStringExtra("FirstName");
         Sex = getIntent().getStringExtra("Sex");
-        Address= getIntent().getStringExtra("Address");
-        Birthday= getIntent().getStringExtra("Birthday");
+        Address = getIntent().getStringExtra("Address");
+        Birthday = getIntent().getStringExtra("Birthday");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        getSupportActionBar().setTitle("Medical Records Details");// DOCTOR SIDe
-
+        getSupportActionBar().setTitle("Medical Records Details");
 
         editTextTemperature.setFilters(new InputFilter[]{new DecimalDigitsInputFilter()});
-
-
-        // Fetch user data
-        fetchUserData();
 
         // Get today's date
         String datetoday = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
@@ -110,10 +99,10 @@ public class AddMedicalRecord extends AppCompatActivity {
 
             // Validate inputs
             if (validateInputs(editTextDate, editTextWeight, editTextTemperature)) {
-                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature,editTextsex, summaryDiagnosis, treatmentPlan, followUpPlan,
+                createMedicalRecord(editTextDate, editTextWeight, editTextTemperature, summaryDiagnosis, treatmentPlan, followUpPlan,
                         checkSick, checkCough, checkDiarrhea, checkFever, checkMeasles, checkEarPain,
                         checkPallor, checkMalnourished, checkFeeding, checkBreastfeeding, checkDiarrheaCough,
-                        checkImmunization, checkOtherProblems, user.getUid(),childId); // Pass user ID as doctorId
+                        checkImmunization, checkOtherProblems, user.getUid(), childId); // Pass user ID as doctorId
             }
         });
     }
@@ -138,53 +127,59 @@ public class AddMedicalRecord extends AppCompatActivity {
         Toast.makeText(AddMedicalRecord.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature, EditText editTextsex,
-                                     EditText summaryDiagnosis, EditText treatmentPlan, EditText followUpPlan,
-                                     CheckBox checkSick, CheckBox checkCough, CheckBox checkDiarrhea,
-                                     CheckBox checkFever, CheckBox checkMeasles, CheckBox checkEarPain,
-                                     CheckBox checkPallor, CheckBox checkMalnourished, CheckBox checkFeeding,
-                                     CheckBox checkBreastfeeding, CheckBox checkDiarrheaCough,
-                                     CheckBox checkImmunization, CheckBox checkOtherProblems, String doctorId, String childId) {
+    private void createMedicalRecord(EditText editTextDate, EditText editTextWeight, EditText editTextTemperature, EditText summaryDiagnosis,
+                                     EditText treatmentPlan, EditText followUpPlan, CheckBox checkSick, CheckBox checkCough,
+                                     CheckBox checkDiarrhea, CheckBox checkFever, CheckBox checkMeasles, CheckBox checkEarPain,
+                                     CheckBox checkPallor, CheckBox checkMalnourished, CheckBox checkFeeding, CheckBox checkBreastfeeding,
+                                     CheckBox checkDiarrheaCough, CheckBox checkImmunization, CheckBox checkOtherProblems,
+                                     String doctorId, String childId) {
 
         // Create a unique ID for the medical record
         String medicalRecordId = UUID.randomUUID().toString();
 
-        // Create a HashMap to store the data
-        Map<String, Object> medicalRecordData = new HashMap<>();
+        // Create an instance of the HealthChecklist model
+        HealthChecklist healthChecklist = new HealthChecklist();
+        healthChecklist.setDate(editTextDate.getText().toString());
+        healthChecklist.setWeight(editTextWeight.getText().toString());
+        healthChecklist.setTemperature(editTextTemperature.getText().toString());
+        healthChecklist.setSex(Sex);
+        healthChecklist.setLastName(LastName);
+        healthChecklist.setFirstName(FirstName);
+        healthChecklist.setBirthdate(Birthday);
 
-        // Store EditText values
-        medicalRecordData.put("Date", editTextDate.getText().toString());
-        medicalRecordData.put("Weight", editTextWeight.getText().toString());
-        medicalRecordData.put("Temperature", editTextTemperature.getText().toString());
-        medicalRecordData.put("Sex", Sex);
-        medicalRecordData.put("childId", childId);
-        medicalRecordData.put("doctorId", doctorId);
-        medicalRecordData.put("medicalRecordId", medicalRecordId);
 
-        // Store CheckBox states
-        medicalRecordData.put("IsSick", checkSick.isChecked());
-        medicalRecordData.put("HasCough", checkCough.isChecked());
-        medicalRecordData.put("HasDiarrhea", checkDiarrhea.isChecked());
-        medicalRecordData.put("HasFever", checkFever.isChecked());
-        medicalRecordData.put("HasMeasles", checkMeasles.isChecked());
-        medicalRecordData.put("HasEarPain", checkEarPain.isChecked());
-        medicalRecordData.put("IsPallor", checkPallor.isChecked());
-        medicalRecordData.put("IsMalnourished", checkMalnourished.isChecked());
-        medicalRecordData.put("IsFeeding", checkFeeding.isChecked());
-        medicalRecordData.put("IsBreastfeeding", checkBreastfeeding.isChecked());
-        medicalRecordData.put("HasDiarrheaCough", checkDiarrheaCough.isChecked());
-        medicalRecordData.put("HasImmunization", checkImmunization.isChecked());
-        medicalRecordData.put("HasOtherProblems", checkOtherProblems.isChecked());
 
-        medicalRecordData.put("Summary", summaryDiagnosis.getText().toString());
-        medicalRecordData.put("Treatment", treatmentPlan.getText().toString());
-        medicalRecordData.put("Follow", followUpPlan.getText().toString());
+
+        healthChecklist.setSummaryDiagnosis(summaryDiagnosis.getText().toString());
+        healthChecklist.setTreatmentPlan(treatmentPlan.getText().toString());
+        healthChecklist.setFollowUpPlan(followUpPlan.getText().toString());
+        healthChecklist.setDoctorId(doctorId);
+        healthChecklist.setMedicalRecordId(medicalRecordId);
+        healthChecklist.setChildId(childId);
+
+        // Set CheckBox values
+        healthChecklist.setSick(checkSick.isChecked());
+        healthChecklist.setCough(checkCough.isChecked());
+        healthChecklist.setDiarrhea(checkDiarrhea.isChecked());
+        healthChecklist.setFever(checkFever.isChecked());
+        healthChecklist.setMeasles(checkMeasles.isChecked());
+        healthChecklist.setEarPain(checkEarPain.isChecked());
+        healthChecklist.setPallor(checkPallor.isChecked());
+        healthChecklist.setMalnourished(checkMalnourished.isChecked());
+        healthChecklist.setAssessFeeding(checkFeeding.isChecked());
+        healthChecklist.setAssessBreastfeeding(checkBreastfeeding.isChecked());
+        healthChecklist.setLongDiarrheaOrCough(checkDiarrheaCough.isChecked());
+        healthChecklist.setNeedsImmunization(checkImmunization.isChecked());
+        healthChecklist.setOtherProblems(checkOtherProblems.isChecked());
+
+        // Set current timestamp
+        healthChecklist.setTimestamp(com.google.firebase.Timestamp.now());
 
         // Reference to the parent document (e.g., child document)
         db.collection("healthRecords").document(childId) // Use the appropriate parent collection and document ID
                 .collection("medicalRecords") // Subcollection name
                 .document(medicalRecordId) // Set a specific document ID for the medical record
-                .set(medicalRecordData)
+                .set(healthChecklist)
                 .addOnSuccessListener(documentReference -> {
                     showToast("Medical record submitted successfully!");
                     // Navigate to the ViewMedicalRecord activity
@@ -196,38 +191,5 @@ public class AddMedicalRecord extends AppCompatActivity {
                     Log.e("FirestoreError", "Error submitting data: " + e.getMessage());
                     showToast("Error submitting record. Please try again.");
                 });
-    }
-
-
-    private void fetchUserData() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-
-        if (user != null) {
-            String userId = user.getUid(); // Get the current user's ID
-
-            db.collection("Users").document(userId).get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                // Access user data
-                                String userName = document.getString("name");
-                                String userEmail = document.getString("email");
-
-                                // You can now use this data as needed, e.g., display it in the UI
-                                showToast("User: " + userName + ", Email: " + userEmail);
-                            } else {
-                                Log.d("FetchUserData", "No such document");
-                                showToast("No user data found.");
-                            }
-                        } else {
-                            Log.d("FetchUserData", "Get failed with ", task.getException());
-                            showToast("Failed to fetch user data. Please try again.");
-                        }
-                    });
-        } else {
-            showToast("No user is logged in.");
-        }
     }
 }

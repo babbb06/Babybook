@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,12 +83,10 @@ public class ListOfMedicalRecord extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
     private void fetchMedicalRecords() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Check if user is logged in
         if (user == null) {
             Toast.makeText(ListOfMedicalRecord.this, "User not logged in", Toast.LENGTH_SHORT).show();
             return;
@@ -95,47 +94,53 @@ public class ListOfMedicalRecord extends AppCompatActivity {
 
         String currentUserId = user.getUid();
 
-        // Check if childId is not null or empty
         if (childId == null || childId.isEmpty()) {
             Toast.makeText(ListOfMedicalRecord.this, "Child ID is not set", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Show a loading indicator if using a refresh layout or similar
         swipeRefreshLayout.setRefreshing(true);
 
-        // Listen for real-time updates
+        // Fetch all medical records for the child
         db.collection("healthRecords")
-                .document(childId) // Specify the document using childId
-                .collection("medicalRecords") // Subcollection name
-                .whereEqualTo("doctorId", currentUserId)
-                .addSnapshotListener((queryDocumentSnapshots, error) -> {
+                .document(childId)  // Use the specific child's document
+                .collection("medicalRecords")  // Access the 'medicalRecords' subcollection
+                .get()  // Fetch all documents at once
+                .addOnCompleteListener(task -> {
                     swipeRefreshLayout.setRefreshing(false);
 
-                    if (error != null) {
-                        Log.e("ListOfMedicalRecord", "Error loading records: ", error);
-                        Toast.makeText(ListOfMedicalRecord.this, "Failed to load records: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                    if (task.isSuccessful()) {
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
 
-                    if (queryDocumentSnapshots != null) {
-                        healthChecklists.clear(); // Clear the list to avoid duplication
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            HealthChecklist checklist = document.toObject(HealthChecklist.class);
-                            String dateToday = document.getString("dateToday");
-                            checklist.setDateToday(dateToday);
-                            healthChecklists.add(checklist);
-                        }
+                        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                            // Clear previous records to avoid duplication
+                            healthChecklists.clear();
 
-                        // Display a "No records found" message if list is empty
-                        if (healthChecklists.isEmpty()) {
+                            // Iterate through documents in the query result
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                HealthChecklist checklist = document.toObject(HealthChecklist.class);
+
+                                // Ensure the checklist object has the correct data
+                                checklist.setDate(document.getString("dateToday"));
+
+                                // Add the checklist to the list
+                                healthChecklists.add(checklist);
+                            }
+
+                            // Notify adapter of the new data
+                            adapter.notifyDataSetChanged();
+                        } else {
                             Toast.makeText(ListOfMedicalRecord.this, "No records found", Toast.LENGTH_SHORT).show();
                         }
-
-                        adapter.notifyDataSetChanged(); // Notify adapter of data changes
+                    } else {
+                        Exception e = task.getException();
+                        Log.e("ListOfMedicalRecord", "Error loading records: ", e);
+                        Toast.makeText(ListOfMedicalRecord.this, "Failed to load records: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+
 
 
 }
