@@ -183,7 +183,7 @@ public class AddMedicalRecord extends AppCompatActivity {
         // Reference to the parent document (e.g., child document)
         db.collection("healthRecords").document(childId) // Use the appropriate parent collection and document ID
                 .collection("medicalRecords") // Subcollection name
-                .document(childId) // Set a specific document ID for the medical record
+                .document(medicalRecordId) // Set a specific document ID for the medical record
                 .set(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
                     showToast("Medical record submitted successfully!");
