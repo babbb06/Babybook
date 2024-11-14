@@ -148,7 +148,6 @@ public class AddMedicalRecord extends AppCompatActivity {
 
         // Create a unique ID for the medical record
         String medicalRecordId = UUID.randomUUID().toString();
-        String sexdata = Sex;
 
         // Create a HashMap to store the data
         Map<String, Object> medicalRecordData = new HashMap<>();
@@ -157,7 +156,7 @@ public class AddMedicalRecord extends AppCompatActivity {
         medicalRecordData.put("Date", editTextDate.getText().toString());
         medicalRecordData.put("Weight", editTextWeight.getText().toString());
         medicalRecordData.put("Temperature", editTextTemperature.getText().toString());
-        medicalRecordData.put("Sex", sexdata);
+        medicalRecordData.put("Sex", Sex);
         medicalRecordData.put("childId", childId);
         medicalRecordData.put("doctorId", doctorId);
         medicalRecordData.put("medicalRecordId", medicalRecordId);
@@ -184,11 +183,14 @@ public class AddMedicalRecord extends AppCompatActivity {
         // Reference to the parent document (e.g., child document)
         db.collection("healthRecords").document(childId) // Use the appropriate parent collection and document ID
                 .collection("medicalRecords") // Subcollection name
-                .document(medicalRecordId) // Set a specific document ID for the medical record
+                .document(childId) // Set a specific document ID for the medical record
                 .set(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
                     showToast("Medical record submitted successfully!");
-                    finish(); // Close the activity
+                    // Navigate to the ViewMedicalRecord activity
+                    Intent intent = new Intent(AddMedicalRecord.this, ViewMedicalRecord.class);
+                    startActivity(intent);
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FirestoreError", "Error submitting data: " + e.getMessage());
@@ -204,8 +206,7 @@ public class AddMedicalRecord extends AppCompatActivity {
         if (user != null) {
             String userId = user.getUid(); // Get the current user's ID
 
-            db.collection("Users")
-                    .document(userId).get()
+            db.collection("Users").document(userId).get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();

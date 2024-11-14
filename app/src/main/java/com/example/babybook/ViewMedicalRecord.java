@@ -19,9 +19,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ViewMedicalRecord extends AppCompatActivity {
 
-    private TextView name, textViewWeight, textViewDate, textViewTemperature, textViewSummaryDiagnosis, textViewTreatmentPlan, textViewFollowUpPlan, textViewBirthday, textViewSex;
+    private TextView name,textViewWeight, textViewDate, textViewTemperature, textViewSummaryDiagnosis, textViewTreatmentPlan, textViewFollowUpPlan,textViewBirthday,textViewSex;
     private CheckBox checkBoxSick, checkBoxCough, checkBoxDiarrhea, checkBoxFever, checkBoxMeasles, checkBoxEarPain, checkBoxPallor, checkBoxMalnourished, checkBoxFeeding, checkBoxBreastfeeding, checkBoxDiarrheaCough, checkBoxImmunization, checkBoxOtherProblems;
-    private String childId, FirstName, LastName, dateToday, Sex, Birthday; // This will now be used to fetch the medical record
+    private String childId,FirstName,LastName,dateToday,Sex,Birthday; // This will now be used to fetch the medical record
     private FloatingActionButton fabCreatePost;
     private LinearLayout layouthide;
     private ConstraintLayout layoutgone;
@@ -43,7 +43,9 @@ public class ViewMedicalRecord extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        getSupportActionBar().setTitle("Medical Records Details");
+        getSupportActionBar().setTitle("Medical Records Details");// DOCTOR SIDe
+
+
 
         // Initialize UI components
         textViewWeight = findViewById(R.id.textViewWeight);
@@ -57,7 +59,7 @@ public class ViewMedicalRecord extends AppCompatActivity {
         name = findViewById(R.id.name);
 
         layoutgone = findViewById(R.id.layoutgone);
-        layouthide = findViewById(R.id.layouthide);
+        layouthide= findViewById(R.id.layouthide);
         checkBoxSick = findViewById(R.id.checkBoxSick);
         checkBoxCough = findViewById(R.id.checkBoxCough);
         checkBoxDiarrhea = findViewById(R.id.checkBoxDiarrhea);
@@ -73,8 +75,9 @@ public class ViewMedicalRecord extends AppCompatActivity {
         checkBoxOtherProblems = findViewById(R.id.checkBoxOtherProblems);
         fabCreatePost = findViewById(R.id.fabCreatePost);
 
-        // Set name and birthday
-        name.setText(FirstName + " " + LastName);
+        fetchHealthRecordDetails();
+
+        name.setText(FirstName +" "+ LastName);
         textViewBirthday.setText(Birthday);
 
         // Fetch health record details from Firestore
@@ -82,16 +85,23 @@ public class ViewMedicalRecord extends AppCompatActivity {
 
         // Set onClickListener for fabCreatePost
         fabCreatePost.setOnClickListener(v -> {
+            // Create an Intent to navigate to AddMedicalRecord Activity
             Intent intent = new Intent(ViewMedicalRecord.this, AddMedicalRecord.class);
             intent.putExtra("childId", childId);
             intent.putExtra("FirstName", FirstName);
             intent.putExtra("LastName", LastName);
-            intent.putExtra("dateToday", dateToday);
+           intent.putExtra("dateToday", dateToday);
             intent.putExtra("Birthday", Birthday);
             intent.putExtra("Sex", Sex);
+
+          //  intent.putExtra("Address", Address);
             startActivity(intent);
         });
+
+
     }
+
+
 
     private void fetchHealthRecordDetails() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

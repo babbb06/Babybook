@@ -40,8 +40,8 @@ public class HealthRecordParentAdapter extends RecyclerView.Adapter<HealthRecord
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HealthRecord record = healthRecords.get(position);
         holder.textViewChildName.setText(record.getFirstName() + " " + record.getLastName());
-        holder.textViewChildAddress.setText(record.getAddress());
-        holder.textViewChildSex.setText(record.getSex());
+        holder.textViewChildAddress.setText("Address: "+record.getAddress());
+        holder.textViewChildSex.setText("Sex: "+record.getSex());
         // Handle card click
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChildDetailsParentActivity.class);
