@@ -93,8 +93,6 @@ public class AddMedicalRecord extends AppCompatActivity {
         // Fetch user data
         fetchUserData();
 
-
-
         // Get today's date
         String datetoday = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
         editTextDate.setText(datetoday);
@@ -190,17 +188,7 @@ public class AddMedicalRecord extends AppCompatActivity {
                 .set(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
                     showToast("Medical record submitted successfully!");
-                    // Navigate to the ViewMedicalRecord activity
-                    Intent intent = new Intent(AddMedicalRecord.this, ListOfMedicalRecord.class);
-                    // Optionally, pass some data using intent if needed
-                    intent.putExtra("childId", childId); // Pass the child ID if needed
-                    intent.putExtra("FirstName", FirstName); // Pass the child ID
-                    intent.putExtra("LastName", LastName);
-                    intent.putExtra("Sex", Sex);
-                    intent.putExtra("Address", Address);
-                    intent.putExtra("Birthday", Birthday);
-                    startActivity(intent);
-                    finish();
+                    finish(); // Close the activity
                 })
                 .addOnFailureListener(e -> {
                     Log.e("FirestoreError", "Error submitting data: " + e.getMessage());
@@ -216,7 +204,8 @@ public class AddMedicalRecord extends AppCompatActivity {
         if (user != null) {
             String userId = user.getUid(); // Get the current user's ID
 
-            db.collection("Users").document(userId).get()
+            db.collection("Users")
+                    .document(userId).get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();

@@ -86,11 +86,11 @@ public class HealthRecordActivity extends AppCompatActivity {
     private void loadHealthRecords() {
         tvNoHealthRec.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
             String currentUserId = user.getUid();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference healthRecordsCollection = db.collection("healthRecords");
 
             healthRecordsCollection

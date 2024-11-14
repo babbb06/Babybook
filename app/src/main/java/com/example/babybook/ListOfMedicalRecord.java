@@ -2,6 +2,7 @@ package com.example.babybook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,10 +66,10 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         medicalRecordsCollection = db.collection("medicalRecords");
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
-        swipeRefreshLayout.setOnRefreshListener(this::fetchHealthRecords);
+        swipeRefreshLayout.setOnRefreshListener(this::fetchMedicalRecords);
 
-        fetchHealthRecords();
-
+        fetchMedicalRecords();
+        Toast.makeText(ListOfMedicalRecord.this, childId, Toast.LENGTH_SHORT).show();
         // Set onClickListener for fabCreatePost
         fabCreatePost.setOnClickListener(v -> {
             Intent intent = new Intent(ListOfMedicalRecord.this, AddMedicalRecord.class);
@@ -82,33 +83,59 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         });
     }
 
-    private void fetchHealthRecords() {
+    private void fetchMedicalRecords() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Check if user is logged in
+        if (user == null) {
+            Toast.makeText(ListOfMedicalRecord.this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String currentUserId = user.getUid();
 
+        // Check if childId is not null or empty
+        if (childId == null || childId.isEmpty()) {
+            Toast.makeText(ListOfMedicalRecord.this, "Child ID is not set", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Show a loading indicator if using a refresh layout or similar
+        swipeRefreshLayout.setRefreshing(true);
+
+        // Listen for real-time updates
         db.collection("healthRecords")
                 .document(childId) // Specify the document using childId
                 .collection("medicalRecords") // Subcollection name
-                .whereEqualTo("doctorId",currentUserId)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    healthChecklists.clear(); // Clear the list to avoid duplication
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        HealthChecklist checklist = document.toObject(HealthChecklist.class);
-                        String dateToday = document.getString("dateToday");
-                        checklist.setDateToday(dateToday);
-                        healthChecklists.add(checklist);
+                .whereEqualTo("doctorId", currentUserId)
+                .addSnapshotListener((queryDocumentSnapshots, error) -> {
+                    swipeRefreshLayout.setRefreshing(false);
+
+                    if (error != null) {
+                        Log.e("ListOfMedicalRecord", "Error loading records: ", error);
+                        Toast.makeText(ListOfMedicalRecord.this, "Failed to load records: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                    if (healthChecklists.isEmpty()) {
-                        // Show "No records found" message if no records are found
-                        Toast.makeText(ListOfMedicalRecord.this, "No records found", Toast.LENGTH_SHORT).show();
+
+                    if (queryDocumentSnapshots != null) {
+                        healthChecklists.clear(); // Clear the list to avoid duplication
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            HealthChecklist checklist = document.toObject(HealthChecklist.class);
+                            String dateToday = document.getString("dateToday");
+                            checklist.setDateToday(dateToday);
+                            healthChecklists.add(checklist);
+                        }
+
+                        // Display a "No records found" message if list is empty
+                        if (healthChecklists.isEmpty()) {
+                            Toast.makeText(ListOfMedicalRecord.this, "No records found", Toast.LENGTH_SHORT).show();
+                        }
+
+                        adapter.notifyDataSetChanged(); // Notify adapter of data changes
                     }
-                    adapter.notifyDataSetChanged(); // Notify adapter of data changes
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(ListOfMedicalRecord.this, "Failed to load records: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
 
 }

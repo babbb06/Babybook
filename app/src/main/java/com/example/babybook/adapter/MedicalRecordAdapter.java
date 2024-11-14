@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.babybook.R;
@@ -18,23 +19,23 @@ import java.util.List;
 
 public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdapter.ViewHolder> {
 
-    private final List<HealthChecklist> healthChecklists;
+    private List<HealthChecklist> healthChecklists;
     private final Context context;
 
     // Constructor updated to accept Context
     public MedicalRecordAdapter(List<HealthChecklist> healthChecklists, Context context) {
-        this.healthChecklists = healthChecklists;
         this.context = context;
+        this.healthChecklists = healthChecklists;
     }
-
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_medical_record, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HealthChecklist checklist = healthChecklists.get(position);
 
         // Displaying data from the checklist
@@ -48,6 +49,8 @@ public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdap
             intent.putExtra("FirstName",  checklist.getFirstName());
             intent.putExtra("LastName",  checklist.getLastName());
             intent.putExtra("dateToday", checklist.getDateToday()); // Send the specific record data
+
+
             context.startActivity(intent);
         });
     }
