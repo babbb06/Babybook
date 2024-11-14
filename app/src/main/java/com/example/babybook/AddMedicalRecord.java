@@ -93,6 +93,8 @@ public class AddMedicalRecord extends AppCompatActivity {
         // Fetch user data
         fetchUserData();
 
+
+
         // Get today's date
         String datetoday = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
         editTextDate.setText(datetoday);
@@ -148,6 +150,7 @@ public class AddMedicalRecord extends AppCompatActivity {
 
         // Create a unique ID for the medical record
         String medicalRecordId = UUID.randomUUID().toString();
+        String sexdata = Sex;
 
         // Create a HashMap to store the data
         Map<String, Object> medicalRecordData = new HashMap<>();
@@ -156,7 +159,7 @@ public class AddMedicalRecord extends AppCompatActivity {
         medicalRecordData.put("Date", editTextDate.getText().toString());
         medicalRecordData.put("Weight", editTextWeight.getText().toString());
         medicalRecordData.put("Temperature", editTextTemperature.getText().toString());
-        medicalRecordData.put("Sex", Sex);
+        medicalRecordData.put("Sex", sexdata);
         medicalRecordData.put("childId", childId);
         medicalRecordData.put("doctorId", doctorId);
         medicalRecordData.put("medicalRecordId", medicalRecordId);
@@ -183,12 +186,19 @@ public class AddMedicalRecord extends AppCompatActivity {
         // Reference to the parent document (e.g., child document)
         db.collection("healthRecords").document(childId) // Use the appropriate parent collection and document ID
                 .collection("medicalRecords") // Subcollection name
-                .document(childId) // Set a specific document ID for the medical record
+                .document(medicalRecordId) // Set a specific document ID for the medical record
                 .set(medicalRecordData)
                 .addOnSuccessListener(documentReference -> {
                     showToast("Medical record submitted successfully!");
                     // Navigate to the ViewMedicalRecord activity
-                    Intent intent = new Intent(AddMedicalRecord.this, ViewMedicalRecord.class);
+                    Intent intent = new Intent(AddMedicalRecord.this, ListOfMedicalRecord.class);
+                    // Optionally, pass some data using intent if needed
+                    intent.putExtra("childId", childId); // Pass the child ID if needed
+                    intent.putExtra("FirstName", FirstName); // Pass the child ID
+                    intent.putExtra("LastName", LastName);
+                    intent.putExtra("Sex", Sex);
+                    intent.putExtra("Address", Address);
+                    intent.putExtra("Birthday", Birthday);
                     startActivity(intent);
                     finish();
                 })

@@ -113,7 +113,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
         // Set an OnClickListener to navigate to ViewMedicalRecord.java
         medicalRecordCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(ChildDetailsActivity.this, com.example.babybook.ViewMedicalRecord.class);
+            Intent intent = new Intent(ChildDetailsActivity.this, com.example.babybook.ListOfMedicalRecord.class);
 
             // Optionally, pass some data using intent if needed
             intent.putExtra("childId", childId); // Pass the child ID if needed
