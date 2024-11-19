@@ -113,7 +113,17 @@ public class DoctorDashboardActivity extends AppCompatActivity {
                         startActivity(new Intent(DoctorDashboardActivity.this, ManageAppointmentsActivity.class));
                         break;
                     case R.id.doctor_nav_clinic:
-                        startActivity(new Intent(DoctorDashboardActivity.this, AddClinicActivity.class));
+                        checkIfDoctorHasClinic(
+                                // If a clinic exists, show a message
+                                () -> showMessageDialog("You have already added a clinic.", null),
+
+                                // If no clinic exists, navigate to AddClinicActivity
+                                () -> startActivity(new Intent(DoctorDashboardActivity.this, AddClinicActivity.class))
+                        );
+                        break;
+
+                    case R.id.doctor_nav_edit_vaccine:
+                        startActivity(new Intent(DoctorDashboardActivity.this, EditVaccineActivity.class));
                         break;
                         //new added layout
                     case R.id.doctor_nav_profile:
@@ -494,6 +504,35 @@ public class DoctorDashboardActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    private void checkIfDoctorHasClinic(Runnable onClinicExists, Runnable onClinicNotExists) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String doctorId = currentUser.getUid();
+
+        // Query the 'clinics' collection for a document with the matching 'doctorId'
+        db.collection("clinics")
+                .whereEqualTo("doctorId", doctorId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        // Clinic already exists for this doctor
+                        if (onClinicExists != null) {
+                            onClinicExists.run();
+                        }
+                    } else {
+                        // No clinic found for this doctor
+                        if (onClinicNotExists != null) {
+                            onClinicNotExists.run();
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle errors in querying Firestore
+                    Toast.makeText(DoctorDashboardActivity.this, "Error checking clinic data", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 
 
 
