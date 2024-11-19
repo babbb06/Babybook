@@ -2,8 +2,10 @@ package com.example.babybook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -85,6 +87,40 @@ public class AddMedicalRecord extends AppCompatActivity {
         // Get today's date
         String datetoday = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
         editTextDate.setText(datetoday);
+
+        editTextTemperature.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Get the temperature value from the EditText
+                try {
+                    double temperature = Double.parseDouble(editable.toString());
+
+                    // Check if the temperature is in the fever range (37.2 - 50.0)
+                    if (temperature >= 37.0 && temperature <= 50.0) {
+                        checkFever.setChecked(true); // Set the Fever checkbox to true
+                        checkFever.setEnabled(true); // Enable the Fever checkbox
+                    } else if (temperature <= 36.9) {
+                        checkFever.setChecked(false); // Uncheck the Fever checkbox if temperature is below 36.9
+                        checkFever.setEnabled(false); // Disable the Fever checkbox
+                    } else {
+                        checkFever.setChecked(false); // Uncheck the Fever checkbox if the temperature is outside the fever range
+                        checkFever.setEnabled(true); // Enable the Fever checkbox (for temperatures in the normal range)
+                    }
+                } catch (NumberFormatException e) {
+                    checkFever.setChecked(false); // If invalid input, uncheck the Fever checkbox
+                    checkFever.setEnabled(true); // Enable the Fever checkbox (it should be enabled for any valid temperature)
+                }
+            }
+        });
+
 
         // Set an onClickListener on the submit button
         submitButton.setOnClickListener(v -> {
