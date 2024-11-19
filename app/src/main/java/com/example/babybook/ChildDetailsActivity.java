@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -309,6 +310,82 @@ public class ChildDetailsActivity extends AppCompatActivity {
     }
 
     private void saveVaccineToFirestore(String vaccineName, String dose, String type, String location, String date, String reaction) {
+        // Define the dose limits for each vaccine type
+        int doseLimit = getDoseLimitForVaccine(type);
+
+        // If the vaccine has a dose limit, check if the limit is reached
+        if (doseLimit > 0) {
+            checkIfDoseLimitReached(type, doseLimit, vaccineName, dose, location, date, reaction);
+        } else {
+            // If there's no dose limit (such as for "BCG" dose 1), save the vaccine details directly
+            saveVaccineDetails(vaccineName, dose, type, location, date, reaction);
+        }
+    }
+
+    // Method to get the dose limit for each vaccine type
+    private int getDoseLimitForVaccine(String type) {
+        switch (type) {
+            case "BCG":
+                return 1;
+            case "Hepatitis B":
+                return 4;
+            case "DPT":
+                return 3;
+            case "BOOSTERS":
+                return 2;
+            case "OPV/IPV":
+                return 2;
+            case "BOOSTERS 1":
+                return 2;
+            case "H. Influenza B":
+                return 4;
+            case "ROTAVIRUS":
+                return 1;
+            case "MEASLES":
+                return 1;
+            case "MMR":
+                return 2;
+            case "BOOSTERS 2":
+                return 2;
+            default:
+                return 0; // No dose limit (default case)
+        }
+    }
+
+    // Method to check if the dose limit has been reached for a specific vaccine type
+    private void checkIfDoseLimitReached(String type, int doseLimit, String vaccineName, String dose, String location, String date, String reaction) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("vaccines")
+                .whereEqualTo("type", type)
+                .whereEqualTo("parentId", currentParentId)
+                .whereEqualTo("childId", childId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Check how many documents with the same type exist for this child
+                        int existingDoses = 0;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (type.equals(document.getString("type"))) {
+                                existingDoses++;
+                            }
+                        }
+
+                        // If the dose limit is reached, show a message and prevent adding more doses
+                        if (existingDoses >= doseLimit) {
+                            Toast.makeText(ChildDetailsActivity.this, type + "  has already been completed.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Otherwise, save the vaccine details
+                            saveVaccineDetails(vaccineName, dose, type, location, date, reaction);
+                        }
+                    } else {
+                        // Handle Firestore query failure
+                        Toast.makeText(ChildDetailsActivity.this, "Error checking existing records", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    // Method to save vaccine details to Firestore
+    private void saveVaccineDetails(String vaccineName, String dose, String type, String location, String date, String reaction) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> vaccine = new HashMap<>();
         vaccine.put("name", vaccineName);
@@ -333,6 +410,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
                     Toast.makeText(ChildDetailsActivity.this, "Error uploading details", Toast.LENGTH_SHORT).show();
                 });
     }
+
 
     private void loadVaccinesFromFirestore(String vaccineName) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -387,6 +465,9 @@ public class ChildDetailsActivity extends AppCompatActivity {
                                 row.addView(createTextView(date));
                                 row.addView(createTextView(reaction));
 
+                                // Check if the vaccine type is completed (based on its dose limit)
+                                checkVaccineCompletionDialog(type, dose);
+
                                 // Set click listener for the row
                                 row.setOnClickListener(v -> {
                                     // Handle row click
@@ -402,6 +483,64 @@ public class ChildDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    // Method to check vaccine completion based on type and dose
+    private void checkVaccineCompletionDialog(String type, String dose) {
+        int doseLimit = getDoseLimitForVaccine(type);  // Get dose limit for the vaccine type
+        if (doseLimit > 0) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("vaccines")
+                    .whereEqualTo("type", type)
+                    .whereEqualTo("parentId", currentParentId)
+                    .whereEqualTo("childId", childId)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            int existingDoses = 0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (type.equals(document.getString("type"))) {
+                                    existingDoses++;
+                                }
+                            }
+
+                            // If the dose limit is reached and the dialog hasn't been shown yet
+                            if (existingDoses >= doseLimit && !hasCompletedDialogShown(type)) {
+                                showCompletedDialog(type, doseLimit);  // Show the dialog
+                                setCompletedDialogShown(type);  // Mark the dialog as shown
+                            }
+                        }
+                    });
+        }
+    }
+
+
+    // Method to show the "Completed" dialog with a customized message
+    private void showCompletedDialog(String type, int doseLimit) {
+        String message = type + " has reached its " + doseLimit + " dose(s). Completed.";
+
+        new AlertDialog.Builder(ChildDetailsActivity.this)
+                .setTitle("Vaccine Status")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .setCancelable(false) // Optional, prevent dialog from being dismissed by tapping outside
+                .show();
+    }
+
+    // Method to check if the "Completed" dialog has already been shown for the given vaccine type
+    private boolean hasCompletedDialogShown(String type) {
+        SharedPreferences preferences = getSharedPreferences("VaccineDialogPrefs", MODE_PRIVATE);
+        return preferences.getBoolean(type + "_completed", false);  // Returns true if dialog shown for this type
+    }
+
+    // Method to mark that the "Completed" dialog has been shown for the given vaccine type
+    private void setCompletedDialogShown(String type) {
+        SharedPreferences preferences = getSharedPreferences("VaccineDialogPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(type + "_completed", true);  // Set the flag for this vaccine type
+        editor.apply();
+    }
+
+
 
 
     private void showDetailsDialog(String documentId, String dose, String type, String location, String date, String reaction) {

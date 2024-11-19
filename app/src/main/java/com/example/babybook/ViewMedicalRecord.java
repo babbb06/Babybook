@@ -78,7 +78,7 @@ public class ViewMedicalRecord extends AppCompatActivity {
         fetchHealthRecordDetails();
 
         name.setText(FirstName +" "+ LastName);
-        textViewBirthday.setText(Birthday);
+       // textViewBirthday.setText(Birthday);
 
         // Fetch health record details from Firestore
         fetchHealthRecordDetails();
@@ -127,7 +127,7 @@ public class ViewMedicalRecord extends AppCompatActivity {
                             textViewSummaryDiagnosis.setText(checklist.getSummaryDiagnosis());
                             textViewTreatmentPlan.setText(checklist.getTreatmentPlan());
                             textViewFollowUpPlan.setText(checklist.getFollowUpPlan());
-
+                            textViewBirthday.setText(checklist.getBirthdate());
                             // Set checkbox values based on boolean data
                             checkBoxSick.setChecked(checklist.isSick());
                             checkBoxCough.setChecked(checklist.hasCough());
