@@ -70,7 +70,7 @@ public class ListOfMedicalRecord extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(this::fetchMedicalRecords);
 
         fetchMedicalRecords();
-        Toast.makeText(ListOfMedicalRecord.this, childId, Toast.LENGTH_SHORT).show();
+
         // Set onClickListener for fabCreatePost
         fabCreatePost.setOnClickListener(v -> {
             Intent intent = new Intent(ListOfMedicalRecord.this, AddMedicalRecord.class);

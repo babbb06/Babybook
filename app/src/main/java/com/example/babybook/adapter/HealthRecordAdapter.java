@@ -43,8 +43,8 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
         HealthRecord record = healthRecords.get(position);
 
         holder.textViewChildName.setText(record.getFirstName() + " " + record.getLastName());
-        holder.textViewChildAddress.setText("Sex: "+record.getAddress());
-        holder.textViewChildSex.setText("Address: "+record.getSex());
+        holder.textViewChildAddress.setText("Address: "+record.getAddress());
+        holder.textViewChildSex.setText("Sex: "+record.getSex());
 
         // Handle card click
         holder.itemView.setOnClickListener(v -> {
