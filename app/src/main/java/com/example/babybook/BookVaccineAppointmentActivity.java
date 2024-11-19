@@ -1,11 +1,14 @@
 package com.example.babybook;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.babybook.model.AppointmentRequest;
+import com.example.babybook.receiver.VaccineAlarmReceiver;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -356,8 +360,7 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
 
 
     private AppointmentRequest createAppointmentRequest() {
-
-        return new AppointmentRequest(
+        AppointmentRequest request = new AppointmentRequest(
                 null,
                 firstName,
                 lastName,
@@ -374,6 +377,11 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
                 doctorId,
                 new Date()
         );
+
+        // Schedule notification alarms
+        scheduleVaccineReminders(birthDay, firstName + " " + lastName);
+
+        return request;
     }
 
     public void showBirthdayDatePicker(View view) {
@@ -439,5 +447,51 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
         // Create and show the dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void scheduleVaccineReminders(String birthDate, String childName) {
+        Log.d("VaccineReminder", "Scheduling reminder for birth date: " + birthDate);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this, VaccineAlarmReceiver.class);
+        intent.putExtra("birthDate", birthDate);
+        intent.putExtra("childName", childName);
+
+        // Create a unique request code based on child's name
+        int requestCode = childName.hashCode();
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        // Schedule the first check for today at 9:00 AM
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
+
+
+        // Log the scheduled time
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        Log.d("VaccineReminder", "First check scheduled for: " + sdf.format(calendar.getTime()));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setAlarmClock(
+                    new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
+                    pendingIntent
+            );
+        } else {
+            alarmManager.setExact(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.getTimeInMillis(),
+                    pendingIntent
+            );
+        }
+
     }
 }

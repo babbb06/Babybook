@@ -18,6 +18,10 @@
                     android:icon="@drawable/add_clinic"
                     android:title="Clinic" />
                 <item
+                    android:id="@+id/doctor_nav_edit_vaccine"
+                    android:icon="@drawable/vaccine"
+                    android:title="Edit Vaccine" />
+                <item
                     android:id="@+id/doctor_nav_appointment"
                     android:icon="@drawable/schedule"
                     android:title="Appointment Requests" />

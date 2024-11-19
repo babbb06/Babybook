@@ -12,6 +12,11 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -23,8 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BabyBook"
         tools:targetApi="31">
+        <activity
+            android:name=".EditVaccineActivity"
+            android:exported="false" />
 
-
+        <receiver
+            android:name=".receiver.VaccineAlarmReceiver"
+            android:exported="false" />
 
         <activity
             android:name=".Terms"
@@ -32,11 +42,12 @@
         <activity
             android:name=".About"
             android:exported="false" />
-
         <activity
             android:name=".ViewMedicalRecordParent"
             android:exported="false" />
-
+        <activity
+            android:name=".ListOfMedicalRecord"
+            android:exported="false" />
         <activity
             android:name=".ViewMedicalRecord"
             android:exported="false" />

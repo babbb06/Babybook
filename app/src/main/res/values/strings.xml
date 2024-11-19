@@ -59,10 +59,9 @@
     </string-array>
     <string-array name="sex_choices">
         <item>Select Sex</item>
-    <item>Male</item>
-    <item>Female</item>
-</string-array>
-
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 
 
     <string-array name="dose_options_bcg">

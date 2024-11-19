@@ -6,6 +6,7 @@
         android:id="@+id/doctor_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:context="ListOfMedicalRecord"
         android:background="@drawable/sidebarbg">
 
         <!-- Main content -->
@@ -15,7 +16,7 @@
 
             <!-- Toolbar -->
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/listToolbar"
                 android:layout_width="match_parent"
                 android:background="@drawable/header"
                 android:layout_height="?attr/actionBarSize"
@@ -35,9 +36,9 @@
                 android:elevation="1dp"
                 app:cardCornerRadius="60dp"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar"
-                app:layout_constraintTop_toTopOf="@+id/toolbar">
+                app:layout_constraintBottom_toBottomOf="@+id/listToolbar"
+                app:layout_constraintEnd_toEndOf="@+id/listToolbar"
+                app:layout_constraintTop_toTopOf="@+id/listToolbar">
 
                 <ImageView
                     android:id="@+id/ivhome"
@@ -51,6 +52,15 @@
 
 
             <!-- Newsfeed RecyclerView -->
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                app:layout_constraintTop_toBottomOf="@id/listToolbar"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
 
             <!-- Floating Action Button to create new post -->
 
@@ -63,11 +73,11 @@
                 android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintTop_toBottomOf="@id/listToolbar"
                 app:layout_constraintVertical_bias="0.0" />
-
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabCreatePost"
                 android:layout_width="wrap_content"

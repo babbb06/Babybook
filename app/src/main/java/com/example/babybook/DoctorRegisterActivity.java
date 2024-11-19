@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -55,8 +56,8 @@ import java.util.Map;
 public class DoctorRegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "DoctorRegisterActivity";
-    private EditText editTextFirstName, editTextLastName,editTextBirthday, editTextEmail, editTextPassword, editTextConfirmPassword,editTextPRCLicenseNumber,
-            editTextSpecialization, editTextClinicAddress,etPhoneNumber;
+    private EditText editTextFirstName, editTextLastName, editTextBirthday, editTextEmail, editTextPassword, editTextConfirmPassword, editTextPRCLicenseNumber,
+            editTextSpecialization, editTextClinicAddress, etPhoneNumber, editTextActivationCode;
     private Spinner spinnerSpecialization;
     private TextInputEditText etStartTime, etEndTime;
     private FirebaseAuth mAuth;
@@ -89,6 +90,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         editTextBirthday = findViewById(R.id.editTextBirthday);
         selectedImage = findViewById(R.id.ivSelectedImage);
         backBtn = findViewById(R.id.imageView);
+        editTextActivationCode = findViewById(R.id.edittext_activation_code);
 
 
         //time
@@ -106,8 +108,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         editTextConfirmPassword.setFilters(new InputFilter[]{new EmojiInputFilter()});
         editTextSpecialization.setFilters(new InputFilter[]{new EmojiInputFilter()});
         editTextClinicAddress.setFilters(new InputFilter[]{new EmojispaceInputFilter()});
-
-
 
 
 //TIME SHOW WHEN PRESS START AND END
@@ -140,6 +140,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
         Button buttonRegister = findViewById(R.id.buttonRegister);
         ImageView backBtn = findViewById(R.id.imageView);
+
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,8 +200,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     }
 
 
-
-
     private void registerDoctor() {
         //final String fullName = editTextFullName.getText().toString().trim();
         String firstName = editTextFirstName.getText().toString().trim();
@@ -210,6 +209,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
         String confirmPassword = editTextConfirmPassword.getText().toString();
         String PRCLicenseNumber = editTextPRCLicenseNumber.getText().toString();
+        String activationCode = editTextActivationCode.getText().toString();
         String birthday = editTextBirthday.getText().toString().trim();
         String phoneNumber = etPhoneNumber.getText().toString().trim();
         String clinicAddress = editTextClinicAddress.getText().toString().trim();
@@ -223,7 +223,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
 
         // Concatenate country code with the phone number
         String fullPhoneNumber = "+63" + phoneNumber;
-
 
 
         // Restrict numbers in First and Last Name
@@ -246,8 +245,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             editTextLastName.requestFocus();
             return;
         }
-
-
 
 
 //EMAIL ERROR HANDLING
@@ -298,8 +295,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         }
 
 
-
-
         //Bday ERROR HANDLING
         if (TextUtils.isEmpty(birthday)) {
             editTextBirthday.setError("Please enter your Birthday");
@@ -317,6 +312,18 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         if (PRCLicenseNumber.length() < 7) {
             editTextPRCLicenseNumber.setError("PRC License Number must be at least 7 Numbers");
             editTextPRCLicenseNumber.requestFocus();
+            return;
+        }
+
+        //ACTIVATION CODE ERROR HANDLING
+        if (TextUtils.isEmpty(activationCode)) {
+            editTextActivationCode.setError("Please enter activation code");
+            editTextActivationCode.requestFocus();
+            return;
+        }
+        if (activationCode.length() < 5) {
+            editTextActivationCode.setError("Activation Code must be at least 5 Numbers");
+            editTextActivationCode.requestFocus();
             return;
         }
 
@@ -355,9 +362,6 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             return;
         }
 
-
-
-
 //PHOTO ERROR HANDLING
 
         // Check if an image has been selected
@@ -384,33 +388,61 @@ public class DoctorRegisterActivity extends AppCompatActivity {
             lblUploadImage.setText("Upload Profile Photo");
         }
 
-        showProgressDialog(this);
+        //showProgressDialog(this);
 
+        db.collection("activation_codes").document(activationCode)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult().exists()) {
+                        // Code found, proceed with registration
+                        // Proceed with registration (Firebase Authentication, storing user data, etc.)
+                        String codeDocId = task.getResult().getId(); // Get the document ID (which is the activation code)
+                        registerWithEmailAndPassword(email, password, fullName, firstName, lastName, birthday, email, fullPhoneNumber, PRCLicenseNumber, specialization, clinicAddress, schedStartTime, schedEndTime, selectedDays, activationCode, codeDocId);
+                    } else {
+                        Toast.makeText(DoctorRegisterActivity.this, "Invalid activation code", Toast.LENGTH_SHORT).show();
+                        editTextActivationCode.setError("Please enter valid activation code");
+                        editTextActivationCode.requestFocus();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle error with Firestore query
+                    Toast.makeText(DoctorRegisterActivity.this, "Invalid activation code", Toast.LENGTH_SHORT).show();
+                    editTextActivationCode.setError("Please enter valid activation code");
+                    editTextActivationCode.requestFocus();
+                });
+    }
+
+    private void registerWithEmailAndPassword(String email, String password, String fullName, String firstName, String lastName, String birthday, String emailAddress, String fullPhoneNumber, String PRCLicenseNumber, String specialization, String clinicAddress, String schedStartTime, String schedEndTime, List<String> schedDays, String activationCode, String codeDocId) {
+        // Show progress dialog
+        showProgressDialog(this);
 
         // Register doctor with Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign up success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // User registration successful, now upload the profile picture and doctor data
+                        String userId = mAuth.getCurrentUser().getUid();
+                        uploadProfilePicture(userId, fullName, firstName, lastName, birthday, emailAddress, fullPhoneNumber, PRCLicenseNumber, specialization, clinicAddress, schedStartTime, schedEndTime, schedDays);
 
-                            // Get the user ID
-                            String userId = mAuth.getCurrentUser().getUid();
+                        // After registration and uploading the profile picture, delete the activation code from Firestore
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("activation_codes").document(codeDocId)
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "Activation code deleted successfully.");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.w(TAG, "Error deleting activation code", e);
+                                });
 
-                            // Call the uploadProfilePicture method
-                            uploadProfilePicture(userId, fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, schedStartTime, schedEndTime, selectedDays);
-
-                            //Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
-                            // Redirect to doctor dashboard
-                            //redirectToLogin();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(DoctorRegisterActivity.this, "Doctor Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        // Redirect or show success message
+                        //Toast.makeText(DoctorRegisterActivity.this, "Doctor Registration successful", Toast.LENGTH_SHORT).show();
+                        // redirectToLogin();
+                    } else {
+                        // If registration fails, show error message
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(DoctorRegisterActivity.this, "Doctor Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -436,7 +468,8 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     private boolean containsNumber(String text) {
         return text.matches(".*\\d.*");
     }
-    private void saveDoctorData(String fullName,String firstName,String lastName,String birthday, String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String profileImageUrl, String schedStartTime, String schedEndTime, List<String> selectedDays) {
+
+    private void saveDoctorData(String fullName, String firstName, String lastName, String birthday, String email, String fullPhoneNumber, String PRCLicenseNumber, String specialization, String clinicAddress, String profileImageUrl, String schedStartTime, String schedEndTime, List<String> selectedDays) {
         // Ensure user is authenticated
         if (mAuth.getCurrentUser() == null) {
             Log.w(TAG, "saveDoctorData: no authenticated user");
@@ -448,7 +481,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
         Map<String, Object> doctor = new HashMap<>();
         doctor.put("DoctorID", userId);  // Add the user ID to the database
         doctor.put("fullName", fullName);
-        doctor.put("firstName",firstName);
+        doctor.put("firstName", firstName);
         doctor.put("lastName", lastName);
         doctor.put("birthday", birthday);
         doctor.put("email", email);
@@ -476,7 +509,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                             hideProgressDialog();
                         } else {
                             Log.w(TAG, "Error writing document", task.getException());
-                            showMessageDialog("Failed to save user data to Firestore. Please try again",null);
+                            showMessageDialog("Failed to save user data to Firestore. Please try again", null);
                         }
                     }
 
@@ -524,7 +557,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
     }
 
     // uploadProfilePicture to accept fullName and email
-    private void uploadProfilePicture(String userId, String fullName,String firstName,String lastName ,String birthday,String email,String fullPhoneNumber, String PRCLicenseNumber,  String specialization, String clinicAddress, String schedStartTime, String schedEndTime, List <String> schedDays) {
+    private void uploadProfilePicture(String userId, String fullName, String firstName, String lastName, String birthday, String email, String fullPhoneNumber, String PRCLicenseNumber, String specialization, String clinicAddress, String schedStartTime, String schedEndTime, List<String> schedDays) {
         if (selectedImageUri != null) {
             StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("doctor_profile_pictures");
             StorageReference imageRef = storageRef.child(userId + ".jpg");
@@ -537,7 +570,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                                 String imageUrl = downloadUrlTask.getResult().toString();
 
                                 // After successfully uploading the image, save user data with profile image URL
-                                saveDoctorData(fullName,firstName,lastName,birthday, email, fullPhoneNumber,PRCLicenseNumber, specialization, clinicAddress, imageUrl, schedStartTime, schedEndTime, schedDays);
+                                saveDoctorData(fullName, firstName, lastName, birthday, email, fullPhoneNumber, PRCLicenseNumber, specialization, clinicAddress, imageUrl, schedStartTime, schedEndTime, schedDays);
                             } else {
                                 // Handle error while getting the image URL
                             }

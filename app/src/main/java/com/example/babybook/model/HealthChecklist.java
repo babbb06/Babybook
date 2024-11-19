@@ -9,7 +9,7 @@ public class HealthChecklist {
     private String weight;
     private String temperature;
     private String sex;
-
+    private String birthdate;
     private boolean isSick;
     private boolean hasCough;
     private boolean hasDiarrhea;
@@ -36,21 +36,19 @@ public class HealthChecklist {
 
     private String doctorId;
     private String medicalRecordId;
-    private String datetoday;
-
-    private String parentId;       // ID of the parent
     private String childId;        // ID of the child
     private Timestamp timestamp;
     // Getters and Setters
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 
 
+    public String getBirthdate() {return birthdate;}
+
+    public void setBirthdate(String birthdate) {this.birthdate = birthdate;}
+
+
+    public String getDate() {return date;}
+
+    public void setDate(String date) {this.date = date;}
 
     public String getWeight() {
         return weight;
@@ -90,18 +88,6 @@ public class HealthChecklist {
     public void setMedicalRecordId(String medicalRecordId) {
         this.medicalRecordId = medicalRecordId;
     }
-
-
-
-
-    public String getDateToday() {
-        return datetoday;
-    }
-
-    public void setDateToday(String dateToday) {
-        this.datetoday = dateToday;
-    }
-
 
 
 
@@ -270,14 +256,6 @@ public class HealthChecklist {
     }
 
 
-    // New getters and setters for parentId, childId, and timestamp
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
 
     public String getChildId() {
         return childId;

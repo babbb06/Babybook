@@ -39,7 +39,6 @@ public class ViewMedicalRecord extends AppCompatActivity {
         Sex = getIntent().getStringExtra("Sex");
         Birthday = getIntent().getStringExtra("Birthday");
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,8 +78,10 @@ public class ViewMedicalRecord extends AppCompatActivity {
         fetchHealthRecordDetails();
 
         name.setText(FirstName +" "+ LastName);
-        textViewBirthday.setText(Birthday);
+       // textViewBirthday.setText(Birthday);
 
+        // Fetch health record details from Firestore
+        fetchHealthRecordDetails();
 
         // Set onClickListener for fabCreatePost
         fabCreatePost.setOnClickListener(v -> {
@@ -109,55 +110,43 @@ public class ViewMedicalRecord extends AppCompatActivity {
         db.collection("healthRecords")
                 .document(childId) // Parent document ID
                 .collection("medicalRecords") // Subcollection name
-                .document(childId) // Specific medical record document ID
-                .addSnapshotListener((documentSnapshot, e) -> {
-                    if (e != null) {
-                        Toast.makeText(ViewMedicalRecord.this, "Failed to load record: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        Toast.makeText(ViewMedicalRecord.this, "No records found", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    if (documentSnapshot != null && documentSnapshot.exists()) {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         HealthChecklist checklist = documentSnapshot.toObject(HealthChecklist.class);
-
-                        // Logging to check if checklist data is being fetched correctly
                         if (checklist != null) {
                             // Set UI elements with the fetched data
-                            textViewWeight.setText(documentSnapshot.getString("Weight"));
-                            textViewDate.setText(documentSnapshot.getString("Date"));
-                            textViewTemperature.setText(documentSnapshot.getString("Temperature"));
-                            textViewSummaryDiagnosis.setText(documentSnapshot.getString("Summary"));
-                            textViewTreatmentPlan.setText(documentSnapshot.getString("Treatment"));
-                            textViewFollowUpPlan.setText(documentSnapshot.getString("Follow"));
-
+                            textViewWeight.setText(checklist.getWeight());
+                            textViewDate.setText(checklist.getDate());
+                            textViewTemperature.setText(checklist.getTemperature());
+                            textViewSummaryDiagnosis.setText(checklist.getSummaryDiagnosis());
+                            textViewTreatmentPlan.setText(checklist.getTreatmentPlan());
+                            textViewFollowUpPlan.setText(checklist.getFollowUpPlan());
+                            textViewBirthday.setText(checklist.getBirthdate());
                             // Set checkbox values based on boolean data
-                            checkBoxSick.setChecked(documentSnapshot.getBoolean("IsSick"));
-                            checkBoxCough.setChecked(documentSnapshot.getBoolean("HasCough"));
-                            checkBoxDiarrhea.setChecked(documentSnapshot.getBoolean("HasDiarrhea"));
-                            checkBoxFever.setChecked(documentSnapshot.getBoolean("HasFever"));
-                            checkBoxMeasles.setChecked(documentSnapshot.getBoolean("HasMeasles"));
-                            checkBoxEarPain.setChecked(documentSnapshot.getBoolean("HasEarPain"));
-                            checkBoxPallor.setChecked(documentSnapshot.getBoolean("IsPallor"));
-                            checkBoxMalnourished.setChecked(documentSnapshot.getBoolean("IsMalnourished"));
-                            checkBoxFeeding.setChecked(documentSnapshot.getBoolean("IsFeeding"));
-                            checkBoxBreastfeeding.setChecked(documentSnapshot.getBoolean("IsBreastfeeding"));
-                            checkBoxDiarrheaCough.setChecked(documentSnapshot.getBoolean("HasDiarrheaCough"));
-                            checkBoxImmunization.setChecked(documentSnapshot.getBoolean("HasImmunization"));
-                            checkBoxOtherProblems.setChecked(documentSnapshot.getBoolean("HasOtherProblems"));
-                        } else {
-
-                            layouthide.setVisibility(View.GONE);
-                            layoutgone.setVisibility(View.VISIBLE);
+                            checkBoxSick.setChecked(checklist.isSick());
+                            checkBoxCough.setChecked(checklist.hasCough());
+                            checkBoxDiarrhea.setChecked(checklist.hasDiarrhea());
+                            checkBoxFever.setChecked(checklist.hasFever());
+                            checkBoxMeasles.setChecked(checklist.hasMeasles());
+                            checkBoxEarPain.setChecked(checklist.hasEarPain());
+                            checkBoxPallor.setChecked(checklist.hasPallor());
+                            checkBoxMalnourished.setChecked(checklist.isMalnourished());
+                            checkBoxFeeding.setChecked(checklist.isAssessFeeding());
+                            checkBoxBreastfeeding.setChecked(checklist.isAssessBreastfeeding());
+                            checkBoxDiarrheaCough.setChecked(checklist.hasLongDiarrheaOrCough());
+                            checkBoxImmunization.setChecked(checklist.needsImmunization());
+                            checkBoxOtherProblems.setChecked(checklist.hasOtherProblems());
                         }
-                    } else {
-                        layouthide.setVisibility(View.GONE);
-                        layoutgone.setVisibility(View.VISIBLE);
                     }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(ViewMedicalRecord.this, "Failed to load record: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
-
-
-
-
-
-
 }

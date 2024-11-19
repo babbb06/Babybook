@@ -147,6 +147,7 @@ public class SearchDoctorActivity extends AppCompatActivity {
     }
 
 
+    // Method to load all doctors when activity starts
     private void loadAllDoctors() {
         swipeRefreshLayout.setRefreshing(true); // Start refreshing animation
         tvNoDoctor.setVisibility(View.GONE);
