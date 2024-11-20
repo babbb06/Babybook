@@ -508,8 +508,55 @@ public class ChildDetailsActivity extends AppCompatActivity {
                                 showCompletedDialog(type, doseLimit);  // Show the dialog
                                 setCompletedDialogShown(type);  // Mark the dialog as shown
                             }
+
+                            // Check for different vaccine types to show/hide their respective TextViews
+                            switch (type) {
+                                case "BCG":
+                                    updateVaccineTextView(R.id.textViewBCGComplete, existingDoses, doseLimit);
+                                    break;
+                                case "Hepatitis B":
+                                    updateVaccineTextView(R.id.textViewHepatitisBComplete, existingDoses, doseLimit);
+                                    break;
+                                case "DPT":
+                                    updateVaccineTextView(R.id.textViewDPTComplete, existingDoses, doseLimit);
+                                    break;
+                                case "BOOSTERS":
+                                    updateVaccineTextView(R.id.textViewBoosters1Complete, existingDoses, doseLimit);
+                                    break;
+                                case "OPV/IPV":
+                                    updateVaccineTextView(R.id.textViewOPVIPVComplete, existingDoses, doseLimit);
+                                    break;
+                                case "BOOSTERS 1":
+                                    updateVaccineTextView(R.id.textViewBoosters2Complete, existingDoses, doseLimit);
+                                    break;
+                                case "H. Influenza B":
+                                    updateVaccineTextView(R.id.textViewHInfluenzaBComplete, existingDoses, doseLimit);
+                                    break;
+                                case "ROTAVIRUS":
+                                    updateVaccineTextView(R.id.textViewRotavirusComplete, existingDoses, doseLimit);
+                                    break;
+                                case "MEASLES":
+                                    updateVaccineTextView(R.id.textViewMeaslesComplete, existingDoses, doseLimit);
+                                    break;
+                                case "MMR":
+                                    updateVaccineTextView(R.id.textViewMMRComplete, existingDoses, doseLimit);
+                                    break;
+                                case "BOOSTERS 2":
+                                    updateVaccineTextView(R.id.textViewBoosters3Complete, existingDoses, doseLimit);
+                                    break;
+                            }
                         }
                     });
+        }
+    }
+
+    // Helper method to update the visibility of TextViews for each vaccine
+    private void updateVaccineTextView(int textViewId, int existingDoses, int doseLimit) {
+        TextView textView = findViewById(textViewId);
+        if (existingDoses >= doseLimit) {
+            textView.setVisibility(View.VISIBLE);  // Show the TextView
+        } else {
+            textView.setVisibility(View.GONE);  // Hide the TextView
         }
     }
 
