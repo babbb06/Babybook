@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.babybook.ChildDetailsActivity;
 import com.example.babybook.ChildDetailsParentActivity;
+
 import com.example.babybook.R;
 import com.example.babybook.model.HealthRecord;
 
