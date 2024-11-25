@@ -89,6 +89,9 @@ public class EditVaccineActivity extends AppCompatActivity {
             updateVaccineData();
         });
 
+        binding.textViewClinicName.setOnClickListener(view -> showEditClinicNameDialog());
+
+
     }
 
 
@@ -254,6 +257,7 @@ public class EditVaccineActivity extends AppCompatActivity {
                         }
                     } else {
                         // If no clinics were found or the task failed
+                        hideProgressDialog();
                         Toast.makeText(EditVaccineActivity.this, "Error finding clinic document.", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -305,5 +309,68 @@ public class EditVaccineActivity extends AppCompatActivity {
         // Create and show the dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void showEditClinicNameDialog() {
+        // Create an AlertDialog builder for editing clinic name
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit Clinic Name");
+
+        // Inflate the custom dialog layout
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_clinic_name, null);
+        builder.setView(dialogView);
+
+        // Get the EditText for the new clinic name
+        EditText clinicNameInput = dialogView.findViewById(R.id.clinicNameInput);
+
+        // Pre-fill the EditText with the current clinic name
+        String currentClinicName = binding.textViewClinicName.getText().toString();
+        clinicNameInput.setText(currentClinicName);
+
+        builder.setPositiveButton("Submit", (dialog, which) -> {
+            String newClinicName = clinicNameInput.getText().toString().trim();
+            if (!newClinicName.isEmpty()) {
+                // Show progress dialog while updating the clinic name
+                showProgressDialog(this);
+
+                // Update the clinic name in the Firestore
+                db.collection("clinics")
+                        .whereEqualTo("doctorId", userId) // Filter by doctorId matching userId
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String clinicId = document.getId();
+
+                                    // Update the clinic name
+                                    db.collection("clinics").document(clinicId)
+                                            .update("clinicName", newClinicName)
+                                            .addOnSuccessListener(aVoid -> {
+                                                // Update the UI
+                                                binding.textViewClinicName.setText(newClinicName);
+                                                hideProgressDialog();
+                                                Toast.makeText(this, "Clinic name updated successfully!", Toast.LENGTH_SHORT).show();
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                hideProgressDialog();
+                                                Toast.makeText(this, "Error updating clinic name", Toast.LENGTH_SHORT).show();
+                                            });
+                                }
+                            } else {
+                                hideProgressDialog();
+                                Toast.makeText(this, "Error fetching clinic data", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(this, "Please enter a valid clinic name", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        // Show the dialog
+        builder.create().show();
     }
 }
