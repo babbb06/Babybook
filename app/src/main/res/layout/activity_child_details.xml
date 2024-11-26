@@ -114,6 +114,14 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/textViewBCGicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewBCG"
+            app:layout_constraintTop_toTopOf="@+id/textViewBCG" />
+
         <TextView
             android:id="@+id/textViewBCGComplete"
             android:layout_width="wrap_content"
@@ -131,6 +139,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewBCG"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
@@ -148,13 +157,12 @@
 
                 <ImageView
                     android:id="@+id/imageViewMenuBCG"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_margin="8dp"
-                    android:layout_marginStart="16dp"
-                    android:contentDescription="Menu"
-                    android:src="@drawable/baseline_more_vert_24"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                  android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -164,8 +172,9 @@
                     android:layout_margin="8dp"
                     android:contentDescription="Add Image"
                     android:src="@drawable/add"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -180,17 +189,27 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Vaccine: HEPATITIS B -->
+
         <TextView
             android:id="@+id/textViewHepatitisB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VACCINE: HEPATITIS B"
-            android:fontFamily="@font/poppins_semibold"
-            android:textSize="18sp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/cardViewBCG"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:fontFamily="@font/poppins_semibold"
+            android:text="VACCINE: HEPATITIS B"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardViewBCG" />
+
+
+        <ImageView
+            android:id="@+id/textViewHepatitisBicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewHepatitisB"
+            app:layout_constraintTop_toTopOf="@+id/textViewHepatitisB" />
 
         <TextView
             android:id="@+id/textViewHepatitisBComplete"
@@ -211,6 +230,7 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/textViewHepatitisB"
@@ -224,13 +244,13 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/imageViewMenuHepatitisB"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewAddHepatitisB"
@@ -238,8 +258,8 @@
                     android:layout_height="32dp"
                     android:src="@drawable/add"
                     android:contentDescription="Add Image"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -267,6 +287,14 @@
             app:layout_constraintTop_toBottomOf="@id/cardViewHepatitisB"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/textViewDPTicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewDPT"
+            app:layout_constraintTop_toTopOf="@+id/textViewDPT" />
+
         <TextView
             android:id="@+id/textViewDPTComplete"
             android:layout_width="wrap_content"
@@ -287,6 +315,7 @@
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
+            android:visibility="gone"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/textViewDPT"
             app:layout_constraintStart_toStartOf="parent"
@@ -297,25 +326,26 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/imageViewMenuDPT"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewAddDPT"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/add"
+                    android:layout_margin="8dp"
                     android:contentDescription="Add Image"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_margin="8dp" />
+                    android:src="@drawable/add"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -342,6 +372,15 @@
             app:layout_constraintTop_toBottomOf="@id/cardViewDPT"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/textViewBoosters1icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewBoosters1"
+            app:layout_constraintTop_toTopOf="@+id/textViewBoosters1" />
+
+
         <TextView
             android:id="@+id/textViewBoosters1Complete"
             android:layout_width="wrap_content"
@@ -364,6 +403,7 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/textViewBoosters1"
@@ -377,13 +417,13 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/imageViewMenuBoosters1"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewAddBoosters1"
@@ -391,8 +431,8 @@
                     android:layout_height="32dp"
                     android:src="@drawable/add"
                     android:contentDescription="Add Image"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -419,6 +459,14 @@
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardViewBoosters1"
             app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/textViewOPVIPVicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewOPVIPV"
+            app:layout_constraintTop_toTopOf="@+id/textViewOPVIPV" />
+
 
 
         <TextView
@@ -443,6 +491,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/textViewOPVIPV"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -454,13 +503,13 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/imageViewMenuOPVIPV"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewAddOPVIPV"
@@ -468,8 +517,8 @@
                     android:layout_height="32dp"
                     android:src="@drawable/add"
                     android:contentDescription="Add Image"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -496,6 +545,13 @@
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardViewOPVIPV"
             app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/textViewBoosters2icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewBoosters2"
+            app:layout_constraintTop_toTopOf="@+id/textViewBoosters2" />
 
         <TextView
             android:id="@+id/textViewBoosters2Complete"
@@ -522,6 +578,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/textViewBoosters2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -533,13 +590,13 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/imageViewMenuBoosters2"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <ImageView
@@ -548,8 +605,8 @@
                     android:layout_height="32dp"
                     android:src="@drawable/add"
                     android:contentDescription="Add Image"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -577,12 +634,20 @@
             app:layout_constraintTop_toBottomOf="@id/cardViewBoosters2"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/textViewHInfluenzaBicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewHInfluenzaB"
+            app:layout_constraintTop_toTopOf="@+id/textViewHInfluenzaB" />
+
         <TextView
             android:id="@+id/textViewHInfluenzaBComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-android:layout_marginStart="10dp"
+            android:layout_marginStart="10dp"
             android:visibility="gone"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
@@ -598,6 +663,7 @@ android:layout_marginStart="10dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
+            android:visibility="gone"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/textViewHInfluenzaB"
             app:layout_constraintStart_toStartOf="parent"
@@ -610,13 +676,13 @@ android:layout_marginStart="10dp"
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/imageViewMenuInfluenzaB"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
                     android:id="@+id/imageViewAddHInfluenzaB"
@@ -624,8 +690,8 @@ android:layout_marginStart="10dp"
                     android:layout_height="32dp"
                     android:src="@drawable/add"
                     android:contentDescription="Add Image"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -653,6 +719,14 @@ android:layout_marginStart="10dp"
             app:layout_constraintTop_toBottomOf="@id/cardViewHInfluenzaB"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/textViewRotavirusicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewRotavirus"
+            app:layout_constraintTop_toTopOf="@+id/textViewRotavirus" />
+
         <TextView
             android:id="@+id/textViewRotavirusComplete"
             android:layout_width="wrap_content"
@@ -660,7 +734,7 @@ android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
-android:layout_marginStart="10dp"
+            android:layout_marginStart="10dp"
             android:visibility="gone"
             android:textColor="#2BC230"
             android:textSize="19sp"
@@ -674,6 +748,7 @@ android:layout_marginStart="10dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
+            android:visibility="gone"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/textViewRotavirus"
             app:layout_constraintStart_toStartOf="parent"
@@ -686,13 +761,13 @@ android:layout_marginStart="10dp"
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/imageViewMenuRotavirus"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewAddRotavirus"
@@ -700,8 +775,8 @@ android:layout_marginStart="10dp"
                     android:layout_height="32dp"
                     android:src="@drawable/add"
                     android:contentDescription="Add Image"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -728,6 +803,13 @@ android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardViewRotavirus"
             app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/textViewMeaslesicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewMeasles"
+            app:layout_constraintTop_toTopOf="@+id/textViewMeasles" />
 
         <TextView
             android:id="@+id/textViewMeaslesComplete"
@@ -752,6 +834,7 @@ android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/textViewMeasles"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -761,25 +844,26 @@ android:layout_marginStart="10dp"
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/imageViewMenuMeasles"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewAddMeasles"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/add"
+                    android:layout_margin="8dp"
                     android:contentDescription="Add Image"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_margin="8dp" />
+                    android:src="@drawable/add"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -806,6 +890,14 @@ android:layout_marginStart="10dp"
             app:layout_constraintTop_toBottomOf="@id/cardViewMeasles"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/textViewMMRicon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewMMR"
+            app:layout_constraintTop_toTopOf="@+id/textViewMMR" />
+
         <TextView
             android:id="@+id/textViewMMRComplete"
             android:layout_width="wrap_content"
@@ -826,6 +918,7 @@ android:layout_marginStart="10dp"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/textViewMMR"
@@ -837,15 +930,16 @@ android:layout_marginStart="10dp"
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/imageViewMenuMMR"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageViewAddMMR"
@@ -853,8 +947,8 @@ android:layout_marginStart="10dp"
                     android:layout_height="32dp"
                     android:src="@drawable/add"
                     android:contentDescription="Add Image"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -881,6 +975,13 @@ android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/cardViewMMR"
             app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/textViewBoosters3icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/baseline_info_outline_24"
+            app:layout_constraintStart_toEndOf="@+id/textViewBoosters3"
+            app:layout_constraintTop_toTopOf="@+id/textViewBoosters3" />
 
         <TextView
             android:id="@+id/textViewBoosters3Complete"
@@ -904,6 +1005,7 @@ android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/textViewBoosters3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -915,23 +1017,25 @@ android:layout_marginStart="10dp"
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/imageViewMenuBoosters3"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/baseline_more_vert_24"
-                    android:contentDescription="Menu"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="8dp" />
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/minimize_30"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageView
                     android:id="@+id/imageViewAddBoosters3"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/add"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
                     android:contentDescription="Add Image"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_margin="8dp" />
+                    android:src="@drawable/add"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

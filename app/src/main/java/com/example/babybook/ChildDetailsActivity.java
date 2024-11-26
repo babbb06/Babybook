@@ -60,6 +60,16 @@ public class ChildDetailsActivity extends AppCompatActivity {
     private ImageView imageViewMenuBoosters3;
 
 
+    private TextView textViewBCG, textViewHepatitisB, textViewDPT, textViewBoosters1, textViewOPVIPV,
+            textViewBoosters2, textViewHInfluenzaB, textViewRotavirus, textViewMeasles,
+            textViewMMR, textViewBoosters3;
+
+    private CardView cardViewBCG, cardViewHepatitisB, cardViewDPT, cardViewBoosters1, cardViewOPVIPV,
+            cardViewBoosters2, cardViewHInfluenzaB, cardViewRotavirus, cardViewMeasles,
+            cardViewMMR, cardViewBoosters3;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,19 +89,34 @@ public class ChildDetailsActivity extends AppCompatActivity {
         imageViewMenuMMR = findViewById(R.id.imageViewMenuMMR);
         imageViewMenuBoosters3 = findViewById(R.id.imageViewAddBoosters3);
 
+        // Initialize TextViews
+        textViewBCG = findViewById(R.id.textViewBCG);
+        textViewHepatitisB = findViewById(R.id.textViewHepatitisB);
+        textViewDPT = findViewById(R.id.textViewDPT);
+        textViewBoosters1 = findViewById(R.id.textViewBoosters1);
+        textViewOPVIPV = findViewById(R.id.textViewOPVIPV);
+        textViewBoosters2 = findViewById(R.id.textViewBoosters2);
+        textViewHInfluenzaB = findViewById(R.id.textViewHInfluenzaB);
+        textViewRotavirus = findViewById(R.id.textViewRotavirus);
+        textViewMeasles = findViewById(R.id.textViewMeasles);
+        textViewMMR = findViewById(R.id.textViewMMR);
+        textViewBoosters3 = findViewById(R.id.textViewBoosters3);
 
-        setupMenu(imageViewMenuBCG);
-        setupMenu(imageViewMenuHepatitisB);
-        setupMenu(imageViewMenuDPT);
-        setupMenu(imageViewMenuBoosters1);
-        setupMenu(imageViewMenuOPVIPV);
-        setupMenu(imageViewMenuBoosters2);
-        setupMenu(imageViewMenuInfluenzaB);
-        setupMenu(imageViewMenuRotavirus);
-        setupMenu(imageViewMenuMeasles);
-        setupMenu(imageViewMenuMMR);
-        setupMenu(imageViewMenuBoosters3);
+        // Initialize CardViews
+        cardViewBCG = findViewById(R.id.cardViewBCG);
+        cardViewHepatitisB = findViewById(R.id.cardViewHepatitisB);
+        cardViewDPT = findViewById(R.id.cardViewDPT);
+        cardViewBoosters1 = findViewById(R.id.cardViewBoosters1);
+        cardViewOPVIPV = findViewById(R.id.cardViewOPVIPV);
+        cardViewBoosters2 = findViewById(R.id.cardViewBoosters2);
+        cardViewHInfluenzaB = findViewById(R.id.cardViewHInfluenzaB);
+        cardViewRotavirus = findViewById(R.id.cardViewRotavirus);
+        cardViewMeasles = findViewById(R.id.cardViewMeasles);
+        cardViewMMR = findViewById(R.id.cardViewMMR);
+        cardViewBoosters3 = findViewById(R.id.cardViewBoosters3);
 
+
+   
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -107,6 +132,36 @@ public class ChildDetailsActivity extends AppCompatActivity {
         Address= getIntent().getStringExtra("Address");
         Birthday = getIntent().getStringExtra("Birthday");
 
+
+
+        // Initially set all CardViews to GONE
+        setCardViewsVisibility(View.GONE);
+
+        // Set click listeners for TextViews
+        textViewBCG.setOnClickListener(v -> showCardView(cardViewBCG));
+        textViewHepatitisB.setOnClickListener(v -> showCardView(cardViewHepatitisB));
+        textViewDPT.setOnClickListener(v -> showCardView(cardViewDPT));
+        textViewBoosters1.setOnClickListener(v -> showCardView(cardViewBoosters1));
+        textViewOPVIPV.setOnClickListener(v -> showCardView(cardViewOPVIPV));
+        textViewBoosters2.setOnClickListener(v -> showCardView(cardViewBoosters2));
+        textViewHInfluenzaB.setOnClickListener(v -> showCardView(cardViewHInfluenzaB));
+        textViewRotavirus.setOnClickListener(v -> showCardView(cardViewRotavirus));
+        textViewMeasles.setOnClickListener(v -> showCardView(cardViewMeasles));
+        textViewMMR.setOnClickListener(v -> showCardView(cardViewMMR));
+        textViewBoosters3.setOnClickListener(v -> showCardView(cardViewBoosters3));
+
+        // Set click listeners for ImageViews
+        imageViewMenuBCG.setOnClickListener(v -> hideCardView(cardViewBCG));
+        imageViewMenuHepatitisB.setOnClickListener(v -> hideCardView(cardViewHepatitisB));
+        imageViewMenuDPT.setOnClickListener(v -> hideCardView(cardViewDPT));
+        imageViewMenuBoosters1.setOnClickListener(v -> hideCardView(cardViewBoosters1));
+        imageViewMenuOPVIPV.setOnClickListener(v -> hideCardView(cardViewOPVIPV));
+        imageViewMenuBoosters2.setOnClickListener(v -> hideCardView(cardViewBoosters2));
+        imageViewMenuInfluenzaB.setOnClickListener(v -> hideCardView(cardViewHInfluenzaB));
+        imageViewMenuRotavirus.setOnClickListener(v -> hideCardView(cardViewRotavirus));
+        imageViewMenuMeasles.setOnClickListener(v -> hideCardView(cardViewMeasles));
+        imageViewMenuMMR.setOnClickListener(v -> hideCardView(cardViewMMR));
+        imageViewMenuBoosters3.setOnClickListener(v -> hideCardView(cardViewBoosters3));
 
 
         // Find the CardView by its ID
@@ -181,34 +236,7 @@ public class ChildDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void setupMenu(ImageView imageViewMenu) {
-        imageViewMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(ChildDetailsActivity.this, view);
-                MenuInflater inflater = popupMenu.getMenuInflater();
-                inflater.inflate(R.menu.menu_item, popupMenu.getMenu());
 
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.menu_edit:
-                                // Handle edit action
-                                return true;
-                            case R.id.menu_delete:
-                                // Handle delete action
-                                return true;
-                            default:
-                                return false;
-                        }
-                    }
-                });
-
-                popupMenu.show();
-            }
-        });
-    }
 
 
     private void showAddImageDialog(String vaccineName, int doseOptionsArrayId) {
@@ -743,4 +771,29 @@ public class ChildDetailsActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
+    // Helper method to show a specific CardView and hide others
+    private void showCardView(CardView cardViewToShow) {
+        setCardViewsVisibility(View.GONE); // Hide all CardViews first
+        cardViewToShow.setVisibility(View.VISIBLE); // Show the selected CardView
+    }
+
+    // Helper method to hide all CardViews
+    private void setCardViewsVisibility(int visibility) {
+        cardViewBCG.setVisibility(visibility);
+        cardViewHepatitisB.setVisibility(visibility);
+        cardViewDPT.setVisibility(visibility);
+        cardViewBoosters1.setVisibility(visibility);
+        cardViewOPVIPV.setVisibility(visibility);
+        cardViewBoosters2.setVisibility(visibility);
+        cardViewHInfluenzaB.setVisibility(visibility);
+        cardViewRotavirus.setVisibility(visibility);
+        cardViewMeasles.setVisibility(visibility);
+        cardViewMMR.setVisibility(visibility);
+        cardViewBoosters3.setVisibility(visibility);
+    }
+    // Helper method to hide the selected CardView
+    private void hideCardView(CardView cardViewToHide) {
+        cardViewToHide.setVisibility(View.GONE); // Hide the specific CardView
+    }
+
 }
