@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -67,6 +69,9 @@ public class ChildDetailsActivity extends AppCompatActivity {
     private CardView cardViewBCG, cardViewHepatitisB, cardViewDPT, cardViewBoosters1, cardViewOPVIPV,
             cardViewBoosters2, cardViewHInfluenzaB, cardViewRotavirus, cardViewMeasles,
             cardViewMMR, cardViewBoosters3;
+    private ImageView textViewBCGicon, textViewHepatitisBicon, textViewDPTicon, textViewBoosters1icon,
+            textViewOPVIPVicon, textViewBoosters2icon, textViewHInfluenzaBicon, textViewRotavirusicon,
+            textViewMeaslesicon, textViewMMRicon, textViewBoosters3icon;
 
 
 
@@ -115,7 +120,18 @@ public class ChildDetailsActivity extends AppCompatActivity {
         cardViewMMR = findViewById(R.id.cardViewMMR);
         cardViewBoosters3 = findViewById(R.id.cardViewBoosters3);
 
-
+// Initialize the TextViews
+        textViewBCGicon = findViewById(R.id.textViewBCGicon);
+        textViewHepatitisBicon = findViewById(R.id.textViewHepatitisBicon);
+        textViewDPTicon = findViewById(R.id.textViewDPTicon);
+        textViewBoosters1icon = findViewById(R.id.textViewBoosters1icon);
+        textViewOPVIPVicon = findViewById(R.id.textViewOPVIPVicon);
+        textViewBoosters2icon = findViewById(R.id.textViewBoosters2icon);
+        textViewHInfluenzaBicon = findViewById(R.id.textViewHInfluenzaBicon);
+        textViewRotavirusicon = findViewById(R.id.textViewRotavirusicon);
+        textViewMeaslesicon = findViewById(R.id.textViewMeaslesicon);
+        textViewMMRicon = findViewById(R.id.textViewMMRicon);
+        textViewBoosters3icon = findViewById(R.id.textViewBoosters3icon);
    
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -162,6 +178,34 @@ public class ChildDetailsActivity extends AppCompatActivity {
         imageViewMenuMeasles.setOnClickListener(v -> hideCardView(cardViewMeasles));
         imageViewMenuMMR.setOnClickListener(v -> hideCardView(cardViewMMR));
         imageViewMenuBoosters3.setOnClickListener(v -> hideCardView(cardViewBoosters3));
+
+
+        // Set click listeners for each TextView icon to show dialog with vaccine information
+        textViewBCGicon.setOnClickListener(v -> showVaccineInfo("BCG Vaccine",
+                "Dose: 1 dose at birth.\nPurpose: Protects against severe forms of tuberculosis, particularly in children, such as TB meningitis and miliary TB."));
+        textViewHepatitisBicon.setOnClickListener(v -> showVaccineInfo("Hepatitis B Vaccine",
+                "Dose: 1 dose at birth.\nPurpose: Prevents hepatitis B infection, which can lead to chronic liver disease and liver cancer."));
+        textViewDPTicon.setOnClickListener(v -> showVaccineInfo("Pentavalent Vaccine (DPT-Hep B-HIB)",
+                "Dose: 3 doses at 1½, 2½, and 3½ months.\nPurpose: Combines protection against five diseases: diphtheria, pertussis (whooping cough), tetanus, hepatitis B, and Haemophilus influenzae type b (causing meningitis and pneumonia)."));
+        textViewBoosters1icon.setOnClickListener(v -> showVaccineInfo("Boosters",
+                "Dose: 1 booster shot at 5 years.,\n<Purpose: Boosts immunity for long-term protection against diseases like DPT."));
+
+        textViewOPVIPVicon.setOnClickListener(v -> showVaccineInfo("Polio Vaccines/Inactivated Polio Vaccine(OPV & IPV)",
+                "Dose: 3 doses at 1½, 2½, and 3½ months.\nPurpose: Provides immunity against poliovirus, preventing poliomyelitis (polio), a disease that can cause paralysis."));
+
+        textViewBoosters2icon.setOnClickListener(v -> showVaccineInfo("Boosters",
+                "Dose: 1 booster shot at 5 years.,\n<Purpose: Boosts immunity for long-term protection against diseases like DPT."));
+        textViewHInfluenzaBicon.setOnClickListener(v -> showVaccineInfo("Haemophilus Influenzae Type B (Hib) Vaccine",
+                "Doses: 3 or 4 doses depending on the vaccine brand, given at 2 months, 4 months, 6 months (if needed), and a booster at 12-15 months.\nPurpose: Provides immunity against Haemophilus influenzae type b, a bacterium that can cause severe infections such as meningitis, pneumonia, and bloodstream infections, especially in young children under 5 years old."));
+        textViewRotavirusicon.setOnClickListener(v -> showVaccineInfo("Rotavirus Vaccine",
+                "Doses: 2 doses at 2 months and 4 months.\nPurpose: Provides immunity against rotavirus, which can cause severe diarrhea, dehydration, vomiting, and fever in infants and young children, preventing hospitalizations and serious complications."));
+
+        textViewMeaslesicon.setOnClickListener(v -> showVaccineInfo("Measles Vaccine",
+                "Dose: 1 dose at 9 months.\nPurpose: Prevents measles, which can cause serious complications like pneumonia, encephalitis, and death."));
+        textViewMMRicon.setOnClickListener(v -> showVaccineInfo("MMR Vaccine",
+                "Dose: 2 doses at 9 months and 1 year.\nPurpose: Prevents measles, mumps, and rubella, preventing complications like pneumonia, encephalitis, and birth defects if contracted during pregnancy."));
+        textViewBoosters3icon.setOnClickListener(v -> showVaccineInfo("Boosters 3",
+                "Dose: 1 booster shot at 5 years.\nPurpose: Boosts immunity for long-term protection against diseases like DPT and polio."));
 
 
         // Find the CardView by its ID
@@ -763,6 +807,45 @@ public class ChildDetailsActivity extends AppCompatActivity {
             return false;
         }
     }*/
+private void showVaccineInfo(String vaccineName, String vaccineDetails) {
+    // Format the vaccine details using HTML to bold "Dose:" and "Purpose:"
+    String formattedDetails = "<b>Dose:</b> " + extractDose(vaccineDetails) + "<br><b>Purpose:</b> " + extractPurpose(vaccineDetails);
+
+    // Convert the formatted string to Spanned for HTML rendering
+    Spanned formattedText = Html.fromHtml(formattedDetails, Html.FROM_HTML_MODE_COMPACT);
+
+    // Show the AlertDialog with the formatted text
+    new AlertDialog.Builder(this)
+            .setTitle(vaccineName)
+            .setMessage(formattedText)
+            .setPositiveButton("OK", null)
+            .show();
+}
+
+    // Helper method to extract "Dose" information from vaccine details (without the "Dose:" keyword)
+    private String extractDose(String details) {
+        // Extract the portion after "Dose:" (if it exists)
+        int doseIndex = details.indexOf("Dose:");
+        if (doseIndex != -1) {
+            // Extract everything after the first "Dose:" keyword
+            return details.substring(doseIndex + 5).trim();  // "+ 5" skips over the "Dose:" part
+        }
+        return "No dose information available.";
+    }
+
+    // Helper method to extract "Purpose" information from vaccine details
+    private String extractPurpose(String details) {
+        // Extract the portion after "Purpose:" (if it exists)
+        int purposeIndex = details.indexOf("Purpose:");
+        if (purposeIndex != -1) {
+            // Extract everything after the "Purpose:" keyword
+            return details.substring(purposeIndex + 8).trim();  // "+ 8" skips over the "Purpose:" part
+        }
+        return "No purpose information available.";
+    }
+
+
+
 
 
     private void navigateToChildDetailsActivity2() {
