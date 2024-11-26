@@ -133,16 +133,15 @@
             android:id="@+id/textViewBCGComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="44dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
-            android:layout_marginEnd="50dp"
+            android:textColor="#2BC230"
             android:textSize="19sp"
             android:textStyle="bold"
-            android:textColor="#2BC230"
-            android:visibility="gone"
+android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/medicalrecordcv" />
+            app:layout_constraintTop_toTopOf="@+id/textViewBCG" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewBCG"
@@ -217,6 +216,20 @@
             app:layout_constraintStart_toEndOf="@+id/textViewHepatitisB"
             app:layout_constraintTop_toTopOf="@+id/textViewHepatitisB" />
 
+        <TextView
+            android:id="@+id/textViewHepatitisBComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="COMPLETED"
+            android:visibility="gone"
+            android:textColor="#2BC230"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewHepatitisB" />
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewHepatitisB"
             android:layout_width="0dp"
@@ -284,19 +297,19 @@
             android:src="@drawable/baseline_info_outline_24"
             app:layout_constraintStart_toEndOf="@+id/textViewDPT"
             app:layout_constraintTop_toTopOf="@+id/textViewDPT" />
+
         <TextView
             android:id="@+id/textViewDPTComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="50dp"
             android:text="COMPLETED"
             android:visibility="gone"
-            android:textStyle="bold"
             android:textColor="#2BC230"
             android:textSize="19sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewHepatitisB" />
+            app:layout_constraintTop_toTopOf="@+id/textViewDPT" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewDPT"
@@ -373,16 +386,15 @@
             android:id="@+id/textViewBoosters1Complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
-            android:layout_marginEnd="50dp"
             android:visibility="gone"
             android:textColor="#2BC230"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewDPT" />
+            app:layout_constraintTop_toTopOf="@+id/textViewBoosters1" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewBoosters1"
@@ -455,12 +467,10 @@
             app:layout_constraintTop_toTopOf="@+id/textViewOPVIPV" />
 
 
-
         <TextView
             android:id="@+id/textViewOPVIPVComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="48dp"
             android:visibility="gone"
             android:fontFamily="@font/poppins_semibold"
@@ -469,7 +479,7 @@
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewBoosters1" />
+            app:layout_constraintTop_toTopOf="@+id/textViewOPVIPV" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewOPVIPV"
@@ -545,15 +555,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
             android:textColor="#2BC230"
             android:textSize="19sp"
-            android:layout_marginEnd="50dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewOPVIPV" />
+            app:layout_constraintTop_toTopOf="@+id/textViewBoosters2" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewBoosters2"
@@ -630,7 +639,6 @@
             android:id="@+id/textViewHInfluenzaBComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="10dp"
             android:visibility="gone"
             android:fontFamily="@font/poppins_semibold"
@@ -638,7 +646,7 @@
             android:textColor="#2BC230"
             android:textSize="17sp"
             app:layout_constraintStart_toEndOf="@+id/textViewHInfluenzaB"
-            app:layout_constraintTop_toBottomOf="@id/cardViewBoosters2" />
+            app:layout_constraintTop_toTopOf="@+id/textViewHInfluenzaB" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewHInfluenzaB"
@@ -713,15 +721,14 @@
             android:id="@+id/textViewRotavirusComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
-            android:layout_marginStart="10dp"
             android:visibility="gone"
             android:textColor="#2BC230"
             android:textSize="19sp"
             app:layout_constraintStart_toEndOf="@+id/textViewRotavirus"
-            app:layout_constraintTop_toBottomOf="@id/cardViewHInfluenzaB" />
+            app:layout_constraintTop_toTopOf="@+id/textViewRotavirus" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewRotavirus"
@@ -798,14 +805,13 @@
             android:layout_width="wrap_content"
             android:visibility="gone"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
-            android:layout_marginEnd="50dp"
             android:textColor="#2BC230"
             android:textSize="19sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewRotavirus" />
+            app:layout_constraintTop_toTopOf="@+id/textViewMeasles" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewMeasles"
@@ -879,15 +885,14 @@
             android:id="@+id/textViewMMRComplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="COMPLETED"
-            android:visibility="gone"
             android:layout_marginEnd="50dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:visibility="gone"
+            android:text="COMPLETED"
             android:textColor="#2BC230"
             android:textSize="19sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewMeasles" />
+            app:layout_constraintTop_toTopOf="@+id/textViewMMR" />
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewMMR"
             android:layout_width="0dp"
@@ -962,7 +967,6 @@
             android:id="@+id/textViewBoosters3Complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="50dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="COMPLETED"
@@ -970,7 +974,7 @@
             android:textColor="#2BC230"
             android:textSize="19sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewMMR" />
+            app:layout_constraintTop_toTopOf="@+id/textViewBoosters3" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewBoosters3"

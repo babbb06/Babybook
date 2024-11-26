@@ -373,7 +373,6 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
 
         db.collection(collectionName)
                 .whereEqualTo("name", vaccineName)
-              //  .whereEqualTo("parentId", currentParentId)
                 .whereEqualTo("childId", childId)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -397,6 +396,15 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
                                 documents.add(document);
                             }
 
+                            // Count the existing doses for this vaccine
+                            int existingDoses = documents.size();
+
+                            // Get the dose limit for the current vaccine type
+                            int doseLimit = getDoseLimit(vaccineName);
+
+                            // Update the TextView based on the number of existing doses
+                            updateVaccineStatus(vaccineName, existingDoses, doseLimit);
+
                             // Sort documents by dose number
                             Collections.sort(documents, (doc1, doc2) -> {
                                 int dose1 = Integer.parseInt(doc1.getString("dose"));
@@ -411,7 +419,6 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
                                 String location = document.getString("location");
                                 String date = document.getString("date");
                                 String reaction = document.getString("reaction");
-                                String docId = document.getId(); // Get document ID
 
                                 TableRow row = new TableRow(ChildDetailsParentActivity.this);
                                 row.addView(createTextView(dose));
@@ -420,98 +427,91 @@ public class ChildDetailsParentActivity extends AppCompatActivity {
                                 row.addView(createTextView(date));
                                 row.addView(createTextView(reaction));
 
-                                // Set click listener for the row
-                              /*row.setOnClickListener(v -> {
-                                    // Handle row click
-                                    showDetailsDialog(docId, dose, type, location, date, reaction);
-                                });*/
-
                                 tableLayout.addView(row);
                             }
                         }
                     } else {
-                        Log.e("FirestoreError", "Error loading details: ", task.getException()); // Log the error
+                        Log.e("FirestoreError", "Error loading details: ", task.getException());
                         Toast.makeText(ChildDetailsParentActivity.this, "Error loading details", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-
-    private void showDetailsDialog(String documentId, String dose, String type, String location, String date, String reaction) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_view_details, null); // Your dialog layout
-
-        // Find EditText fields in the dialog view
-        EditText editTextDose = dialogView.findViewById(R.id.editTextDose);
-        EditText editTextType = dialogView.findViewById(R.id.editTextType);
-        EditText editTextLocation = dialogView.findViewById(R.id.editTextLocation);
-        EditText editTextDate = dialogView.findViewById(R.id.editTextDate);
-        EditText editTextReaction = dialogView.findViewById(R.id.editTextReaction);
-
-        // Set the values to the EditTexts
-        editTextDose.setText(dose);
-        editTextType.setText(type);
-        editTextLocation.setText(location);
-        editTextDate.setText(date);
-        editTextReaction.setText(reaction);
-
-               builder.setView(dialogView)
-                .setTitle("Edit Vaccine Details")
-                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle the "Edit" button click
-                        String newDose = editTextDose.getText().toString();
-                        String newType = editTextType.getText().toString();
-                        String newLocation = editTextLocation.getText().toString();
-                        String newDate = editTextDate.getText().toString();
-                        String newReaction = editTextReaction.getText().toString();
-
-                        // Perform the update action here
-                        updateVaccineDetails(documentId, newDose, newType, newLocation, newDate, newReaction);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    private int getDoseLimit(String type) {
+        switch (type) {
+            case "BCG":
+                return 1;
+            case "Hepatitis B":
+                return 4;
+            case "DPT":
+                return 3;
+            case "BOOSTERS":
+                return 2;
+            case "OPV/IPV":
+                return 2;
+            case "BOOSTERS 1":
+                return 2;
+            case "H. Influenza B":
+                return 4;
+            case "ROTAVIRUS":
+                return 1;
+            case "MEASLES":
+                return 1;
+            case "MMR":
+                return 2;
+            case "BOOSTERS 2":
+                return 2;
+            default:
+                return 0; // No dose limit
+        }
     }
 
-    private void updateVaccineDetails(String documentId, String dose, String type, String location, String date, String reaction) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("dose", dose);
-        updates.put("type", type);
-        updates.put("location", location);
-        updates.put("date", date);
-        updates.put("reaction", reaction);
-
-        db.collection("vaccines").document(documentId)
-                .update(updates)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(ChildDetailsParentActivity.this, "Details updated successfully", Toast.LENGTH_SHORT).show();
-                    loadVaccinesFromFirestore("BCG");
-                    loadVaccinesFromFirestore("Hepatitis B");
-                    loadVaccinesFromFirestore("DPT");
-                    loadVaccinesFromFirestore("BOOSTERS");
-                    loadVaccinesFromFirestore("OPV/IPV");
-                    loadVaccinesFromFirestore("BOOSTERS 1");
-                    loadVaccinesFromFirestore("H. Influenza B");
-                    loadVaccinesFromFirestore("ROTAVIRUS");
-                    loadVaccinesFromFirestore("MEASLES");
-                    loadVaccinesFromFirestore("MMR");
-                    loadVaccinesFromFirestore("BOOSTERS 2");
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(ChildDetailsParentActivity.this, "Error updating details", Toast.LENGTH_SHORT).show();
-                });
+    private void updateVaccineStatus(String vaccineName, int existingDoses, int doseLimit) {
+        switch (vaccineName) {
+            case "BCG":
+                updateVaccineTextView(R.id.textViewBCGComplete, existingDoses, doseLimit);
+                break;
+            case "Hepatitis B":
+                updateVaccineTextView(R.id.textViewHepatitisBComplete, existingDoses, doseLimit);
+                break;
+            case "DPT":
+                updateVaccineTextView(R.id.textViewDPTComplete, existingDoses, doseLimit);
+                break;
+            case "BOOSTERS":
+                updateVaccineTextView(R.id.textViewBoosters1Complete, existingDoses, doseLimit);
+                break;
+            case "OPV/IPV":
+                updateVaccineTextView(R.id.textViewOPVIPVComplete, existingDoses, doseLimit);
+                break;
+            case "BOOSTERS 1":
+                updateVaccineTextView(R.id.textViewBoosters2Complete, existingDoses, doseLimit);
+                break;
+            case "H. Influenza B":
+                updateVaccineTextView(R.id.textViewHInfluenzaBComplete, existingDoses, doseLimit);
+                break;
+            case "ROTAVIRUS":
+                updateVaccineTextView(R.id.textViewRotavirusComplete, existingDoses, doseLimit);
+                break;
+            case "MEASLES":
+                updateVaccineTextView(R.id.textViewMeaslesComplete, existingDoses, doseLimit);
+                break;
+            case "MMR":
+                updateVaccineTextView(R.id.textViewMMRComplete, existingDoses, doseLimit);
+                break;
+            case "BOOSTERS 2":
+                updateVaccineTextView(R.id.textViewBoosters3Complete, existingDoses, doseLimit);
+                break;
+            default:
+                break;
+        }
     }
+
+    private void updateVaccineTextView(int textViewId, int existingDoses, int doseLimit) {
+        TextView textView = findViewById(textViewId);
+        if (existingDoses >= doseLimit) {
+            textView.setVisibility(View.VISIBLE);  // Make the TextView visible
+        }
+    }
+
 
 
     private TableLayout getTableLayout(String vaccineName) {
