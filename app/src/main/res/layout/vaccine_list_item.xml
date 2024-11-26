@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:paddingHorizontal="8dp"
     android:paddingVertical="4dp"
@@ -18,16 +19,26 @@
         android:textStyle="bold"
         android:fontFamily="@font/roboto_slab_bold"
         android:padding="8dp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        tools:text="@tools:sample/lorem"/>
 
     <TextView
         android:id="@+id/quantityTextView"
         android:layout_width="0dp"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/roboto_slab_bold"
         android:textSize="16sp"
         android:padding="8dp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        tools:text="@tools:sample/lorem"/>
+
+    <ImageView
+        android:id="@+id/image_view_delete"
+        android:layout_weight="0.5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_delete_24"/>
 
 </LinearLayout>

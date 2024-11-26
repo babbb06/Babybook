@@ -28,6 +28,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BabyBook"
         tools:targetApi="31">
+        <activity
+            android:name=".EditVaccineActivity"
+            android:exported="false" />
 
         <receiver
             android:name=".receiver.VaccineAlarmReceiver"
@@ -39,15 +42,12 @@
         <activity
             android:name=".About"
             android:exported="false" />
-
         <activity
             android:name=".ViewMedicalRecordParent"
             android:exported="false" />
-
         <activity
             android:name=".ListOfMedicalRecord"
             android:exported="false" />
-
         <activity
             android:name=".ViewMedicalRecord"
             android:exported="false" />
