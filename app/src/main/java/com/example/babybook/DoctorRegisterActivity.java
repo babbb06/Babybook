@@ -440,6 +440,7 @@ public class DoctorRegisterActivity extends AppCompatActivity {
                         // redirectToLogin();
                     } else {
                         // If registration fails, show error message
+                        hideProgressDialog();
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(DoctorRegisterActivity.this, "Doctor Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
