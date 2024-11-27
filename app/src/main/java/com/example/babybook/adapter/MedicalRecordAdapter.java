@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MedicalRecordAdapter extends RecyclerView.Adapter<MedicalRecordAdapter.ViewHolder> {
 
-    private List<HealthChecklist> healthChecklists;
+    private final List<HealthChecklist> healthChecklists;
     private final Context context;
 
     // Constructor updated to accept Context
