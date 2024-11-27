@@ -43,7 +43,11 @@ public class AppointmentRequestAdapter extends RecyclerView.Adapter<AppointmentR
         holder.textViewService.setText("Service: " + request.getService());
         holder.textViewDate.setText("Date: " + request.getDate());
         holder.textViewTime.setText("Time: " + request.getTime());
-        holder.textViewStatus.setText("Status: " + request.getStatus());
+        holder.textViewStatus.setText(
+                request.getReason() != null
+                        ? "Status: " + request.getStatus() + " " + request.getReason()
+                        : "Status: " + request.getStatus()
+        );
         // Set the status text color based on the status
         int statusColor;
         switch (request.getStatus()) {

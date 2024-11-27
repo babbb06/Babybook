@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:padding="15dp"
+        android:layout_height="wrap_content">
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/usernameLayout"
+            style="@style/LoginTextInputOuterFieldStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/violet"
+            app:boxStrokeErrorColor="@color/colorError"
+            app:errorTextColor="@color/clear"
+            app:hintTextColor="@color/violet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/clinicNameInput"
+                style="@style/LoginTextInputInnerFieldStyle"
+                android:layout_width="match_parent"
+                android:hint="Clinic Name"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:inputType="textPersonName"
+                tools:ignore="TouchTargetSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

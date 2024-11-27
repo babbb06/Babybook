@@ -99,14 +99,41 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
             @Override
             public void onDeclineClick(AppointmentRequest request) {
-                // Show confirmation dialog for declining
+                // List of reasons for declining the appointment
+                String[] declineReasons = {
+                        "\nNot available at this time – The doctor is unavailable during the requested time slot.",
+                        "\nFully booked schedule – The doctor has no open slots available for that day.",
+                        "\nPatient's condition requires a specialist - The patient's needs are better suited for a different medical expert.",
+                        "\nUrgent personal matter - The doctor has an unexpected personal obligation.",
+                        "\nConflict with another appointment - Another patient's appointment conflicts with the requested time.",
+                        "\nIncomplete patient information - The provided information is insufficient for booking.",
+                        "\nTime not suited for the specific service - The requested time is reserved for a different type of consultation or procedure.",
+                        "\nClinic closure on that day - The clinic is closed for a holiday or maintenance.",
+                        "\nInsufficient preparation time – The doctor needs more time to prepare for the requested procedure or consultation.",
+                        "\nPatient's requested service not offered - The requested service is not provided by the doctor."
+
+                };
+
+
+                // Show the dialog with a scrollable list of reasons
                 new androidx.appcompat.app.AlertDialog.Builder(ManageAppointmentsActivity.this)
-                        .setTitle("Confirm Decline")
-                        .setMessage("Are you sure you want to decline this appointment?")
-                        .setPositiveButton("Yes", (dialog, which) -> {
-                            updateAppointmentStatus(request.getId(), "Declined");
+                        .setTitle("Select Reason for Decline")
+                        .setItems(declineReasons, (dialog, which) -> {
+                            // Get the selected reason
+                            String selectedReason = declineReasons[which];
+
+                            // Show the confirmation dialog for declining
+                            new androidx.appcompat.app.AlertDialog.Builder(ManageAppointmentsActivity.this)
+                                    .setTitle("Confirm Decline")
+                                    .setMessage("Are you sure you want to decline this appointment for the reason: \n" + selectedReason + "?")
+                                    .setPositiveButton("Yes", (dialog1, which1) -> {
+                                        // Update the appointment status and include the reason
+                                        updateAppointmentStatus(request.getId(), "Declined", selectedReason.trim());
+                                    })
+                                    .setNegativeButton("No", (dialog12, which12) -> dialog12.dismiss())
+                                    .create()
+                                    .show();
                         })
-                        .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                         .create()
                         .show();
             }
@@ -196,7 +223,8 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
         // Also update the appointment status
         db.collection("appointments").document(id)
-                .update("status", status)
+                .update("status", status,
+                "toShowPopup", 1)
                 .addOnSuccessListener(aVoid -> {
                     Log.d("ManageAppointments", "Appointment status updated to " + status.toLowerCase());
                 })
@@ -205,7 +233,6 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
                     Toast.makeText(ManageAppointmentsActivity.this, "Failed to update status", Toast.LENGTH_SHORT).show();
                 });
     }
-
 
 
     private void loadAppointments() {
@@ -230,8 +257,7 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
 
                         if (appointmentRequests.isEmpty()) {
                             tvNoRequestAppointments.setVisibility(View.VISIBLE);
-                        }
-                        else{
+                        } else {
                             tvNoRequestAppointments.setVisibility(View.GONE);
                         }
 
@@ -243,10 +269,12 @@ public class ManageAppointmentsActivity extends AppCompatActivity {
     }
 
 
-    private void updateAppointmentStatus(String id, String status) {
+    private void updateAppointmentStatus(String id, String status, String reason) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("appointments").document(id)
-                .update("status", status)
+                .update("status", status,
+                        "reason", reason)
+
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(ManageAppointmentsActivity.this, "Appointment " + status.toLowerCase(), Toast.LENGTH_SHORT).show();
 
