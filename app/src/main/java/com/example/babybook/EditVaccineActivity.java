@@ -216,7 +216,7 @@ public class EditVaccineActivity extends AppCompatActivity {
                                 }
                             }
 
-                            binding.textViewClinicName.setText(clinicName);
+                            binding.textViewClinicName.setText(clinicName + " ");
                         }
                     } else {
                         // If the query failed, show an error message

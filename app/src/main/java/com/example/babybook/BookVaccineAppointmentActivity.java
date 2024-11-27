@@ -375,7 +375,9 @@ public class BookVaccineAppointmentActivity extends AppCompatActivity {
                 "Pending",
                 mAuth.getCurrentUser().getUid(),
                 doctorId,
-                new Date()
+                new Date(),
+                null,
+                0
         );
 
         // Schedule notification alarms

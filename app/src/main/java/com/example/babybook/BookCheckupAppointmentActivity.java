@@ -50,6 +50,7 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
     private String birthDay;
     private String birthPlace;
     private String address;
+    private String selectedGender;
     private final String selectedService = "Check-Up";
     private String selectedTime;
     private FirebaseAuth mAuth;
@@ -313,6 +314,11 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
         birthPlace = editTextbirthplace.getText().toString().trim();
         address = etStreet.getText().toString().trim() + ", " + etBrgy.getText().toString().trim() + ", " + etCity.getText().toString().trim() + ", " + etProvince.getText().toString().trim();
 
+        if (selectedSpinnerPosition == 1) {
+            selectedGender = "Male";
+        } else if (selectedSpinnerPosition == 2) {
+            selectedGender = "Female";
+        }
 
         // Check for empty fields
         boolean isValid = true;
@@ -369,7 +375,7 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
                 lastName,
                 firstName + " " + lastName,
                 birthDay,
-                selectedSpinnerPosition.toString(),
+                selectedGender,
                 birthPlace,
                 address,
                 selectedService,
@@ -378,7 +384,9 @@ public class BookCheckupAppointmentActivity extends AppCompatActivity {
                 "Pending",
                 mAuth.getCurrentUser().getUid(),
                 doctorId,
-                new Date()
+                new Date(),
+                null,
+                0
         );
     }
 

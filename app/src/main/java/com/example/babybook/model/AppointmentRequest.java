@@ -19,12 +19,14 @@ public class AppointmentRequest {
     private String userId;
     private String doctorId;
     private Date bookingTime;
+    private String reason;
+    private Integer toShowPopup = 0;
 
     public AppointmentRequest() {
         // Default constructor required for Firestore serialization
     }
 
-    public AppointmentRequest(String id, String firstName, String lastName,  String childFullName, String birthDay, String sex, String birthPlace, String address, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime) {
+    public AppointmentRequest(String id, String firstName, String lastName,  String childFullName, String birthDay, String sex, String birthPlace, String address, String service, String date, String time, String status, String userId, String doctorId, Date bookingTime, String reason, Integer toShowPopup) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,11 +42,29 @@ public class AppointmentRequest {
         this.userId = userId;
         this.doctorId = doctorId;
         this.bookingTime = bookingTime;
+        this.reason = reason;
+        this.toShowPopup = toShowPopup;
+    }
+
+    public Integer getToShowPopup() {
+        return toShowPopup;
+    }
+
+    public void setToShowPopup(Integer toShowPopup) {
+        this.toShowPopup = toShowPopup;
     }
 
     // Getter and Setter methods for all fields
     public String getId() {
         return id;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public void setId(String id) {
